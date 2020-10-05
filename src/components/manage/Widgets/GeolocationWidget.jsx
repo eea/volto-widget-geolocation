@@ -56,13 +56,7 @@ const GeolocationWidget = (props) => {
                 components={{ DropdownIndicator, Option }}
                 value={selectedOption || []}
                 onChange={(field, value) => {
-                  setOption((prevState) =>
-                    field
-                      ? field.map((item) => {
-                          return { value: item.value, label: item.label };
-                        })
-                      : null,
-                  );
+                  setOption((prevState) => (field ? field.slice(-1) : null));
                 }}
               />
             </Grid.Column>
