@@ -1,4 +1,4 @@
-# volto-addon-template
+# volto-widget-geolocation
 
 ## Develop
 
@@ -25,16 +25,16 @@ Before starting make sure your development environment is properly set. See [Vol
             },
 
             "addons": [
-                "@eeacms/volto-addon-template"
+                "@eeacms/volto-widget-geolocation"
             ],
         }
 
 1. Add the following to `mrs.developer.json`:
 
         {
-            "volto-addon-template": {
-                "url": "https://github.com/eea/volto-addon-template.git",
-                "package": "@eeacms/volto-addon-template",
+            "volto-widget-geolocation": {
+                "url": "https://github.com/eea/volto-widget-geolocation.git",
+                "package": "@eeacms/volto-widget-geolocation",
                 "branch": "develop",
                 "path": "src"
             }
@@ -63,4 +63,4 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1. Happy hacking!
 
-        $ cd src/addons/volto-addon-template/
+        $ cd src/addons/volto-widget-geolocation/
