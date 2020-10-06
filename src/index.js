@@ -1,9 +1,9 @@
 import { GeolocationWidget } from './components';
 
 const applyConfig = (config) => {
-  config.widgets.type = {
-    ...config.widgets.type,
-    select: GeolocationWidget,
+  config.widgets.widget = {
+    ...config.widgets.widget,
+    geolocation: GeolocationWidget,
   };
   return config;
 };
