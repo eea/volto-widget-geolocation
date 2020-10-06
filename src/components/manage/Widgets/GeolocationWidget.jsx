@@ -25,7 +25,7 @@ const GeolocationWidget = (props) => {
     onChangeBlock(block, {
       ...data,
       geographic: selectedOption
-        ? [...data.geographic, ...selectedOption]
+        ? [...data.geographic, selectedOption]
         : data.geographic,
     });
   }, [selectedOption]);
@@ -44,7 +44,6 @@ const GeolocationWidget = (props) => {
             </Grid.Column>
             <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
               <CreatableSelect
-                isMulti
                 allowCreateWhileLoading={true}
                 id="select-listingblock-template"
                 name="select-listingblock-template"
@@ -55,8 +54,10 @@ const GeolocationWidget = (props) => {
                 theme={selectTheme}
                 components={{ DropdownIndicator, Option }}
                 value={selectedOption || []}
-                onChange={(field, value) => {
-                  setOption((prevState) => (field ? field.slice(-1) : null));
+                onCreateOption={(field, value) => {
+                  setOption((prevState) =>
+                    field ? { label: field, value: field } : null,
+                  );
                 }}
               />
             </Grid.Column>
