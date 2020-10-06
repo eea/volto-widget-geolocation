@@ -50,7 +50,7 @@ const GeolocationWidget = (props) => {
                 className="react-select-container"
                 classNamePrefix="react-select"
                 options={data && data.geographic}
-                styles={customSelectStyles}
+                styles={{ ...customSelectStyles, paddingTop: '20px' }}
                 theme={selectTheme}
                 components={{ DropdownIndicator, Option }}
                 value={selectedOption || []}
