@@ -7,7 +7,7 @@ import { FormFieldWrapper } from '@plone/volto/components';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
-import { eeaCountries } from './eeaCountries';
+import { eeaCountries, eeaGroups } from './eeaCountries';
 import {
   Option,
   DropdownIndicator,
@@ -20,7 +20,12 @@ const messages = defineMessages({
     id: 'Geographic coverage',
     defaultMessage: 'Geographic coverage',
   },
+  countries: {
+    id: 'Select Countries',
+    defaultMessage: 'Select Countries',
+  },
 });
+let arr = [];
 const groupedOptions = [
   {
     label: 'Biogeographical region',
@@ -28,7 +33,7 @@ const groupedOptions = [
   },
   {
     label: 'Countries group',
-    options: eeaCountries,
+    options: arr,
   },
 ];
 const Group = (props) => <components.Group {...props} />;
@@ -36,17 +41,53 @@ const Group = (props) => <components.Group {...props} />;
 const GeolocationWidget = (props) => {
   const { data, block, onChangeBlock, intl } = props;
   const [selectedOption, setOption] = useState(null);
+  const [selectCountry, setCountry] = useState(null);
 
   React.useEffect(() => {
+    if (selectCountry) {
+      arr = [];
+      arr = eeaCountries.filter((item) =>
+        item.group?.includes(selectCountry.label),
+      );
+      groupedOptions[1].options = arr;
+    }
     onChangeBlock(block, {
       ...data,
       geolocation: selectedOption ? [...selectedOption] : data.geolocation,
     });
-  }, [selectedOption]);
+  }, [selectedOption, selectCountry]);
 
   return (
     <FormFieldWrapper {...props} columns={1}>
       <Grid>
+        <Grid.Row stretched>
+          <Grid.Column width="4">
+            <div className="wrapper">
+              <label htmlFor="select-listingblock-template">
+                {intl.formatMessage(messages.countries)}
+              </label>
+            </div>
+          </Grid.Column>
+          <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
+            <Select
+              defaultValue={selectCountry || []}
+              id="select-listingblock-template"
+              name="select-listingblock-template"
+              className="react-select-container"
+              classNamePrefix="react-select"
+              options={eeaGroups}
+              styles={customSelectStyles}
+              theme={selectTheme}
+              components={{ DropdownIndicator, Option }}
+              //value={selectedOption || []}
+              onChange={(field, value) => {
+                setCountry((prevState) =>
+                  field ? { label: field.label, value: field.value } : null,
+                );
+              }}
+            />
+          </Grid.Column>
+        </Grid.Row>
         <Grid.Row stretched>
           <Grid.Column width="4">
             <div className="wrapper">
@@ -59,7 +100,6 @@ const GeolocationWidget = (props) => {
             <Select
               defaultValue={data.geolocation || []}
               isMulti
-              allowCreateWhileLoading={true}
               id="select-listingblock-template"
               name="select-listingblock-template"
               className="react-select-container"
