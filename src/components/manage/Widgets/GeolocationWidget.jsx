@@ -16,18 +16,18 @@ import {
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 
 const messages = defineMessages({
-  Coverage: {
+  coverage: {
     id: 'Geographic coverage',
     defaultMessage: 'Geographic coverage',
   },
 });
 const groupedOptions = [
   {
-    label: 'BioGeographical',
+    label: 'Biogeographical region',
     options: biogeographicalData,
   },
   {
-    label: 'EEA Countries',
+    label: 'Countries group',
     options: eeaCountries,
   },
 ];
@@ -40,7 +40,7 @@ const GeolocationWidget = (props) => {
   React.useEffect(() => {
     onChangeBlock(block, {
       ...data,
-      geographic: selectedOption ? [...selectedOption] : data.geographic,
+      geolocation: selectedOption ? [...selectedOption] : data.geolocation,
     });
   }, [selectedOption]);
 
@@ -51,13 +51,13 @@ const GeolocationWidget = (props) => {
           <Grid.Column width="4">
             <div className="wrapper">
               <label htmlFor="select-listingblock-template">
-                {intl.formatMessage(messages.Coverage)}
+                {intl.formatMessage(messages.coverage)}
               </label>
             </div>
           </Grid.Column>
           <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
             <Select
-              defaultValue={data.geographic || []}
+              defaultValue={data.geolocation || []}
               isMulti
               allowCreateWhileLoading={true}
               id="select-listingblock-template"
