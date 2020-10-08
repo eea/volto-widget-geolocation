@@ -1,1 +1,27 @@
-export const biogeographicalData = {};
+export const biogeographicalData = [
+  { label: 'Alpine', value: 'alpine' },
+  { label: 'Anatolian', value: 'anatolian' },
+  { label: 'Arctic', value: 'arctic' },
+  { label: 'Atlantic', value: 'atlantic' },
+  { label: 'Black sea', value: 'black sea' },
+  { label: 'Boreal', value: 'boreal' },
+  { label: 'Continental', value: 'continental' },
+  { label: 'Macaronesia', value: 'macaronesia' },
+  { label: 'Marine Arctic Ocean', value: 'marine arctic ocean' },
+  { label: 'Marine Baltic sea', value: 'marine baltic sea' },
+  { label: 'Marine Black sea', value: 'marine black sea' },
+  { label: 'Marine Caspian sea', value: 'marine caspian sea' },
+  {
+    label: 'Marine Macaronesia/Atlantic ocean',
+    value: 'Marine Macaronesia/Atlantic ocean',
+  },
+  { label: 'Marine Mediterranean sea', value: 'marine mediterranean sea' },
+  { label: 'Marine North sea', value: 'marine north sea' },
+  {
+    label: 'Marine North-east Atlantc ocean',
+    value: 'Marine North-east Atlantc ocean',
+  },
+  { label: 'Mediterranean', value: 'Mediterranean' },
+  { label: 'Pannonian', value: 'pannonian' },
+  { label: 'Steppic', value: 'steppic' },
+];
