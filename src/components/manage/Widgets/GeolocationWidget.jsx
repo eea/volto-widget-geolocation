@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -43,18 +43,23 @@ const GeolocationWidget = (props) => {
   const [selectedOption, setOption] = useState(null);
   const [selectCountry, setCountry] = useState(null);
 
+  const filterCountries = useCallback(() => {
+    arr = [];
+    arr = eeaCountries.filter((item) =>
+      item.group?.includes(selectCountry.label),
+    );
+    groupedOptions[1].options = arr;
+  }, [selectCountry]);
+
   React.useEffect(() => {
     if (selectCountry) {
-      arr = [];
-      arr = eeaCountries.filter((item) =>
-        item.group?.includes(selectCountry.label),
-      );
-      groupedOptions[1].options = arr;
+      filterCountries();
     }
     onChangeBlock(block, {
       ...data,
       geolocation: selectedOption ? [...selectedOption] : data.geolocation,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOption, selectCountry]);
 
   return (
