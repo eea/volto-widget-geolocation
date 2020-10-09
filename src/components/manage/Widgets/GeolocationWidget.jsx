@@ -39,28 +39,12 @@ const groupedOptions = [
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChangeBlock, intl } = props;
-  const [selectedOption, setOption] = useState(null);
-  const [selectCountry, setCountry] = useState(null);
-
-  const filterCountries = useCallback(() => {
+  const { data, block, onChange, intl, id } = props;
+  const handleChange = (e, value) => {
     arr = [];
-    arr = eeaCountries.filter((item) =>
-      item.group?.includes(selectCountry.label),
-    );
+    arr = eeaCountries.filter((item) => item.group?.includes(e.label));
     groupedOptions[1].options = arr;
-  }, [selectCountry]);
-
-  React.useEffect(() => {
-    if (selectCountry) {
-      filterCountries();
-    }
-    onChangeBlock(block, {
-      ...data,
-      geolocation: selectedOption ? [...selectedOption] : data.geolocation,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedOption, selectCountry]);
+  };
 
   return (
     <FormFieldWrapper {...props} columns={1}>
@@ -75,7 +59,7 @@ const GeolocationWidget = (props) => {
           </Grid.Column>
           <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
             <Select
-              defaultValue={selectCountry || []}
+              defaultValue={[]}
               id="select-listingblock-template"
               name="select-listingblock-template"
               className="react-select-container"
@@ -85,11 +69,7 @@ const GeolocationWidget = (props) => {
               theme={selectTheme}
               components={{ DropdownIndicator, Option }}
               //value={selectedOption || []}
-              onChange={(field, value) => {
-                setCountry((prevState) =>
-                  field ? { label: field.label, value: field.value } : null,
-                );
-              }}
+              onChange={(e, value) => handleChange(e, value)}
             />
           </Grid.Column>
         </Grid.Row>
@@ -114,15 +94,9 @@ const GeolocationWidget = (props) => {
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
               //value={selectedOption || []}
-              onChange={(field, value) => {
-                setOption((prevState) =>
-                  field
-                    ? field.map((it) => {
-                        return { label: it.label, value: it.value };
-                      })
-                    : null,
-                );
-              }}
+              onChange={(field, value) =>
+                onChange(field, value === '' ? undefined : value)
+              }
             />
           </Grid.Column>
         </Grid.Row>
