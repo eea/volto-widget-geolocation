@@ -20,9 +20,9 @@ const messages = defineMessages({
     id: 'Geographic coverage',
     defaultMessage: 'Geographic coverage',
   },
-  countries: {
-    id: 'Select Countries',
-    defaultMessage: 'Select Countries',
+  group: {
+    id: 'Geographic group',
+    defaultMessage: 'Geographic group',
   },
 });
 const Group = (props) => <components.Group {...props} />;
@@ -58,7 +58,7 @@ const GeolocationWidget = (props) => {
           <Grid.Column width="4">
             <div className="wrapper">
               <label htmlFor="select-listingblock-template">
-                {intl.formatMessage(messages.countries)}
+                {intl.formatMessage(messages.group)}
               </label>
             </div>
           </Grid.Column>
