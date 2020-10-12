@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -25,25 +25,30 @@ const messages = defineMessages({
     defaultMessage: 'Select Countries',
   },
 });
-let arr = [];
-const groupedOptions = [
-  {
-    label: 'Biogeographical region',
-    options: biogeographicalData,
-  },
-  {
-    label: 'Countries group',
-    options: arr,
-  },
-];
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
+  const [geoGroup, setGeoGroup] = useState([]);
+
   const handleChange = (e, value) => {
-    arr = [];
-    arr = eeaCountries.filter((item) => item.group?.includes(e.label));
-    groupedOptions[1].options = arr;
+    if (e.label === 'Biogeographical regions') {
+      setGeoGroup((prevState) => {
+        return {
+          label: 'Biogeographical regions',
+          options: biogeographicalData,
+        };
+      });
+    } else {
+      let arr = [];
+      arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+      setGeoGroup((prevState) => {
+        return {
+          label: 'Countries group',
+          options: arr,
+        };
+      });
+    }
   };
 
   return (
@@ -89,7 +94,7 @@ const GeolocationWidget = (props) => {
               name="select-listingblock-template"
               className="react-select-container"
               classNamePrefix="react-select"
-              options={groupedOptions}
+              options={[geoGroup]}
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
