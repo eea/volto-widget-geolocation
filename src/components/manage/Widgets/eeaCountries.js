@@ -341,4 +341,5 @@ export const eeaGroups = [
   { label: 'EU27', value: 'EU27' },
   { label: 'EU28', value: 'EU28' },
   { label: 'Pan-Europe', value: 'pan-europe' },
+  { label: 'Biogeographical regions', value: 'biogeographical regions' },
 ];
