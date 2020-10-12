@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Form } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import CreatableSelect from 'react-select/creatable';
+
 import { FormFieldWrapper } from '@plone/volto/components';
+
+import Select, { components } from 'react-select';
+import { biogeographicalData } from './biogeographical';
+import { eeaCountries, eeaGroups } from './eeaCountries';
 import {
   Option,
   DropdownIndicator,
@@ -12,62 +16,93 @@ import {
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 
 const messages = defineMessages({
-  Coverage: {
-    id: 'Geometric coverage',
-    defaultMessage: 'Geometric coverage',
+  coverage: {
+    id: 'Geographic coverage',
+    defaultMessage: 'Geographic coverage',
+  },
+  countries: {
+    id: 'Select Countries',
+    defaultMessage: 'Select Countries',
   },
 });
+let arr = [];
+const groupedOptions = [
+  {
+    label: 'Biogeographical region',
+    options: biogeographicalData,
+  },
+  {
+    label: 'Countries group',
+    options: arr,
+  },
+];
+const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChangeBlock, intl } = props;
-  const [selectedOption, setOption] = useState(null);
-  React.useEffect(() => {
-    onChangeBlock(block, {
-      ...data,
-      geographic: selectedOption
-        ? [...data.geographic, selectedOption]
-        : data.geographic,
-    });
-  }, [selectedOption]);
+  const { data, block, onChange, intl, id } = props;
+  const handleChange = (e, value) => {
+    arr = [];
+    arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+    groupedOptions[1].options = arr;
+  };
 
-  if (data.geographic) {
-    return (
-      <FormFieldWrapper {...props} columns={1}>
-        <Grid>
-          <Grid.Row stretched>
-            <Grid.Column width="4">
-              <div className="wrapper">
-                <label htmlFor="select-listingblock-template">
-                  {intl.formatMessage(messages.Coverage)}
-                </label>
-              </div>
-            </Grid.Column>
-            <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
-              <CreatableSelect
-                allowCreateWhileLoading={true}
-                id="select-listingblock-template"
-                name="select-listingblock-template"
-                className="react-select-container"
-                classNamePrefix="react-select"
-                options={data && data.geographic}
-                styles={customSelectStyles}
-                theme={selectTheme}
-                components={{ DropdownIndicator, Option }}
-                value={selectedOption || []}
-                onCreateOption={(field, value) => {
-                  setOption((prevState) =>
-                    field ? { label: field, value: field } : null,
-                  );
-                }}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </FormFieldWrapper>
-    );
-  }
-
-  return <></>;
+  return (
+    <FormFieldWrapper {...props} columns={1}>
+      <Grid>
+        <Grid.Row stretched>
+          <Grid.Column width="4">
+            <div className="wrapper">
+              <label htmlFor="select-listingblock-template">
+                {intl.formatMessage(messages.countries)}
+              </label>
+            </div>
+          </Grid.Column>
+          <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
+            <Select
+              defaultValue={[]}
+              id="select-listingblock-template"
+              name="select-listingblock-template"
+              className="react-select-container"
+              classNamePrefix="react-select"
+              options={eeaGroups}
+              styles={customSelectStyles}
+              theme={selectTheme}
+              components={{ DropdownIndicator, Option }}
+              //value={selectedOption || []}
+              onChange={(e, value) => handleChange(e, value)}
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row stretched>
+          <Grid.Column width="4">
+            <div className="wrapper">
+              <label htmlFor="select-listingblock-template">
+                {intl.formatMessage(messages.coverage)}
+              </label>
+            </div>
+          </Grid.Column>
+          <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
+            <Select
+              defaultValue={data.geolocation || []}
+              isMulti
+              id="select-listingblock-template"
+              name="select-listingblock-template"
+              className="react-select-container"
+              classNamePrefix="react-select"
+              options={groupedOptions}
+              styles={customSelectStyles}
+              theme={selectTheme}
+              components={{ DropdownIndicator, Option, Group }}
+              //value={selectedOption || []}
+              onChange={(field, value) =>
+                onChange(field, value === '' ? undefined : value)
+              }
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </FormFieldWrapper>
+  );
 };
 
 GeolocationWidget.propTypes = {
