@@ -35,7 +35,7 @@ const GeolocationWidget = (props) => {
       setGeoGroup((prevState) => {
         return {
           label: 'Biogeographical regions',
-          options: [...biogeographicalData, ...prevState.options],
+          options: [...biogeographicalData, ...(prevState.options || [])],
         };
       });
     } else {
