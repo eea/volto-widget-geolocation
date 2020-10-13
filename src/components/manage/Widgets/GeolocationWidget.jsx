@@ -32,12 +32,12 @@ const GeolocationWidget = (props) => {
 
   const handleChange = (e, value) => {
     if (e.label === 'Biogeographical regions') {
-      setGeoGroup((prevState) => [
-        {
+      setGeoGroup((prevState) => {
+        return {
           label: 'Biogeographical regions',
-          options: biogeographicalData,
-        },
-      ]);
+          options: [...biogeographicalData, ...prevState.options],
+        };
+      });
     } else {
       let arr = [];
       arr = eeaCountries.filter((item) => item.group?.includes(e.label));
