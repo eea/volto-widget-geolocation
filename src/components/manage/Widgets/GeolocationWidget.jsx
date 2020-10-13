@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper } from '@plone/volto/components';
+import { unionBy } from 'lodash';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
@@ -36,18 +37,20 @@ const GeolocationWidget = (props) => {
       options: biogeographicalData,
     },
   ];
+
+  const getOptions = (arr, state) => {
+    return unionBy(arr, [...(state.options || state)], 'label');
+  };
+
   const handleChange = (e, value) => {
-    if (e.label === 'Biogeographical regions') {
-    } else {
-      let arr = [];
-      arr = eeaCountries.filter((item) => item.group?.includes(e.label));
-      setGeoGroup((prevState) => {
-        return {
-          label: 'Countries group',
-          options: [...arr, ...(prevState.options || prevState)],
-        };
-      });
-    }
+    let arr = [];
+    arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+    setGeoGroup((prevState) => {
+      return {
+        label: 'Countries group',
+        options: getOptions(arr, prevState),
+      };
+    });
   };
 
   return (
