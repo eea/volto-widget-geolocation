@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-
 import { FormFieldWrapper } from '@plone/volto/components';
 
 import Select, { components } from 'react-select';
@@ -31,21 +30,21 @@ const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
   const [geoGroup, setGeoGroup] = useState([]);
 
+  let options = [
+    {
+      label: 'Biogeographical regions',
+      options: biogeographicalData,
+    },
+  ];
   const handleChange = (e, value) => {
     if (e.label === 'Biogeographical regions') {
-      setGeoGroup((prevState) => {
-        return {
-          label: 'Biogeographical regions',
-          options: biogeographicalData,
-        };
-      });
     } else {
       let arr = [];
       arr = eeaCountries.filter((item) => item.group?.includes(e.label));
       setGeoGroup((prevState) => {
         return {
           label: 'Countries group',
-          options: arr,
+          options: [...arr, ...(prevState.options || prevState)],
         };
       });
     }
@@ -88,20 +87,20 @@ const GeolocationWidget = (props) => {
           </Grid.Column>
           <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
             <Select
-              defaultValue={data.geolocation || []}
               isMulti
               id="select-listingblock-template"
               name="select-listingblock-template"
               className="react-select-container"
               classNamePrefix="react-select"
-              options={[geoGroup]}
+              options={options}
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
-              //value={selectedOption || []}
-              onChange={(field, value) =>
-                onChange(field, value === '' ? undefined : value)
-              }
+              value={geoGroup.options || [...geoGroup] || []}
+              onChange={(field, value) => {
+                setGeoGroup(() => field);
+                onChange(field, value === '' ? undefined : value);
+              }}
             />
           </Grid.Column>
         </Grid.Row>
