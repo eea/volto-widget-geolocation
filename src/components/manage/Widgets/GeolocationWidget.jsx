@@ -30,21 +30,21 @@ const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
   const [geoGroup, setGeoGroup] = useState([]);
 
+  let options = [
+    {
+      label: 'Biogeographical regions',
+      options: biogeographicalData,
+    },
+  ];
   const handleChange = (e, value) => {
     if (e.label === 'Biogeographical regions') {
-      setGeoGroup((prevState) => {
-        return {
-          label: 'Biogeographical regions',
-          options: [...biogeographicalData, ...(prevState.options || [])],
-        };
-      });
     } else {
       let arr = [];
       arr = eeaCountries.filter((item) => item.group?.includes(e.label));
       setGeoGroup((prevState) => {
         return {
           label: 'Countries group',
-          options: arr,
+          options: [...arr, ...(prevState.options || prevState)],
         };
       });
     }
@@ -92,7 +92,7 @@ const GeolocationWidget = (props) => {
               name="select-listingblock-template"
               className="react-select-container"
               classNamePrefix="react-select"
-              options={[geoGroup]}
+              options={options}
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
