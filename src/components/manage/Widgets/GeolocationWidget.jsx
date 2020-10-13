@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { CheckboxWidget } from '@plone/volto/components';
 import { FormFieldWrapper } from '@plone/volto/components';
 
 import Select, { components } from 'react-select';
@@ -30,17 +29,15 @@ const Group = (props) => <components.Group {...props} />;
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
   const [geoGroup, setGeoGroup] = useState([]);
-  const [isChecked, checked] = useState(false);
 
   const handleChange = (e, value) => {
-    checked(() => false);
     if (e.label === 'Biogeographical regions') {
-      setGeoGroup((prevState) => {
-        return {
+      setGeoGroup((prevState) => [
+        {
           label: 'Biogeographical regions',
           options: biogeographicalData,
-        };
-      });
+        },
+      ]);
     } else {
       let arr = [];
       arr = eeaCountries.filter((item) => item.group?.includes(e.label));
@@ -79,12 +76,6 @@ const GeolocationWidget = (props) => {
               onChange={(e, value) => handleChange(e, value)}
             />
           </Grid.Column>
-          <CheckboxWidget
-            id="geolocationAllCountry"
-            title={'Select All Countries'}
-            value={isChecked}
-            onChange={(name, value) => checked((prev) => !prev)}
-          />
         </Grid.Row>
         <Grid.Row stretched>
           <Grid.Column width="4">
@@ -105,7 +96,7 @@ const GeolocationWidget = (props) => {
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
-              value={isChecked ? geoGroup.options || [...geoGroup] : []}
+              value={geoGroup.options || [...geoGroup] || []}
               onChange={(field, value) => {
                 setGeoGroup(() => field);
                 onChange(field, value === '' ? undefined : value);
