@@ -29,7 +29,7 @@ const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
-  const [geoGroup, setGeoGroup] = useState([]);
+  const [geoGroup, setGeoGroup] = useState(null);
 
   let options = [
     {
