@@ -42,7 +42,7 @@ const GeolocationWidget = (props) => {
   ];
 
   const getOptions = (arr, state) => {
-    return state ? unionBy(arr, [...(state?.options || state)], 'label') : arr;
+    return state ? unionBy(arr, state, 'label') : arr;
   };
 
   const handleChange = (e, value) => {
