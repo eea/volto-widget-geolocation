@@ -29,7 +29,6 @@ const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
-  const [geoGroup, setGeoGroup] = useState(null);
 
   let options = [
     {
@@ -49,12 +48,7 @@ const GeolocationWidget = (props) => {
   const handleChange = (e, value) => {
     let arr = [];
     arr = eeaCountries.filter((item) => item.group?.includes(e.label));
-    setGeoGroup((prevState) => {
-      return {
-        label: 'Countries group',
-        options: getOptions(arr, prevState),
-      };
-    });
+    onChange(getOptions(data.geolocation, arr));
   };
 
   return (
@@ -103,11 +97,8 @@ const GeolocationWidget = (props) => {
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
-              value={
-                geoGroup ? geoGroup.options || [...geoGroup] : data.geolocation
-              }
+              value={data.geolocation}
               onChange={(field, value) => {
-                setGeoGroup(() => field);
                 onChange(field, value === '' ? undefined : value);
               }}
             />
