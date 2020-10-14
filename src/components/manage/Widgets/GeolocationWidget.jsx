@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper } from '@plone/volto/components';
+import { unionBy } from 'lodash';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
@@ -28,26 +29,26 @@ const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id } = props;
-  const [geoGroup, setGeoGroup] = useState([]);
 
   let options = [
     {
       label: 'Biogeographical regions',
       options: biogeographicalData,
     },
+    {
+      label: 'Countries groups',
+      options: eeaCountries,
+    },
   ];
+
+  const getOptions = (arr, state) => {
+    return state ? unionBy(arr, state, 'label') : arr;
+  };
+
   const handleChange = (e, value) => {
-    if (e.label === 'Biogeographical regions') {
-    } else {
-      let arr = [];
-      arr = eeaCountries.filter((item) => item.group?.includes(e.label));
-      setGeoGroup((prevState) => {
-        return {
-          label: 'Countries group',
-          options: [...arr, ...(prevState.options || prevState)],
-        };
-      });
-    }
+    let arr = [];
+    arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+    onChange(getOptions(data.geolocation, arr));
   };
 
   return (
@@ -96,9 +97,8 @@ const GeolocationWidget = (props) => {
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
-              value={geoGroup.options || [...geoGroup] || []}
+              value={data.geolocation}
               onChange={(field, value) => {
-                setGeoGroup(() => field);
                 onChange(field, value === '' ? undefined : value);
               }}
             />
