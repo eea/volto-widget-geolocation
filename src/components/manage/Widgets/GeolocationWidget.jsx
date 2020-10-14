@@ -36,10 +36,14 @@ const GeolocationWidget = (props) => {
       label: 'Biogeographical regions',
       options: biogeographicalData,
     },
+    {
+      label: 'Countries groups',
+      options: eeaCountries,
+    },
   ];
 
   const getOptions = (arr, state) => {
-    return unionBy(arr, [...(state.options || state)], 'label');
+    return state ? unionBy(arr, [...(state?.options || state)], 'label') : arr;
   };
 
   const handleChange = (e, value) => {
@@ -99,7 +103,9 @@ const GeolocationWidget = (props) => {
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
-              value={geoGroup.options || [...geoGroup] || []}
+              value={
+                geoGroup ? geoGroup.options || [...geoGroup] : data.geolocation
+              }
               onChange={(field, value) => {
                 setGeoGroup(() => field);
                 onChange(field, value === '' ? undefined : value);
