@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { FormFieldWrapper } from '@plone/volto/components';
+import { FormFieldWrapper, CheckboxWidget } from '@plone/volto/components';
 import { unionBy } from 'lodash';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
+import SearchGeoName from './SearchGeoName';
 import { eeaCountries, eeaGroups } from './eeaCountries';
 import {
   Option,
@@ -24,11 +25,15 @@ const messages = defineMessages({
     id: 'Geographic group',
     defaultMessage: 'Geographic group',
   },
+  search: {
+    id: 'Advance Search',
+    defaultMessage: 'Advance Search',
+  },
 });
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChange, intl, id } = props;
+  const { data, block, onChange, intl, id, onToggle } = props;
 
   let options = [
     {
@@ -103,6 +108,17 @@ const GeolocationWidget = (props) => {
               }}
             />
           </Grid.Column>
+        </Grid.Row>
+        <Grid.Row stretched>
+          <CheckboxWidget
+            id="AdvanceSearch"
+            title={intl.formatMessage(messages.search)}
+            value={data.openGeoSearch ? data.openGeoSearch : false}
+            onChange={(name, value) => {
+              onToggle(value);
+            }}
+          />
+          {data.openGeoSearch && <SearchGeoName />}
         </Grid.Row>
       </Grid>
     </FormFieldWrapper>
