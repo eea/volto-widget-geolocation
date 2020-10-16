@@ -1,27 +1,31 @@
+import { eeaCountries } from './eeaCountries';
+
 export const GeoSearchSchema = {
   title: 'GeoGraphical Search',
   fieldsets: [
     {
       id: 'default',
       title: 'Default',
-      fields: ['id', 'widget'],
+      fields: ['search', 'countries', 'featureClass'],
     },
   ],
   properties: {
-    id: {
+    search: {
       title: 'Search',
       description: 'Search for geo Tags',
-      factory: 'Choice',
+      factory: 'Search',
       type: 'string',
-      choices: [
-        ['title', 'Title'],
-        ['description', 'Description'],
-      ],
     },
-    widget: {
-      title: 'Display',
-      type: 'string',
+    countries: {
+      description: 'Select countries',
+      title: 'Countries',
+      choices: eeaCountries.map((item) => [item.label, item.value]),
+    },
+    featureClass: {
+      description: 'Select feature regions for eg: lakes,parks etc',
+      title: 'Feature class',
+      choices: [],
     },
   },
-  required: ['id'],
+  required: ['countries'],
 };

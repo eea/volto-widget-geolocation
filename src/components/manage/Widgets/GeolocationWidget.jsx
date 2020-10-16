@@ -120,7 +120,7 @@ const GeolocationWidget = (props) => {
             }}
           />
           <SidebarPopup open={data.openGeoSearch}>
-            <SearchGeoName data={data} onToggle={onToggle} />
+            <SearchGeoName data={data} onToggle={onToggle} block={block} />
           </SidebarPopup>
         </Grid.Row>
       </Grid>

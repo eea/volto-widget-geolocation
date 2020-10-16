@@ -7,13 +7,15 @@ import checkSVG from '@plone/volto/icons/check.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 
 export default (props) => {
-  const { data, onToggle, onChangeValues } = props;
+  const { data, onToggle, onChangeValues, block } = props;
 
   const [formData, setFormData] = React.useState({});
 
   return (
     <InlineForm
+      footer={<p>{''}</p>}
       schema={schema}
+      block={block}
       title={schema.title}
       icon={<VoltoIcon size="24px" name={briefcaseSVG} />}
       onChangeField={(id, value) => {
