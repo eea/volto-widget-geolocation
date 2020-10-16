@@ -6,7 +6,7 @@ import briefcaseSVG from '@plone/volto/icons/briefcase.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 
 export default (props) => {
-  const { data, onToggle, onChangeValues, block } = props;
+  const { data, onToggle, onChangeValues, block, closePopup } = props;
 
   const [formData, setFormData] = React.useState({});
 
@@ -31,7 +31,7 @@ export default (props) => {
         <>
           <button
             onClick={() => {
-              onToggle(!data.openGeoSearch);
+              closePopup(false);
             }}
           >
             <VoltoIcon size="24px" name={clearSVG} />

@@ -35,6 +35,7 @@ const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, id, onToggle } = props;
+  const [isOpenPopup, setPopup] = useState(false);
 
   let options = [
     {
@@ -114,13 +115,13 @@ const GeolocationWidget = (props) => {
           <CheckboxWidget
             id="AdvanceSearch"
             title={intl.formatMessage(messages.search)}
-            value={data.openGeoSearch ? data.openGeoSearch : false}
+            value={isOpenPopup ? isOpenPopup : false}
             onChange={(name, value) => {
-              onToggle(value);
+              setPopup(value);
             }}
           />
-          <SidebarPopup open={data.openGeoSearch}>
-            <SearchGeoName data={data} onToggle={onToggle} block={block} />
+          <SidebarPopup open={isOpenPopup}>
+            <SearchGeoName data={data} closePopup={setPopup} block={block} />
           </SidebarPopup>
         </Grid.Row>
       </Grid>
