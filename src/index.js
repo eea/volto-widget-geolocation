@@ -1,9 +1,16 @@
+import Geonames from 'geonames.js';
 import {
   GeolocationWidget,
   biogeographicalData,
   eeaCountries,
   SearchWidget,
 } from './components';
+
+export const geonames = new Geonames({
+  username: 'nileshgulia',
+  lan: 'en',
+  encoding: 'JSON',
+});
 
 const applyConfig = (config) => {
   config.widgets.widget = {

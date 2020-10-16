@@ -2,7 +2,7 @@ import React from 'react';
 import InlineForm from 'volto-slate/futurevolto/InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
 import { GeoSearchSchema as schema } from './schema';
-import briefcaseSVG from '@plone/volto/icons/briefcase.svg';
+import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 
 export default (props) => {
@@ -16,7 +16,7 @@ export default (props) => {
       schema={schema}
       block={block}
       title={schema.title}
-      icon={<VoltoIcon size="24px" name={briefcaseSVG} />}
+      icon={<VoltoIcon size="24px" name={worldSVG} />}
       onChangeField={(id, value) => {
         if (!onChangeValues) {
           return setFormData({

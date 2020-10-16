@@ -47,7 +47,10 @@ const SearchWidget = (props) => {
             placeholder={props.intl.formatMessage(messages.searchSite)}
             title={props.intl.formatMessage(messages.search)}
           />
-          <button aria-label={props.intl.formatMessage(messages.search)}>
+          <button
+            aria-label={props.intl.formatMessage(messages.search)}
+            style={{ verticalAlign: 'middle' }}
+          >
             <Icon name={zoomSVG} size="24px" />
           </button>
         </div>
