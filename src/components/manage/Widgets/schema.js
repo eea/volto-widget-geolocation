@@ -14,7 +14,7 @@ export const GeoSearchSchema = {
       title: 'Search',
       description: 'Search for geo Tags',
       factory: 'Search',
-      type: 'string',
+      widget: 'search',
     },
     countries: {
       description: 'Select countries',

@@ -1,5 +1,9 @@
-import { GeolocationWidget } from './components';
-import { biogeographicalData, eeaCountries } from './components';
+import {
+  GeolocationWidget,
+  biogeographicalData,
+  eeaCountries,
+  SearchWidget,
+} from './components';
 
 const applyConfig = (config) => {
   config.widgets.widget = {
@@ -8,6 +12,7 @@ const applyConfig = (config) => {
       widget: GeolocationWidget,
       vocabulary: { biogeographical: biogeographicalData, eea: eeaCountries },
     },
+    search: SearchWidget,
   };
   return config;
 };

@@ -3,7 +3,6 @@ import InlineForm from 'volto-slate/futurevolto/InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
 import { GeoSearchSchema as schema } from './schema';
 import briefcaseSVG from '@plone/volto/icons/briefcase.svg';
-import checkSVG from '@plone/volto/icons/check.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 
 export default (props) => {
@@ -30,9 +29,6 @@ export default (props) => {
       formData={formData}
       headerActions={
         <>
-          <button onClick={() => {}}>
-            <VoltoIcon size="24px" name={checkSVG} />
-          </button>
           <button
             onClick={() => {
               onToggle(!data.openGeoSearch);
