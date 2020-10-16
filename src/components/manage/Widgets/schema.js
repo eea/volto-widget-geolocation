@@ -1,5 +1,5 @@
 export const GeoSearchSchema = {
-  title: 'Metadata entry',
+  title: 'GeoGraphical Search',
   fieldsets: [
     {
       id: 'default',
@@ -9,8 +9,8 @@ export const GeoSearchSchema = {
   ],
   properties: {
     id: {
-      title: 'Metadata',
-      description: 'Select metadata to be used',
+      title: 'Search',
+      description: 'Search for geo Tags',
       factory: 'Choice',
       type: 'string',
       choices: [

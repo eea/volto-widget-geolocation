@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper, CheckboxWidget } from '@plone/volto/components';
 import { unionBy } from 'lodash';
+import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
@@ -118,7 +119,9 @@ const GeolocationWidget = (props) => {
               onToggle(value);
             }}
           />
-          {data.openGeoSearch && <SearchGeoName />}
+          <SidebarPopup open={data.openGeoSearch}>
+            <SearchGeoName data={data} onToggle={onToggle} />
+          </SidebarPopup>
         </Grid.Row>
       </Grid>
     </FormFieldWrapper>
@@ -128,7 +131,7 @@ const GeolocationWidget = (props) => {
 GeolocationWidget.propTypes = {
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   block: PropTypes.string.isRequired,
-  onChangeBlock: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default injectIntl(GeolocationWidget);
