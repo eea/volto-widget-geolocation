@@ -6,9 +6,12 @@
 import React, { useState } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { compose } from 'redux';
+
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper } from '@plone/volto/components';
 import { Icon } from '@plone/volto/components';
+import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 import zoomSVG from '@plone/volto/icons/zoom.svg';
 
 const messages = defineMessages({
@@ -29,8 +32,15 @@ const messages = defineMessages({
  */
 const SearchWidget = (props) => {
   const [text, setText] = useState('');
-  const onSubmit = (event) => {
+  const dispatch = useDispatch();
+  const onSubmit = async (event) => {
     event.preventDefault();
+    let url = `https://secure.geonames.org/searchJSON?q=${text}&maxRows=10&username=nileshgulia`;
+    await dispatch(
+      getProxiedExternalContent(url, {
+        headers: { Accept: 'application/json' },
+      }),
+    );
   };
 
   return (

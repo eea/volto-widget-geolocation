@@ -21,6 +21,10 @@ const applyConfig = (config) => {
     },
     search: SearchWidget,
   };
+  config.settings.allowed_cors_destinations = [
+    ...(config.settings.allowed_cors_destinations || []),
+    'secure.geonames.org',
+  ];
   return config;
 };
 

@@ -1,1 +1,0 @@
-export const GET_CONTINENTS = 'GET_CONTINENTS';

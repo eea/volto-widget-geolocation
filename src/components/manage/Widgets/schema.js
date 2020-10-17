@@ -6,7 +6,7 @@ export const GeoSearchSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['search', 'countries', 'featureClass'],
+      fields: ['search', 'countries', 'featureClass', 'continents'],
     },
   ],
   properties: {
@@ -26,6 +26,11 @@ export const GeoSearchSchema = {
       title: 'Feature class',
       choices: [],
     },
+    continents: {
+      description: 'Select continents',
+      title: 'Continents',
+      choices: [],
+    },
   },
-  required: ['countries'],
+  required: [],
 };
