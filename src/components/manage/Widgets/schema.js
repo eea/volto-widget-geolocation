@@ -29,7 +29,15 @@ export const GeoSearchSchema = {
     continents: {
       description: 'Select continents',
       title: 'Continents',
-      choices: [],
+      choices: [
+        ['all', 'all'],
+        ['Europe', 'Europe'],
+        ['Africa', 'Africa'],
+        ['Asia', 'Asia'],
+        ['Oceania', 'Oceania'],
+        ['North America', 'North America'],
+        ['South America', 'South America'],
+      ],
     },
   },
   required: [],

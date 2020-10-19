@@ -14,15 +14,8 @@ export default (props) => {
   const dispatch = useDispatch();
   const subrequest = useSelector((state) => state.content.subrequests);
   const [formData, setFormData] = React.useState({});
-  const url =
-    'https://secure.geonames.org/searchJSON?username=nileshgulia&q=CONT';
-  React.useEffect(() => {
-    dispatch(
-      getProxiedExternalContent(url, {
-        headers: { Accept: 'application/json' },
-      }),
-    ).then((e) => updateSchema());
-  }, [dispatch]);
+  // const url =
+  //   'https://secure.geonames.org/searchJSON?username=nileshgulia&q=CONT';
 
   const updateSchema = React.useCallback(() => {
     setEditSchema({
@@ -40,53 +33,51 @@ export default (props) => {
     });
   }, [editSchema, subrequest]);
   return (
-    <div>
-      <InlineForm
-        footer={
-          Object.keys(subrequest).length > 2 && (
-            <Segment>
-              <Header>Filter results</Header>
-              <List relaxed>
-                {subrequest[Object.keys(subrequest).pop()]?.data?.geonames?.map(
-                  (item) => (
-                    <List.Item>
-                      <List.Content>
-                        <List.Header>{item.toponymName}</List.Header>
-                        <List.Description>{item.fclName}</List.Description>
-                      </List.Content>
-                    </List.Item>
-                  ),
-                )}
-              </List>
-            </Segment>
-          )
+    <InlineForm
+      schema={editSchema}
+      block={block}
+      title={editSchema.title}
+      icon={<VoltoIcon size="24px" name={worldSVG} />}
+      onChangeField={(id, value) => {
+        if (!onChangeValues) {
+          return setFormData({
+            ...formData,
+            [id]: value,
+          });
         }
-        schema={editSchema}
-        block={block}
-        title={editSchema.title}
-        icon={<VoltoIcon size="24px" name={worldSVG} />}
-        onChangeField={(id, value) => {
-          if (!onChangeValues) {
-            return setFormData({
-              ...formData,
-              [id]: value,
-            });
-          }
-          return onChangeValues(id, value, formData, setFormData);
-        }}
-        formData={formData}
-        headerActions={
-          <>
-            <button
-              onClick={() => {
-                closePopup(false);
-              }}
-            >
-              <VoltoIcon size="24px" name={clearSVG} />
-            </button>
-          </>
-        }
-      />
-    </div>
+        return onChangeValues(id, value, formData, setFormData);
+      }}
+      formData={formData}
+      headerActions={
+        <>
+          <button
+            onClick={() => {
+              closePopup(false);
+            }}
+          >
+            <VoltoIcon size="24px" name={clearSVG} />
+          </button>
+        </>
+      }
+      footer={
+        Object.keys(subrequest).length > 1 && (
+          <Segment>
+            <Header>Filter results</Header>
+            <List relaxed>
+              {subrequest[Object.keys(subrequest).pop()]?.data?.geonames?.map(
+                (item) => (
+                  <List.Item>
+                    <List.Content>
+                      <List.Header>{item.toponymName}</List.Header>
+                      <List.Description>{item.fclName}</List.Description>
+                    </List.Content>
+                  </List.Item>
+                ),
+              )}
+            </List>
+          </Segment>
+        )
+      }
+    />
   );
 };
