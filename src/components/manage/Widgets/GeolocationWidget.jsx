@@ -121,7 +121,12 @@ const GeolocationWidget = (props) => {
             }}
           />
           <SidebarPopup open={isOpenPopup}>
-            <SearchGeoName data={data} closePopup={setPopup} block={block} />
+            <SearchGeoName
+              data={data}
+              closePopup={setPopup}
+              block={block}
+              onChange={onChange}
+            />
           </SidebarPopup>
         </Grid.Row>
       </Grid>
