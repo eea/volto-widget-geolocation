@@ -1,11 +1,13 @@
 import React from 'react';
-import InlineForm from 'volto-slate/futurevolto/InlineForm';
+import InlineForm from './InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
 import { List, Segment, Header } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { GeoSearchSchema as schema } from './schema';
+import ListResults from './ListResults';
 import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
+import checkSVG from '@plone/volto/icons/check.svg';
 
 export default (props) => {
   const { data, block, closePopup, onChange } = props;
@@ -14,6 +16,7 @@ export default (props) => {
     state.content.data,
     state.content.subrequests,
   ]);
+  const loading = subrequest[Object.keys(subrequest).pop()]?.loading;
   const results = subrequest[Object.keys(subrequest).pop()]?.data?.geonames;
   const [formData, setFormData] = React.useState(content.blocks[block]);
   // const url =
@@ -72,6 +75,9 @@ export default (props) => {
       formData={formData}
       headerActions={
         <>
+          <button onClick={() => {}}>
+            <VoltoIcon size="24px" name={checkSVG} />
+          </button>
           <button
             onClick={() => {
               closePopup(false);
@@ -83,25 +89,11 @@ export default (props) => {
       }
       footer={
         Object.keys(subrequest).length > 1 && (
-          <Segment>
-            <Header>Filter results</Header>
-            <List relaxed>
-              {results?.map((item, index) => (
-                <List.Item
-                  onClick={(e, value) => {
-                    results.splice(index, 1);
-                    onChange(e.target.innerText);
-                  }}
-                  key={index}
-                >
-                  <List.Content as="a">
-                    <List.Header>{item.toponymName}</List.Header>
-                    <List.Description>{item.fclName}</List.Description>
-                  </List.Content>
-                </List.Item>
-              ))}
-            </List>
-          </Segment>
+          <ListResults
+            results={results}
+            onChange={onChange}
+            loading={loading}
+          />
         )
       }
     />
