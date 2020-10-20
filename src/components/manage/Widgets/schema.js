@@ -24,7 +24,18 @@ export const GeoSearchSchema = {
     featureClass: {
       description: 'Select feature regions for eg: lakes,parks etc',
       title: 'Feature class',
-      choices: [],
+      choices: [
+        ['all', 'all'],
+        ['country,state,region...', 'country,state,region...'],
+        ['stream,lake...', 'stream,lake...'],
+        ['parks,area...', 'parks,area...'],
+        ['city,village...', 'city,village...'],
+        ['road,railroad', 'road,railroad'],
+        ['spot,building,farm', 'spot,building,farm'],
+        ['mountain,hill,rock...', 'mountain,hill,rock...'],
+        ['undersea', 'undersea'],
+        ['forest,health...', 'forest,health...'],
+      ],
     },
     continents: {
       description: 'Select continents',

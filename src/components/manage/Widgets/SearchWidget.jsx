@@ -60,6 +60,7 @@ const SearchWidget = (props) => {
           <button
             aria-label={props.intl.formatMessage(messages.search)}
             style={{ verticalAlign: 'middle' }}
+            onClick={onSubmit}
           >
             <Icon name={zoomSVG} size="24px" />
           </button>
