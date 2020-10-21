@@ -3,7 +3,9 @@ import {
   List,
   Segment,
   Header,
+  Menu,
   Dimmer,
+  Grid,
   Loader,
   Accordion,
   Label,
@@ -11,6 +13,11 @@ import {
   Card,
   Button,
 } from 'semantic-ui-react';
+import { Icon } from '@plone/volto/components';
+import rightSVG from '@plone/volto/icons/right-key.svg';
+import downSVG from '@plone/volto/icons/down-key.svg';
+import addSVG from '@plone/volto/icons/circle-plus.svg';
+
 const ListResults = ({ results, onChange, loading }) => {
   const [activeAccIndex, setActiveAccIndex] = React.useState(0);
 
@@ -28,52 +35,64 @@ const ListResults = ({ results, onChange, loading }) => {
           <Loader inverted>Loading</Loader>
         </Dimmer>
       )}
-      <ul>
+      {/* onClick={(e, value) => {
+                  results.splice(index, 1);
+                  onChange(e.target.innerText);
+                }} */}
+      <Accordion fluid styled exclusive={false}>
         {results?.map((item, index) => (
-          <li key={`result-${item.label}-${index}`}>
-            <div className="li-item">
-              <Image avatar src={''} />
-              {item.label ? <Label horizontal>hello</Label> : null}
-
-              <button className="list-button-md">
-                {item.citationTitle || null}
-              </button>
-            </div>
-            {activeAccIndex === index ? (
-              <Card fluid>
-                <Card.Content>
-                  <Card.Description>
-                    Hello
-                    <Button
-                      circular
-                      color="twitter"
-                      size="mini"
-                      floated="right"
-                    >
-                      preview
+          <Accordion.Accordion style={{ borderBottom: '1px solid #c7cdd8' }}>
+            <Accordion.Title
+              active={activeAccIndex === 0}
+              index={index}
+              onClick={handleAccClick}
+              style={{
+                background: 'none',
+                display: 'flex',
+              }}
+            >
+              {item.toponymName}
+              <div>
+                <Button
+                  basic
+                  primary
+                  floated="left"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Icon name={addSVG} size="24px" color="#007eb1" />
+                </Button>
+                {activeAccIndex === index ? (
+                  <Icon name={downSVG} size="24px" />
+                ) : (
+                  <Icon name={rightSVG} size="24px" />
+                )}
+              </div>
+            </Accordion.Title>
+            <Accordion.Content active={activeAccIndex === index}>
+              <Grid columns={2}>
+                <Grid.Row>
+                  <Grid.Column>
+                    <p>
+                      <b>Feature set:</b> {item.fclName}
+                    </p>
+                    <p>
+                      <b>Country:</b> {item.countryName}
+                    </p>
+                    <p>
+                      <b>GeonameID:</b> {item.geonameId}
+                    </p>
+                  </Grid.Column>
+                  <Grid.Column verticalAlign="middle">
+                    <Button color="twitter" size="small" compact={true}>
+                      Preview
                     </Button>
-                  </Card.Description>
-                  <Card.Meta>
-                    <span className="result-type-orange">publication</span>
-                    <span className="result-type"> . </span>
-                    <span className="result-type">hello</span>
-                  </Card.Meta>
-                  <Card.Meta>
-                    <span>hello</span>
-                  </Card.Meta>
-                  <Card.Description>
-                    <a target="_blank" rel="noreferrer">
-                      DOI:
-                    </a>
-                  </Card.Description>
-                  <Card.Description>ISBN: </Card.Description>
-                  <Card.Description>Publisher:</Card.Description>
-                </Card.Content>
-              </Card>
-            ) : null}
-          </li>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Accordion.Content>
+          </Accordion.Accordion>
         ))}
-      </ul>
+      </Accordion>
     </Segment>
   );
 };
