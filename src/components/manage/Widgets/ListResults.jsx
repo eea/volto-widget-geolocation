@@ -30,10 +30,6 @@ const ListResults = ({ results, onChange, loading }) => {
           <Loader inverted>Loading</Loader>
         </Dimmer>
       )}
-      {/* onClick={(e, value) => {
-                  results.splice(index, 1);
-                  onChange(e.target.innerText);
-                }} */}
       <Accordion fluid styled exclusive={false}>
         {results?.map((item, index) => (
           <Accordion.Accordion style={{ borderBottom: '1px solid #c7cdd8' }}>
@@ -54,8 +50,8 @@ const ListResults = ({ results, onChange, loading }) => {
                   floated="left"
                   onClick={(e, value) => {
                     e.stopPropagation();
-                    results.splice(index, 1);
-                    onChange(item.toponymName);
+                    //results.splice(index, 1); do not remove result onClick
+                    onChange(item);
                   }}
                 >
                   <Icon name={addSVG} size="24px" color="#007eb1" />

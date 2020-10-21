@@ -60,6 +60,7 @@ export default (props) => {
   return (
     <InlineForm
       data={data}
+      onChange={onChange}
       schema={editSchema}
       block={block}
       title={editSchema.title}
@@ -76,7 +77,12 @@ export default (props) => {
       formData={formData}
       headerActions={
         <>
-          <button onClick={() => {}}>
+          <button
+            onClick={() => {
+              updateSchema();
+              closePopup(false);
+            }}
+          >
             <VoltoIcon size="24px" name={checkSVG} />
           </button>
           <button

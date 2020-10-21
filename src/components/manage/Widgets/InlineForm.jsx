@@ -36,6 +36,7 @@ const InlineForm = ({
   formData,
   onChangeField,
   schema,
+  onChange,
   title,
   icon,
   headerActions,
@@ -79,6 +80,7 @@ const InlineForm = ({
         <Card fluid>
           <Select
             defaultValue={[]}
+            isClearable={true}
             isMulti={true}
             menuIsOpen={false}
             id="select-listingblock-template"
@@ -95,6 +97,9 @@ const InlineForm = ({
             theme={selectTheme}
             components={{ DropdownIndicator, Option }}
             value={data.geolocation || []}
+            onChange={(field, value) => {
+              onChange(field, value === '' ? undefined : value);
+            }}
           />
         </Card>
       </Segment>
