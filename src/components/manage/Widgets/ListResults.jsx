@@ -1,16 +1,11 @@
 import React from 'react';
 import {
-  List,
   Segment,
   Header,
-  Menu,
   Dimmer,
   Grid,
   Loader,
   Accordion,
-  Label,
-  Image,
-  Card,
   Button,
 } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
@@ -57,7 +52,11 @@ const ListResults = ({ results, onChange, loading }) => {
                   basic
                   primary
                   floated="left"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e, value) => {
+                    e.stopPropagation();
+                    results.splice(index, 1);
+                    onChange(item.toponymName);
+                  }}
                 >
                   <Icon name={addSVG} size="24px" color="#007eb1" />
                 </Button>
@@ -83,9 +82,15 @@ const ListResults = ({ results, onChange, loading }) => {
                     </p>
                   </Grid.Column>
                   <Grid.Column verticalAlign="middle">
-                    <Button color="twitter" size="small" compact={true}>
-                      Preview
-                    </Button>
+                    <a
+                      href={`https://www.geonames.org/${item.geonameId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Button color="twitter" size="small" compact={true}>
+                        Preview
+                      </Button>
+                    </a>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

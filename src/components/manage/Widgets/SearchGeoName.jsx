@@ -59,6 +59,7 @@ export default (props) => {
   );
   return (
     <InlineForm
+      data={data}
       schema={editSchema}
       block={block}
       title={editSchema.title}

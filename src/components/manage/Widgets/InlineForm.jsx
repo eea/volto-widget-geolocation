@@ -29,6 +29,7 @@ const messages = defineMessages({
 
 const InlineForm = ({
   block,
+  data,
   description,
   error, // Such as {message: "It's not good"}
   errors = {},
@@ -93,7 +94,7 @@ const InlineForm = ({
             }}
             theme={selectTheme}
             components={{ DropdownIndicator, Option }}
-            //value={selectedOption || []}
+            value={data.geolocation || []}
           />
         </Card>
       </Segment>
