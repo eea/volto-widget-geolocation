@@ -1,7 +1,6 @@
 import React from 'react';
 import InlineForm from './InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
-import { List, Segment, Header } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
@@ -16,11 +15,12 @@ export default (props) => {
     state.content.data,
     state.content.subrequests,
   ]);
-  const loading = subrequest[Object.keys(subrequest).pop()]?.loading;
-  const results = subrequest[Object.keys(subrequest).pop()]?.data?.geonames;
+  const geonamesUrl = Object.keys(subrequest).find((item) =>
+    item.includes('geonames'),
+  );
+  const loading = subrequest[geonamesUrl]?.loading;
+  const results = subrequest[geonamesUrl]?.data?.geonames;
   const [formData, setFormData] = React.useState(content.blocks[block]);
-  // const url =
-  //   'https://secure.geonames.org/searchJSON?username=nileshgulia&q=CONT';
 
   const updateSchema = React.useCallback(() => {
     setEditSchema({
@@ -29,7 +29,7 @@ export default (props) => {
         ...schema.properties,
         continents: {
           ...schema.properties.continents,
-          choices: subrequest[url]?.data?.geonames?.map((item) => [
+          choices: subrequest[geonamesUrl]?.data?.geonames?.map((item) => [
             item.name,
             item.name,
           ]),
