@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { FormFieldWrapper } from '@plone/volto/components';
+import { FormFieldWrapper, CheckboxWidget } from '@plone/volto/components';
 import { unionBy } from 'lodash';
+import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
+import SearchGeoName from './SearchGeoName';
 import { eeaCountries, eeaGroups } from './eeaCountries';
 import {
   Option,
@@ -24,11 +26,16 @@ const messages = defineMessages({
     id: 'Geographic group',
     defaultMessage: 'Geographic group',
   },
+  search: {
+    id: 'Advance Search',
+    defaultMessage: 'Advance Search',
+  },
 });
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChange, intl, id } = props;
+  const { data, block, onChange, intl, id, onToggle } = props;
+  const [isOpenPopup, setPopup] = useState(false);
 
   let options = [
     {
@@ -104,6 +111,24 @@ const GeolocationWidget = (props) => {
             />
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row stretched>
+          <CheckboxWidget
+            id="AdvanceSearch"
+            title={intl.formatMessage(messages.search)}
+            value={isOpenPopup ? isOpenPopup : false}
+            onChange={(name, value) => {
+              setPopup(value);
+            }}
+          />
+          <SidebarPopup open={isOpenPopup}>
+            <SearchGeoName
+              data={data}
+              closePopup={setPopup}
+              block={block}
+              onChange={onChange}
+            />
+          </SidebarPopup>
+        </Grid.Row>
       </Grid>
     </FormFieldWrapper>
   );
@@ -112,7 +137,7 @@ const GeolocationWidget = (props) => {
 GeolocationWidget.propTypes = {
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   block: PropTypes.string.isRequired,
-  onChangeBlock: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default injectIntl(GeolocationWidget);

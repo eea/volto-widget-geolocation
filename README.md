@@ -1,4 +1,5 @@
 # volto-widget-geolocation
+
 [![Releases](https://img.shields.io/github/v/release/eea/volto-widget-geolocation)](https://github.com/eea/volto-widget-geolocation/releases)
 
 [Volto](https://github.com/plone/volto) add-on
@@ -12,28 +13,35 @@ Demo GIF
 ## Getting started
 
 1. Create new volto project if you don't already have one:
-    ```
-    $ npm install -g @plone/create-volto-app
-    $ create-volto-app my-volto-project
-    $ cd my-volto-project
-    ```
+
+   ```
+   $ npm install -g @plone/create-volto-app
+   $ create-volto-app my-volto-project
+   $ cd my-volto-project
+   ```
 
 1. Update `package.json`:
-    ``` JSON
-    "addons": [
-        "@eeacms/volto-widget-geolocation"
-    ],
 
-    "dependencies": {
-        "@eeacms/volto-widget-geolocation": "1.0.0"
-    }
-    ```
+   ```JSON
+   "addons": [
+       "@eeacms/volto-widget-geolocation",
+       "@eeacms/volto-block-style",
+       "volto-slate:asDefault"
+   ],
+
+   "dependencies": {
+       "@eeacms/volto-widget-geolocation": "1.0.0",
+       "@eeacms/volto-block-style": "github:eea/volto-block-style",
+       "volto-slate": "github:eea/volto-slate",
+   }
+   ```
 
 1. Install new add-ons and restart Volto:
-    ```
-    $ yarn
-    $ yarn start
-    ```
+
+   ```
+   $ yarn
+   $ yarn start
+   ```
 
 1. Go to http://localhost:3000
 
