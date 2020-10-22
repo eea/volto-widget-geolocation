@@ -11,7 +11,7 @@ import checkSVG from '@plone/volto/icons/check.svg';
 export default (props) => {
   const { data, block, closePopup, onChange } = props;
   const [editSchema, setEditSchema] = React.useState(schema);
-  const [resultsValue, setResultsValue] = React.useState([]);
+  const [resultsValue, setResultsValue] = React.useState(data.geolocation);
   const [content, subrequest] = useSelector((state) => [
     state.content.data,
     state.content.subrequests,
