@@ -13,7 +13,7 @@ import rightSVG from '@plone/volto/icons/right-key.svg';
 import downSVG from '@plone/volto/icons/down-key.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 
-const ListResults = ({ results, onChange, loading }) => {
+const ListResults = ({ results, onChange, loading, setValue }) => {
   const [activeAccIndex, setActiveAccIndex] = React.useState(0);
 
   function handleAccClick(e, titleProps) {
@@ -51,7 +51,10 @@ const ListResults = ({ results, onChange, loading }) => {
                   onClick={(e, value) => {
                     e.stopPropagation();
                     //results.splice(index, 1); do not remove result onClick
-                    onChange(item);
+                    setValue((prevState) => [
+                      ...(prevState || []),
+                      { label: item.toponymName, value: item.geonameId },
+                    ]);
                   }}
                 >
                   <Icon name={addSVG} size="24px" color="#007eb1" />

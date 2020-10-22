@@ -30,7 +30,9 @@ const messages = defineMessages({
 const InlineForm = ({
   block,
   data,
+  setValue,
   description,
+  value,
   error, // Such as {message: "It's not good"}
   errors = {},
   formData,
@@ -96,9 +98,16 @@ const InlineForm = ({
             }}
             theme={selectTheme}
             components={{ DropdownIndicator, Option }}
-            value={data.geolocation || []}
+            value={value || []}
             onChange={(field, value) => {
-              onChange(field, value === '' ? undefined : value);
+              setValue((prevState) =>
+                field
+                  ? field.map((item) => ({
+                      label: item.label,
+                      value: item.value,
+                    }))
+                  : null,
+              );
             }}
           />
         </Card>
