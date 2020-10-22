@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
 import React from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import {
   Option,
   DropdownIndicator,
@@ -80,7 +80,6 @@ const InlineForm = ({
       <Segment>
         <Card fluid>
           <Select
-            defaultValue={[]}
             isClearable={true}
             isMulti={true}
             menuIsOpen={false}
