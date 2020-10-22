@@ -48,7 +48,7 @@ const InlineForm = ({
   const defaultFieldset = schema.fieldsets.find((o) => o.id === 'default');
   const other = schema.fieldsets.filter((o) => o.id !== 'default');
   return (
-    <Segment.Group raised className="form">
+    <Segment.Group className="form">
       <header className="header pulled">
         {icon}
         <h2>{title || _(messages.editValues)}</h2>
