@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
 import React from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import {
   Option,
   DropdownIndicator,
@@ -48,7 +48,7 @@ const InlineForm = ({
   const defaultFieldset = schema.fieldsets.find((o) => o.id === 'default');
   const other = schema.fieldsets.filter((o) => o.id !== 'default');
   return (
-    <Segment.Group raised className="form">
+    <Segment.Group className="form">
       <header className="header pulled">
         {icon}
         <h2>{title || _(messages.editValues)}</h2>
@@ -80,7 +80,6 @@ const InlineForm = ({
       <Segment>
         <Card fluid>
           <Select
-            defaultValue={[]}
             isClearable={true}
             isMulti={true}
             menuIsOpen={false}
