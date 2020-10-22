@@ -13,7 +13,7 @@ import rightSVG from '@plone/volto/icons/right-key.svg';
 import downSVG from '@plone/volto/icons/down-key.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 
-const ListResults = ({ results, onChange, loading }) => {
+const ListResults = ({ results, loading, setValue, value }) => {
   const [activeAccIndex, setActiveAccIndex] = React.useState(0);
 
   function handleAccClick(e, titleProps) {
@@ -30,10 +30,6 @@ const ListResults = ({ results, onChange, loading }) => {
           <Loader inverted>Loading</Loader>
         </Dimmer>
       )}
-      {/* onClick={(e, value) => {
-                  results.splice(index, 1);
-                  onChange(e.target.innerText);
-                }} */}
       <Accordion fluid styled exclusive={false}>
         {results?.map((item, index) => (
           <Accordion.Accordion style={{ borderBottom: '1px solid #c7cdd8' }}>
@@ -52,10 +48,18 @@ const ListResults = ({ results, onChange, loading }) => {
                   basic
                   primary
                   floated="left"
-                  onClick={(e, value) => {
+                  onClick={(e) => {
                     e.stopPropagation();
-                    results.splice(index, 1);
-                    onChange(item.toponymName);
+                    if (
+                      value?.find((val) => val.value === item.geonameId) ===
+                      undefined
+                    ) {
+                      //results.splice(index, 1); do not remove result onClick
+                      setValue((prevState) => [
+                        ...(prevState || []),
+                        { label: item.toponymName, value: item.geonameId },
+                      ]);
+                    }
                   }}
                 >
                   <Icon name={addSVG} size="24px" color="#007eb1" />

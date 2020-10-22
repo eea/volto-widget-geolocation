@@ -11,6 +11,7 @@ import checkSVG from '@plone/volto/icons/check.svg';
 export default (props) => {
   const { data, block, closePopup, onChange } = props;
   const [editSchema, setEditSchema] = React.useState(schema);
+  const [resultsValue, setResultsValue] = React.useState([]);
   const [content, subrequest] = useSelector((state) => [
     state.content.data,
     state.content.subrequests,
@@ -62,6 +63,8 @@ export default (props) => {
       data={data}
       schema={editSchema}
       block={block}
+      setValue={setResultsValue}
+      value={resultsValue}
       title={editSchema.title}
       icon={<VoltoIcon size="24px" name={worldSVG} />}
       onChangeField={(id, value) => {
@@ -76,7 +79,12 @@ export default (props) => {
       formData={formData}
       headerActions={
         <>
-          <button onClick={() => {}}>
+          <button
+            onClick={() => {
+              onChange(resultsValue);
+              closePopup(false);
+            }}
+          >
             <VoltoIcon size="24px" name={checkSVG} />
           </button>
           <button
@@ -92,8 +100,9 @@ export default (props) => {
         Object.keys(subrequest).length > 1 && (
           <ListResults
             results={results}
-            onChange={onChange}
             loading={loading}
+            setValue={setResultsValue}
+            value={resultsValue}
           />
         )
       }
