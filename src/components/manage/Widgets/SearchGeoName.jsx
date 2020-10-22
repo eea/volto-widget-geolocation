@@ -11,7 +11,7 @@ import checkSVG from '@plone/volto/icons/check.svg';
 export default (props) => {
   const { data, block, closePopup, onChange } = props;
   const [editSchema, setEditSchema] = React.useState(schema);
-  const [value, setValue] = React.useState([]);
+  const [resultsValue, setResultsValue] = React.useState([]);
   const [content, subrequest] = useSelector((state) => [
     state.content.data,
     state.content.subrequests,
@@ -61,11 +61,10 @@ export default (props) => {
   return (
     <InlineForm
       data={data}
-      onChange={onChange}
       schema={editSchema}
       block={block}
-      setValue={setValue}
-      value={value}
+      setValue={setResultsValue}
+      value={resultsValue}
       title={editSchema.title}
       icon={<VoltoIcon size="24px" name={worldSVG} />}
       onChangeField={(id, value) => {
@@ -82,7 +81,7 @@ export default (props) => {
         <>
           <button
             onClick={() => {
-              updateSchema();
+              onChange(resultsValue);
               closePopup(false);
             }}
           >
@@ -101,9 +100,9 @@ export default (props) => {
         Object.keys(subrequest).length > 1 && (
           <ListResults
             results={results}
-            onChange={onChange}
             loading={loading}
-            setValue={setValue}
+            setValue={setResultsValue}
+            value={resultsValue}
           />
         )
       }

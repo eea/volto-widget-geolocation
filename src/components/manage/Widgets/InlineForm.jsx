@@ -38,7 +38,6 @@ const InlineForm = ({
   formData,
   onChangeField,
   schema,
-  onChange,
   title,
   icon,
   headerActions,
