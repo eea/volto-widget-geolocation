@@ -12,7 +12,7 @@ export function getGeonames(url, subrequest = null) {
     subrequest,
     request: {
       op: 'get',
-      path: `${url}/@geolocation`,
+      path: `/@geolocation`,
       headers: {
         Accept: 'application/json',
       },
