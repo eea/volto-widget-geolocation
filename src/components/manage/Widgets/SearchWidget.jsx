@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { compose } from 'redux';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper } from '@plone/volto/components';
 import { Icon } from '@plone/volto/components';
@@ -33,9 +33,12 @@ const messages = defineMessages({
 const SearchWidget = (props) => {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
+  const password = useSelector(
+    (state) => state.geolocation?.api?.geonames.password,
+  );
   const onSubmit = async (event) => {
     event.preventDefault();
-    let url = `https://secure.geonames.org/searchJSON?q=${text}&maxRows=10&username=nileshgulia`;
+    let url = `https://secure.geonames.org/searchJSON?q=${text}&maxRows=10&username=${password}`;
     await dispatch(
       getProxiedExternalContent(url, {
         headers: { Accept: 'application/json' },

@@ -26,7 +26,9 @@ export default (props) => {
   const [formData, setFormData] = React.useState(content.blocks[block]);
 
   //componentDidMount
-  React.useEffect(() => dispatch(getGeonames), []);
+  React.useEffect(() => {
+    dispatch(getGeonames());
+  }, []);
 
   const updateSchema = React.useCallback(() => {
     setEditSchema({

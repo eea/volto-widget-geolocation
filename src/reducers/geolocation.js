@@ -31,7 +31,7 @@ function getRequestKey(actionType) {
  * @param {Object} action Action to be handled.
  * @returns {Object} New state.
  */
-export function geolocation(state = initialState, action = {}) {
+export default function geolocation(state = initialState, action = {}) {
   let { result } = action;
   switch (action.type) {
     case `${GET_GEONAMES}_PENDING`:
@@ -49,8 +49,8 @@ export function geolocation(state = initialState, action = {}) {
         ...state,
         api: { ...result },
         [getRequestKey(action.type)]: {
-          loading: true,
-          loaded: false,
+          loading: false,
+          loaded: true,
           error: null,
         },
       };
@@ -59,7 +59,7 @@ export function geolocation(state = initialState, action = {}) {
         ...state,
         api: null,
         [getRequestKey(action.type)]: {
-          loading: true,
+          loading: false,
           loaded: false,
           error: action.error,
         },
