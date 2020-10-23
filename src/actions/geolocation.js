@@ -6,10 +6,9 @@ import { settings } from '@plone/volto/config';
  * @param {url} url URL.
  * @returns {Object} Object.
  */
-export function getGeonames(url, subrequest = null) {
+export function getGeonames() {
   return {
     type: GET_GEONAMES,
-    subrequest,
     request: {
       op: 'get',
       path: `/@geolocation`,

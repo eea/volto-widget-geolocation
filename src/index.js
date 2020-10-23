@@ -4,6 +4,7 @@ import {
   eeaCountries,
   SearchWidget,
 } from './components';
+import { geolocation } from './reducers';
 
 const applyConfig = (config) => {
   config.widgets.widget = {
@@ -18,6 +19,11 @@ const applyConfig = (config) => {
     ...(config.settings.allowed_cors_destinations || []),
     'secure.geonames.org',
   ];
+
+  config.addonReducers = {
+    ...config.addonReducers,
+    geolocation,
+  };
   return config;
 };
 

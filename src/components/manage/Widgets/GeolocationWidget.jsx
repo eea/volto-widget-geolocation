@@ -123,7 +123,7 @@ const GeolocationWidget = (props) => {
           <SidebarPopup open={isOpenPopup}>
             <SearchGeoName
               data={data}
-              closePopup={setPopup}
+              setPopup={setPopup}
               block={block}
               onChange={onChange}
             />
