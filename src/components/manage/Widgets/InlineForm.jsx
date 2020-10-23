@@ -117,7 +117,7 @@ const InlineForm = ({
             id={field}
             fieldSet={defaultFieldset.title.toLowerCase()}
             focus={index === 0}
-            value={formData[field] || schema.properties[field].default}
+            value={formData?.[field] || schema.properties[field]?.default}
             required={schema.required.indexOf(field) !== -1}
             onChange={(id, value) => {
               onChangeField(id, value);
