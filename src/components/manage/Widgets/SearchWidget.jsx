@@ -34,6 +34,7 @@ const SearchWidget = (props) => {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const onSubmit = async (event) => {
+    props.onChange('search', text);
     event.preventDefault();
     let url = `https://secure.geonames.org/searchJSON?q=${text}&maxRows=10&username=nileshgulia`;
     await dispatch(
