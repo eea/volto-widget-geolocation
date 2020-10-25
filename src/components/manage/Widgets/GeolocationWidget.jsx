@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Button, Label, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import {
-  FormFieldWrapper,
-  CheckboxWidget,
-  Icon,
-} from '@plone/volto/components';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy } from 'lodash';
 import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
@@ -21,6 +17,7 @@ import {
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 import zoomSVG from '@plone/volto/icons/zoom-in.svg';
+import './public.less';
 
 const messages = defineMessages({
   coverage: {
@@ -118,7 +115,7 @@ const GeolocationWidget = (props) => {
         </Grid.Row>
         <Grid.Row stretched>
           <Segment attached className="actions">
-            <label style={{ verticalAlign: 'sub' }}>
+            <label className={'popup-label'}>
               {intl.formatMessage(messages.search)}
             </label>
             <Button
