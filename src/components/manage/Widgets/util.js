@@ -1,5 +1,5 @@
-export const getFilteredResults = (results = [], formData) => {
-  const { countries = '' } = formData;
+import countries from 'i18n-iso-countries';
 
-  return results.filter((item) => item?.countryName === countries);
-};
+export function getCountryCode(countryName = '') {
+  return countries.getAlpha2Code(countryName, 'en');
+}

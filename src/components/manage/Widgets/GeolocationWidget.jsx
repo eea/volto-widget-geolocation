@@ -34,7 +34,7 @@ const messages = defineMessages({
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChange, intl, id, onToggle } = props;
+  const { data, block, onChange, intl, onChangeSchema } = props;
   const [isOpenPopup, setPopup] = useState(false);
 
   let options = [
@@ -126,6 +126,7 @@ const GeolocationWidget = (props) => {
               closePopup={setPopup}
               block={block}
               onChange={onChange}
+              onChangeSchema={onChangeSchema}
             />
           </SidebarPopup>
         </Grid.Row>

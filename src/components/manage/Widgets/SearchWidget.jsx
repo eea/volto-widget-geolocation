@@ -12,7 +12,12 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper } from '@plone/volto/components';
 import { Icon } from '@plone/volto/components';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
+import { getCountryCode } from './util';
+import countries from 'i18n-iso-countries';
 import zoomSVG from '@plone/volto/icons/zoom.svg';
+import locales from 'i18n-iso-countries/langs/en.json';
+
+countries.registerLocale(locales);
 
 const messages = defineMessages({
   search: {
@@ -31,12 +36,16 @@ const messages = defineMessages({
  * @extends Component
  */
 const SearchWidget = (props) => {
+  const { onChange, value, data, id } = props;
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const onSubmit = async (event) => {
-    props.onChange('search', text);
     event.preventDefault();
-    let url = `https://secure.geonames.org/searchJSON?q=${text}&maxRows=10&username=nileshgulia`;
+    const countryCode = getCountryCode(data.countries);
+    let url = `https://secure.geonames.org/searchJSON?q=${text}&country=${
+      countryCode || ''
+    }&maxRows=10&username=nileshgulia`;
+    onChange('searchUrl', url);
     await dispatch(
       getProxiedExternalContent(url, {
         headers: { Accept: 'application/json' },
