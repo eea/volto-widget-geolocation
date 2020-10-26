@@ -1,5 +1,10 @@
-import { GeolocationWidget } from './components';
-import { biogeographicalData, eeaCountries } from './components';
+import {
+  GeolocationWidget,
+  biogeographicalData,
+  eeaCountries,
+  SearchWidget,
+} from './components';
+import { geolocation } from './reducers';
 
 const applyConfig = (config) => {
   config.widgets.widget = {
@@ -8,6 +13,16 @@ const applyConfig = (config) => {
       widget: GeolocationWidget,
       vocabulary: { biogeographical: biogeographicalData, eea: eeaCountries },
     },
+    search: SearchWidget,
+  };
+  config.settings.allowed_cors_destinations = [
+    ...(config.settings.allowed_cors_destinations || []),
+    'secure.geonames.org',
+  ];
+
+  config.addonReducers = {
+    ...config.addonReducers,
+    geolocation,
   };
   return config;
 };

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Button, Label, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { FormFieldWrapper } from '@plone/volto/components';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy } from 'lodash';
+import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
 import { biogeographicalData } from './biogeographical';
+import SearchGeoName from './SearchGeoName';
 import { eeaCountries, eeaGroups } from './eeaCountries';
 import {
   Option,
@@ -14,6 +16,8 @@ import {
   selectTheme,
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
+import zoomSVG from '@plone/volto/icons/zoom-in.svg';
+import './public.less';
 
 const messages = defineMessages({
   coverage: {
@@ -24,11 +28,16 @@ const messages = defineMessages({
     id: 'Geographic group',
     defaultMessage: 'Geographic group',
   },
+  search: {
+    id: 'Advance search',
+    defaultMessage: 'Advance search',
+  },
 });
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChange, intl, id } = props;
+  const { data, block, onChange, intl, onChangeSchema } = props;
+  const [isOpenPopup, setPopup] = useState(false);
 
   let options = [
     {
@@ -104,6 +113,37 @@ const GeolocationWidget = (props) => {
             />
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row stretched>
+          <Segment attached className="actions">
+            <label className={'popup-label'}>
+              {intl.formatMessage(messages.search)}
+            </label>
+            <Button
+              basic
+              primary
+              floated="left"
+              onClick={(name, value) => {
+                setPopup(value);
+              }}
+            >
+              <Icon
+                name={zoomSVG}
+                size="30px"
+                className="addSVG"
+                title={intl.formatMessage(messages.search)}
+              />
+            </Button>
+          </Segment>
+          <SidebarPopup open={isOpenPopup}>
+            <SearchGeoName
+              data={data}
+              setPopup={setPopup}
+              block={block}
+              onChange={onChange}
+              onChangeSchema={onChangeSchema}
+            />
+          </SidebarPopup>
+        </Grid.Row>
       </Grid>
     </FormFieldWrapper>
   );
@@ -112,7 +152,7 @@ const GeolocationWidget = (props) => {
 GeolocationWidget.propTypes = {
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   block: PropTypes.string.isRequired,
-  onChangeBlock: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default injectIntl(GeolocationWidget);
