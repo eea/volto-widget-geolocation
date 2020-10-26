@@ -1,11 +1,11 @@
 export const eeaCountries = [
   {
-    value: '783754',
+    value: 'geo-783754',
     label: 'Albania',
     group: ['EEA32', 'EEA33', 'EEA39', 'Pan-Europe'],
   },
   {
-    value: '2782113',
+    value: 'geo-2782113',
     label: 'Austria',
     group: [
       'EEA32',
@@ -19,7 +19,7 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '2802361',
+    value: 'geo-2802361',
     label: 'Belgium',
     group: [
       'EEA32',
@@ -33,27 +33,27 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '3277605',
+    value: 'geo-3277605',
     label: 'Bosnia and Herzegovina',
     group: ['EFTA4', 'Pan-Europe'],
   },
   {
-    value: '732800',
+    value: 'geo-732800',
     label: 'Bulgaria',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '3202326',
+    value: 'geo-3202326',
     label: 'Croatia',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '146669',
+    value: 'geo-146669',
     label: 'Cyprus',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'Pan-Europe'],
   },
   {
-    value: '3077311',
+    value: 'geo-3077311',
     label: 'Czechia',
     group: [
       'EEA32',
@@ -67,17 +67,17 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '2623032',
+    value: 'geo-2623032',
     label: 'Denmark',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU15', 'EU25', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '453733',
+    value: 'geo-453733',
     label: 'Estonia',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '660013',
+    value: 'geo-660013',
     label: 'Finland',
     group: [
       'EEA32',
@@ -91,7 +91,7 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '3017382',
+    value: 'geo-3017382',
     label: 'France',
     group: [
       'EEA32',
@@ -105,7 +105,7 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '2921044',
+    value: 'geo-2921044',
     label: 'Germany',
     group: [
       'EEA32',
@@ -119,7 +119,7 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '390903',
+    value: 'geo-390903',
     label: 'Greece',
     group: [
       'EEA32',
@@ -133,17 +133,17 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '719819',
+    value: 'geo-719819',
     label: 'Hungary',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '2629691',
+    value: 'geo-2629691',
     label: 'Iceland',
     group: ['EEA32', 'EEA33', 'EEA39', 'EFTA4', 'Pan-Europe'],
   },
   {
-    value: '2963597',
+    value: 'geo-2963597',
     label: 'Ireland',
     group: [
       'EEA32',
@@ -157,7 +157,7 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '3175395',
+    value: 'geo-3175395',
     label: 'Italy',
     group: [
       'EEA32',
@@ -171,27 +171,27 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '831053',
+    value: 'geo-831053',
     label: 'Kosovo (UNSCR 1244/99)',
     group: ['EEA32', 'EEA33', 'EEA39'],
   },
   {
-    value: '458258',
+    value: 'geo-458258',
     label: 'Latvia',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '3042058',
+    value: 'geo-3042058',
     label: 'Liechtenstein',
     group: ['EEA32', 'EEA33', 'EEA39', 'EFTA4', 'Pan-Europe'],
   },
   {
-    value: '597427',
+    value: 'geo-597427',
     label: 'Lithuania',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '2960313',
+    value: 'geo-2960313',
     label: 'Luxembourg',
     group: [
       'EEA32',
@@ -205,17 +205,17 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '2562770',
+    value: 'geo-2562770',
     label: 'Malta',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '3194884',
+    value: 'geo-3194884',
     label: 'Montenegro',
     group: ['EEA32', 'EEA33', 'EEA39', 'Pan-Europe'],
   },
   {
-    value: '2750405',
+    value: 'geo-2750405',
     label: 'Netherlands',
     group: [
       'EEA32',
@@ -229,22 +229,22 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '718075',
+    value: 'geo-718075',
     label: 'North Macedonia',
     group: ['EEA32', 'EEA33', 'EEA39', 'Pan-Europe'],
   },
   {
-    value: '3144096',
+    value: 'geo-3144096',
     label: 'Norway',
     group: ['EEA32', 'EEA33', 'EEA39', 'EFTA4', 'Pan-Europe'],
   },
   {
-    value: '798544',
+    value: 'geo-798544',
     label: 'Poland',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '2264397',
+    value: 'geo-2264397',
     label: 'Portugal',
     group: [
       'EEA32',
@@ -258,27 +258,27 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '798549',
+    value: 'geo-798549',
     label: 'Romania',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '6290252',
+    value: 'geo-6290252',
     label: 'Serbia',
     group: ['EEA32', 'EEA33', 'EEA39', 'Pan-Europe'],
   },
   {
-    value: '3057568',
+    value: 'geo-3057568',
     label: 'Slovakia',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '3190538',
+    value: 'geo-3190538',
     label: 'Slovenia',
     group: ['EEA32', 'EEA33', 'EEA39', 'EU25', 'EU27', 'EU28', 'Pan-Europe'],
   },
   {
-    value: '2510769',
+    value: 'geo-2510769',
     label: 'Spain',
     group: [
       'EEA32',
@@ -292,7 +292,7 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '2661886',
+    value: 'geo-2661886',
     label: 'Sweden',
     group: [
       'EEA32',
@@ -306,17 +306,17 @@ export const eeaCountries = [
     ],
   },
   {
-    value: '2658434',
+    value: 'geo-2658434',
     label: 'Switzerland',
     group: ['EEA32', 'EEA33', 'EEA39', 'EFTA4', 'Pan-Europe'],
   },
   {
-    value: '298795',
+    value: 'geo-298795',
     label: 'Turkey',
     group: ['EEA32', 'EEA33', 'EEA39', 'Pan-Europe'],
   },
   {
-    value: '2635167',
+    value: 'geo-2635167',
     label: 'United Kingdom',
     group: [
       'EEA32',
