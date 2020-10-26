@@ -18,7 +18,7 @@ export const GeoSearchSchema = {
     countries: {
       description: 'Select countries',
       title: 'Countries',
-      choices: eeaCountries.map((item) => [item.label, item.value]),
+      choices: eeaCountries.map((item) => [item.value, item.label]),
     },
     featureClass: {
       description: 'Select feature regions for eg: lakes,parks etc',
