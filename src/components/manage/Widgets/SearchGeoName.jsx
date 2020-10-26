@@ -1,7 +1,8 @@
 import React from 'react';
 import InlineForm from './InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
 import { getGeonames } from '@eeacms/volto-widget-geolocation/actions';
@@ -10,80 +11,42 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
 
 export default (props) => {
-  const { data, block, setPopup, onChange } = props;
-  const [editSchema, setEditSchema] = React.useState(schema);
+  const { data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
-  const [content, subrequest] = useSelector((state) => [
-    state.content.data,
-    state.content.subrequests,
-  ]);
-  const geonamesUrl = Object.keys(subrequest).find((item) =>
-    item.includes('geonames'),
+  const subrequest = useSelector(
+    (state) => state.content.subrequests,
+    shallowEqual,
   );
-  const dispatch = useDispatch();
-  const loading = subrequest[geonamesUrl]?.loading;
+  const geonamesUrl = Object.keys(subrequest).find((item) =>
+    item.includes(data?.searchUrl),
+  );
   const results = subrequest[geonamesUrl]?.data?.geonames;
-  const [formData, setFormData] = React.useState(content.blocks[block]);
+  const loading = subrequest[geonamesUrl]?.loading;
+  const dispatch = useDispatch();
 
   //componentDidMount
   React.useEffect(() => {
     dispatch(getGeonames());
   }, []);
 
-  const updateSchema = React.useCallback(() => {
-    setEditSchema({
-      ...schema,
-      properties: {
-        ...schema.properties,
-        continents: {
-          ...schema.properties.continents,
-          choices: subrequest[geonamesUrl]?.data?.geonames?.map((item) => [
-            item.name,
-            item.name,
-          ]),
-        },
-      },
-    });
-  }, [editSchema, subrequest]);
-
   const onChangeValues = React.useCallback(
     (id, value) => {
-      if (id === 'id') {
-        setFormData({
-          ...formData,
-          [id]: value,
-          widget: '',
-          [value]: '',
-        });
-        updateSchema(value);
-      } else {
-        setFormData({
-          ...formData,
-          [id]: value,
-        });
-      }
+      onChangeSchema(value, id);
     },
-    [updateSchema, formData],
+    [onChangeSchema],
   );
   return (
     <InlineForm
       data={data}
-      schema={editSchema}
+      schema={schema}
       block={block}
       setValue={setResultsValue}
       value={resultsValue}
-      title={editSchema.title}
+      title={schema.title}
       icon={<VoltoIcon size="24px" name={worldSVG} />}
       onChangeField={(id, value) => {
-        if (!onChangeValues) {
-          return setFormData({
-            ...formData,
-            [id]: value,
-          });
-        }
         return onChangeValues(id, value);
       }}
-      formData={formData}
       headerActions={
         <>
           <button

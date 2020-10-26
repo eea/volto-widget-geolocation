@@ -24,6 +24,6 @@
     "bootstrap": "./bootstrap"
   },
   "dependencies": {
-    "geonames.js": "2.3.0"
+    "i18n-iso-countries": "6.2.1"
   }
 }

@@ -35,7 +35,6 @@ const InlineForm = ({
   value,
   error, // Such as {message: "It's not good"}
   errors = {},
-  formData,
   onChangeField,
   schema,
   title,
@@ -117,7 +116,7 @@ const InlineForm = ({
             id={field}
             fieldSet={defaultFieldset.title.toLowerCase()}
             focus={index === 0}
-            value={formData?.[field] || schema.properties[field]?.default}
+            value={data?.[field] || schema.properties[field]?.default}
             required={schema.required.indexOf(field) !== -1}
             onChange={(id, value) => {
               onChangeField(id, value);
@@ -125,6 +124,7 @@ const InlineForm = ({
             key={field}
             error={errors[field]}
             block={block}
+            data={data}
           />
         ))}
       </div>
@@ -139,7 +139,7 @@ const InlineForm = ({
               <Field
                 {...schema.properties[field]}
                 id={field}
-                value={formData[field] || schema.properties[field].default}
+                value={data[field] || schema.properties[field].default}
                 required={schema.required.indexOf(field) !== -1}
                 onChange={(id, value) => {
                   onChangeField(id, value);
@@ -160,11 +160,11 @@ const InlineForm = ({
 InlineForm.defaultProps = {
   block: null,
   description: null,
-  formData: null,
   onChangeField: null,
   error: null,
   errors: {},
   schema: {},
+  data: {},
 };
 
 InlineForm.propTypes = {
@@ -182,7 +182,7 @@ InlineForm.propTypes = {
     definitions: PropTypes.objectOf(PropTypes.any),
     required: PropTypes.arrayOf(PropTypes.string),
   }),
-  formData: PropTypes.objectOf(PropTypes.any),
+  data: PropTypes.objectOf(PropTypes.any),
   pathname: PropTypes.string,
   onChangeField: PropTypes.func,
   error: PropTypes.shape({
