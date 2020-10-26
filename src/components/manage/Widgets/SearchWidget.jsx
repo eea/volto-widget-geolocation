@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { compose } from 'redux';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper } from '@plone/volto/components';
 import { Icon } from '@plone/volto/components';
@@ -37,20 +37,38 @@ const messages = defineMessages({
  */
 const SearchWidget = (props) => {
   const { onChange, value, data, id } = props;
+  const { countries } = data;
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const password = useSelector(
     (state) => state.geolocation?.api?.geonames.password,
   );
+  const subrequests = useSelector(
+    (state) => state.content.subrequests,
+    shallowEqual,
+  );
   const onSubmit = async (event) => {
     event.preventDefault();
-    const countryCode = getCountryCode(data.countries);
-    let url = `https://secure.geonames.org/searchJSON?q=${text}&country=${
+    let countryCode;
+    if (/\d/.test(countries)) {
+      let url = `https://secure.geonames.org/getJSON?geonameId=${
+        countries.split('-')[1]
+      }&username=${password}`;
+      let response = await dispatch(
+        getProxiedExternalContent(url, {
+          headers: { Accept: 'application/json' },
+        }),
+      );
+      countryCode = response.countryCode;
+    } else {
+      countryCode = getCountryCode(countries);
+    }
+    let searchUrl = `https://secure.geonames.org/searchJSON?q=${text}&country=${
       countryCode || ''
     }&maxRows=10&username=${password}`;
-    onChange('searchUrl', url);
+    onChange('searchUrl', searchUrl);
     await dispatch(
-      getProxiedExternalContent(url, {
+      getProxiedExternalContent(searchUrl, {
         headers: { Accept: 'application/json' },
       }),
     );
