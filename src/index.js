@@ -1,16 +1,10 @@
-import Geonames from 'geonames.js';
 import {
   GeolocationWidget,
   biogeographicalData,
   eeaCountries,
   SearchWidget,
 } from './components';
-
-export const geonames = new Geonames({
-  username: 'nileshgulia',
-  lan: 'en',
-  encoding: 'JSON',
-});
+import { geolocation } from './reducers';
 
 const applyConfig = (config) => {
   config.widgets.widget = {
@@ -25,6 +19,11 @@ const applyConfig = (config) => {
     ...(config.settings.allowed_cors_destinations || []),
     'secure.geonames.org',
   ];
+
+  config.addonReducers = {
+    ...config.addonReducers,
+    geolocation,
+  };
   return config;
 };
 

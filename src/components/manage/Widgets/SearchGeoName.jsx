@@ -1,17 +1,17 @@
 import React from 'react';
 import InlineForm from './InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
-import { getFilteredResults } from './util';
+import { getGeonames } from '@eeacms/volto-widget-geolocation/actions';
 import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
-import search from '../../../../../../../omelette/src/reducers/search/search';
 
 export default (props) => {
-  const { data, block, closePopup, onChange, onChangeSchema } = props;
+  const { data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
   const subrequest = useSelector(
     (state) => state.content.subrequests,
@@ -22,6 +22,12 @@ export default (props) => {
   );
   const results = subrequest[geonamesUrl]?.data?.geonames;
   const loading = subrequest[geonamesUrl]?.loading;
+  const dispatch = useDispatch();
+
+  //componentDidMount
+  React.useEffect(() => {
+    dispatch(getGeonames());
+  }, []);
 
   const onChangeValues = React.useCallback(
     (id, value) => {
@@ -46,14 +52,14 @@ export default (props) => {
           <button
             onClick={() => {
               onChange(resultsValue);
-              closePopup(false);
+              setPopup(false);
             }}
           >
             <VoltoIcon size="24px" name={checkSVG} />
           </button>
           <button
             onClick={() => {
-              closePopup(false);
+              setPopup(false);
             }}
           >
             <VoltoIcon size="24px" name={clearSVG} />
