@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Button, Label, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { FormFieldWrapper, CheckboxWidget } from '@plone/volto/components';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy } from 'lodash';
 import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
@@ -16,6 +16,8 @@ import {
   selectTheme,
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
+import zoomSVG from '@plone/volto/icons/zoom-in.svg';
+import './public.less';
 
 const messages = defineMessages({
   coverage: {
@@ -27,8 +29,8 @@ const messages = defineMessages({
     defaultMessage: 'Geographic group',
   },
   search: {
-    id: 'Advance Search',
-    defaultMessage: 'Advance Search',
+    id: 'Advance search',
+    defaultMessage: 'Advance search',
   },
 });
 const Group = (props) => <components.Group {...props} />;
@@ -112,14 +114,26 @@ const GeolocationWidget = (props) => {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row stretched>
-          <CheckboxWidget
-            id="AdvanceSearch"
-            title={intl.formatMessage(messages.search)}
-            value={isOpenPopup ? isOpenPopup : false}
-            onChange={(name, value) => {
-              setPopup(value);
-            }}
-          />
+          <Segment attached className="actions">
+            <label className={'popup-label'}>
+              {intl.formatMessage(messages.search)}
+            </label>
+            <Button
+              basic
+              primary
+              floated="left"
+              onClick={(name, value) => {
+                setPopup(value);
+              }}
+            >
+              <Icon
+                name={zoomSVG}
+                size="30px"
+                className="addSVG"
+                title={intl.formatMessage(messages.search)}
+              />
+            </Button>
+          </Segment>
           <SidebarPopup open={isOpenPopup}>
             <SearchGeoName
               data={data}
