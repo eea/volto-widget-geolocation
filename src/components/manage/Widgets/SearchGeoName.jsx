@@ -17,8 +17,8 @@ export default (props) => {
     (state) => state.content.subrequests,
     shallowEqual,
   );
-  const geonamesUrl = Object.keys(subrequest).find((item) =>
-    item.includes(data?.searchUrl),
+  const geonamesUrl = Object.keys(subrequest).find(
+    (item) => item === data?.searchUrl,
   );
   const results = subrequest[geonamesUrl]?.data?.geonames;
   const loading = subrequest[geonamesUrl]?.loading;
