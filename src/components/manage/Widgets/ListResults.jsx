@@ -57,7 +57,10 @@ const ListResults = ({ results, loading, setValue, value }) => {
                       //results.splice(index, 1); do not remove result onClick
                       setValue((prevState) => [
                         ...(prevState || []),
-                        { label: item.toponymName, value: item.geonameId },
+                        {
+                          label: item.toponymName,
+                          value: 'geo-' + item.geonameId,
+                        },
                       ]);
                     }
                   }}
@@ -82,19 +85,15 @@ const ListResults = ({ results, loading, setValue, value }) => {
                       <b>Country:</b> {item.countryName}
                     </p>
                     <p>
-                      <b>GeonameID:</b> {item.geonameId}
+                      <b>GeonameID:</b>{' '}
+                      <a
+                        href={`https://www.geonames.org/${item.geonameId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {item.geonameId}
+                      </a>
                     </p>
-                  </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
-                    <a
-                      href={`https://www.geonames.org/${item.geonameId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Button color="twitter" size="small" compact={true}>
-                        Preview
-                      </Button>
-                    </a>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
