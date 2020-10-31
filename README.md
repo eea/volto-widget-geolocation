@@ -6,7 +6,7 @@
 
 ## Features
 
-###
+![Widget geolocation](https://github.com/eea/volto-widget-geolocation/raw/docs/docs/volto-widget-geolocation.gif)
 
 Demo GIF
 
