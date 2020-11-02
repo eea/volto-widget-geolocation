@@ -97,14 +97,7 @@ const InlineForm = ({
             components={{ DropdownIndicator, Option }}
             value={value || []}
             onChange={(field, value) => {
-              setValue((prevState) =>
-                field
-                  ? field.map((item) => ({
-                      label: item.label,
-                      value: item.value,
-                    }))
-                  : null,
-              );
+              setValue(field, value);
             }}
           />
         </Card>

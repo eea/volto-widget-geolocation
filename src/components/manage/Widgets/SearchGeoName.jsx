@@ -24,6 +24,26 @@ export default (props) => {
   const loading = subrequest[geonamesUrl]?.loading;
   const dispatch = useDispatch();
 
+  const saveResultsValue = (item) => {
+    setResultsValue((prevState) => [
+      ...(prevState || []),
+      {
+        label: item.toponymName,
+        value: 'geo-' + item.geonameId,
+      },
+    ]);
+  };
+
+  const changeTaglist = (field, value) => {
+    setResultsValue((prevState) =>
+      field
+        ? field.map((item) => ({
+            label: item.label,
+            value: item.value,
+          }))
+        : null,
+    );
+  };
   //componentDidMount
   React.useEffect(() => {
     dispatch(getGeonames());
@@ -40,7 +60,7 @@ export default (props) => {
       data={data}
       schema={schema}
       block={block}
-      setValue={setResultsValue}
+      setValue={changeTaglist}
       value={resultsValue}
       title={schema.title}
       icon={<VoltoIcon size="24px" name={worldSVG} />}
@@ -71,7 +91,7 @@ export default (props) => {
           <ListResults
             results={results}
             loading={loading}
-            setValue={setResultsValue}
+            setValue={saveResultsValue}
             value={resultsValue}
           />
         )

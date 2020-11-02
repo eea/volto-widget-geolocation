@@ -51,17 +51,12 @@ const ListResults = ({ results, loading, setValue, value }) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     if (
-                      value?.find((val) => val.value === item.geonameId) ===
-                      undefined
+                      value?.find(
+                        (val) => val.value === 'geo-' + item.geonameId,
+                      ) === undefined
                     ) {
                       //results.splice(index, 1); do not remove result onClick
-                      setValue((prevState) => [
-                        ...(prevState || []),
-                        {
-                          label: item.toponymName,
-                          value: 'geo-' + item.geonameId,
-                        },
-                      ]);
+                      setValue(item);
                     }
                   }}
                 >
