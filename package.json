@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-widget-geolocation",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "volto-widget-geolocation: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -8,6 +8,9 @@
   "homepage": "https://github.com/eea/volto-widget-geolocation",
   "keywords": [
     "volto-addon",
+    "volto-widget",
+    "volto-geonames",
+    "volto-geolocation",
     "volto",
     "plone",
     "react"
@@ -16,14 +19,19 @@
     "type": "git",
     "url": "git@github.com:eea/volto-widget-geolocation.git"
   },
-  "devDependencies": {
-    "release-it": "*"
+  "dependencies": {
+    "@eeacms/volto-block-style": "^1.0.0",
+    "i18n-iso-countries": "6.2.1"
   },
   "scripts": {
     "release": "release-it",
-    "bootstrap": "./bootstrap"
-  },
-  "dependencies": {
-    "i18n-iso-countries": "6.2.1"
+    "bootstrap": "node bootstrap",
+    "stylelint": "../../../node_modules/stylelint/bin/stylelint.js --allow-empty-input 'src/**/*.{css,less}'",
+    "stylelint:overrides": "../../../node_modules/.bin/stylelint --syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides'",
+    "stylelint:fix": "yarn stylelint --fix && yarn stylelint:overrides --fix",
+    "prettier": "../../../node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}'",
+    "prettier:fix": "../../../node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,json,css,less,md}'",
+    "lint": "../../../node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx}'",
+    "lint:fix": "../../../node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'"
   }
 }

@@ -4,32 +4,16 @@
 
 Before starting make sure your development environment is properly set. See [Volto Developer Documentation](https://docs.voltocms.com/getting-started/install/)
 
-1.  Install `mrs.developer`
+1.  Make sure you have installed `yo`, `@plone/generator-volto` and `mrs-developer`
 
-        $ npm install -g mrs.developer
-
-1.  Install `@plone/create-volto-app`
-
-        $ npm install -g @plone/create-volto-app
+        $ npm install -g yo
+        $ npm install -g @plone/generator-volto
+        $ npm install -g mrs-developer
 
 1.  Create new volto app
 
-        $ create-volto-app my-volto-project
+        $ yo @plone/volto my-volto-project --addon @eeacms/volto-widget-geolocation --workspace src/addons/volto-widget-geolocation
         $ cd my-volto-project
-
-1.  Update `package.json` with the following information:
-
-        {
-            "scripts": {
-                "develop": "missdev --config=jsconfig.json --output=addons"
-            },
-
-            "addons": [
-                "@eeacms/volto-widget-geolocation",
-                "@eeacms/volto-block-style",
-                "volto-slate:asDefault"
-            ],
-        }
 
 1.  Add the following to `mrs.developer.json`:
 

@@ -1,38 +1,36 @@
 # volto-widget-geolocation
-
 [![Releases](https://img.shields.io/github/v/release/eea/volto-widget-geolocation)](https://github.com/eea/volto-widget-geolocation/releases)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-widget-geolocation%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-widget-geolocation/job/master/display/redirect)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-widget-geolocation%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-widget-geolocation/job/develop/display/redirect)
 
-[Volto](https://github.com/plone/volto) add-on
+[Volto](https://github.com/plone/volto) Widget: Geolocation with [GeoNames](https://www.geonames.org/) integration
 
 ## Features
 
+### Geolocation Widget with [GeoNames](https://www.geonames.org/) integration
+
 ![Widget geolocation](https://github.com/eea/volto-widget-geolocation/raw/docs/docs/volto-widget-geolocation.gif)
 
-Demo GIF
 
 ## Getting started
 
 1. Create new volto project if you don't already have one:
 
    ```
-   $ npm install -g @plone/create-volto-app
-   $ create-volto-app my-volto-project
-   $ cd my-volto-project
+   $ npm install -g yo @plone/generator-volto
+   $ yo @plone/volto my-volto-project --addon @eeacms/volto-widget-geolocation
+   $ yarn add @eeacms/volto-widget-geolocation
    ```
 
-1. Update `package.json`:
+1. If you already have a volto project, just update `package.json`:
 
    ```JSON
    "addons": [
-       "@eeacms/volto-widget-geolocation",
-       "@eeacms/volto-block-style",
-       "volto-slate:asDefault"
+       "@eeacms/volto-widget-geolocation"
    ],
 
    "dependencies": {
-       "@eeacms/volto-widget-geolocation": "1.0.0",
-       "@eeacms/volto-block-style": "github:eea/volto-block-style",
-       "volto-slate": "github:eea/volto-slate",
+       "@eeacms/volto-widget-geolocation": "^1.0.0"
    }
    ```
 
