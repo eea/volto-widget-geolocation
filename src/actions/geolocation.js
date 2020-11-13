@@ -1,5 +1,4 @@
 import { GET_GEONAMES } from '@eeacms/volto-widget-geolocation/actionTypes';
-import { settings } from '@plone/volto/config';
 /**
  * getGeonames function.
  * @function getGeonames

@@ -26,6 +26,7 @@ export function makeSearchUrl(data, text, password, countryCode) {
           filterFeature[item]
         }&continentCode=${continents}&maxRows=10&username=${password}`;
       }
+      return undefined;
     });
     if (url.every((item) => item === undefined))
       return `https://secure.geonames.org/searchJSON?q=${text}&country=${

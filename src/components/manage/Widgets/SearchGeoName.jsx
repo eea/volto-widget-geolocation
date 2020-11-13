@@ -47,7 +47,7 @@ export default (props) => {
   //componentDidMount
   React.useEffect(() => {
     dispatch(getGeonames());
-  }, []);
+  }, [dispatch]);
 
   const onChangeValues = React.useCallback(
     (id, value) => {

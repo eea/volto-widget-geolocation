@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, Label, Segment } from 'semantic-ui-react';
+import { Grid, Button, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy } from 'lodash';
