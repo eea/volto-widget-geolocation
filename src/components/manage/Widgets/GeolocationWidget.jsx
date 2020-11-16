@@ -61,7 +61,12 @@ const GeolocationWidget = (props) => {
   };
 
   return (
-    <FormFieldWrapper {...props} columns={1}>
+    <FormFieldWrapper
+      {...props}
+      id="geolocation"
+      title="Geo Coverage"
+      columns={1}
+    >
       <Grid>
         <Grid.Row stretched>
           <Grid.Column width="4">

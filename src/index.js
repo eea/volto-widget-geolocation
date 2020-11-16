@@ -18,6 +18,7 @@ const applyConfig = (config) => {
   config.settings.allowed_cors_destinations = [
     ...(config.settings.allowed_cors_destinations || []),
     'secure.geonames.org',
+    'alin.dev2aws.eea.europa.eu',
   ];
 
   config.addonReducers = {
