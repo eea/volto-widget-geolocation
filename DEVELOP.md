@@ -12,7 +12,7 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1.  Create new volto app
 
-        $ yo @plone/volto my-volto-project --addon @eeacms/volto-widget-geolocation --workspace src/addons/volto-widget-geolocation
+        $ yo @plone/volto my-volto-project --addon @eeacms/volto-widget-geolocation
         $ cd my-volto-project
 
 1.  Add the following to `mrs.developer.json`:

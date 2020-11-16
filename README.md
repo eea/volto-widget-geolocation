@@ -19,7 +19,9 @@
    ```
    $ npm install -g yo @plone/generator-volto
    $ yo @plone/volto my-volto-project --addon @eeacms/volto-widget-geolocation
-   $ yarn add @eeacms/volto-widget-geolocation
+
+   $ cd my-volto-project
+   $ yarn add -W @eeacms/volto-widget-geolocation
    ```
 
 1. If you already have a volto project, just update `package.json`:
@@ -44,6 +46,7 @@
 1. Go to http://localhost:3000
 
 1. Happy editing!
+
 
 ## How to contribute
 
