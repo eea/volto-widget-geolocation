@@ -32,7 +32,10 @@ const ListResults = ({ results, loading, setValue, value }) => {
       )}
       <Accordion fluid styled exclusive={false}>
         {results?.map((item, index) => (
-          <Accordion.Accordion style={{ borderBottom: '1px solid #c7cdd8' }}>
+          <Accordion.Accordion
+            style={{ borderBottom: '1px solid #c7cdd8' }}
+            key={index}
+          >
             <Accordion.Title
               active={activeAccIndex === 0}
               index={index}
