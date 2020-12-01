@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Button, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
+import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy } from 'lodash';
+import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
-import { biogeographicalData } from './biogeographical';
+import { getBioTags } from './util';
 import SearchGeoName from './SearchGeoName';
 import { eeaCountries, eeaGroups } from './eeaCountries';
 import {
@@ -38,11 +40,17 @@ const Group = (props) => <components.Group {...props} />;
 const GeolocationWidget = (props) => {
   const { data, block, onChange, intl, onChangeSchema } = props;
   const [isOpenPopup, setPopup] = useState(false);
+  const dispatch = useDispatch();
+  const geoData = useSelector((state) => state.geolocation?.data || {});
+  const { biotags, country_mapping, geotags } = geoData;
+  React.useEffect(() => {
+    dispatch(getGeoData());
+  }, [dispatch]);
 
   let options = [
     {
       label: 'Biogeographical regions',
-      options: biogeographicalData,
+      options: getBioTags(biotags),
     },
     {
       label: 'Countries groups',

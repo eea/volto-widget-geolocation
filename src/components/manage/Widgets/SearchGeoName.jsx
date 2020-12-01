@@ -5,7 +5,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
-import { getGeonames } from '@eeacms/volto-widget-geolocation/actions';
+import { getGeonameSettings } from '@eeacms/volto-widget-geolocation/actions';
 import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
@@ -46,7 +46,7 @@ export default (props) => {
   };
   //componentDidMount
   React.useEffect(() => {
-    dispatch(getGeonames());
+    dispatch(getGeonameSettings());
   }, [dispatch]);
 
   const onChangeValues = React.useCallback(

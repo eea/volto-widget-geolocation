@@ -3,4 +3,7 @@
  * @module actions
  * @example import { getGeoNames } from 'actions';
  */
-export { getGeonames } from '@eeacms/volto-widget-geolocation/actions/geolocation';
+export {
+  getGeonameSettings,
+  getGeoData,
+} from '@eeacms/volto-widget-geolocation/actions/geolocation';

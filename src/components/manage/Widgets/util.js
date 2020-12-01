@@ -38,3 +38,11 @@ export function makeSearchUrl(data, text, password, countryCode) {
     countryCode || ''
   }&continentCode=${continents}&maxRows=10&username=${password}`;
 }
+
+export function getBioTags(biotags = {}) {
+  const bioRegions = Object.keys(biotags).map((item) => ({
+    label: biotags[item].title,
+    value: item,
+  }));
+  return bioRegions;
+}
