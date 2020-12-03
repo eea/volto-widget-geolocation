@@ -4,14 +4,14 @@ import { Grid, Button, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
-import { unionBy } from 'lodash';
+import { unionBy, keys } from 'lodash';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
 import { getBioTags } from './util';
 import SearchGeoName from './SearchGeoName';
-import { eeaCountries, eeaGroups } from './eeaCountries';
+import { eeaCountries } from './eeaCountries';
 import {
   Option,
   DropdownIndicator,
@@ -57,14 +57,29 @@ const GeolocationWidget = (props) => {
       options: eeaCountries,
     },
   ];
-
+  const eeaGroups = () => {
+    return keys(geotags).map((item) => ({
+      label: item,
+      value: item,
+    }));
+  };
   const getOptions = (arr, state) => {
     return state ? unionBy(arr, state, 'label') : arr;
   };
 
   const handleChange = (e, value) => {
     let arr = [];
-    arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+    //arr = Object.keys(geotags).filter((item) => item.group?.includes(e.label));
+    arr = keys(geotags[e.value])
+      .filter((item) => item !== 'title')
+      .map((item) =>
+        item !== 'title'
+          ? {
+              value: item,
+              label: geotags[e.value][item],
+            }
+          : '',
+      );
     onChange(getOptions(data.geolocation, arr));
   };
 
@@ -91,7 +106,7 @@ const GeolocationWidget = (props) => {
               name="select-listingblock-template"
               className="react-select-container"
               classNamePrefix="react-select"
-              options={eeaGroups}
+              options={eeaGroups()}
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option }}
