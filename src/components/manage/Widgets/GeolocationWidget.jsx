@@ -11,7 +11,7 @@ import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 import Select, { components } from 'react-select';
 import { getBioTags, getCountries } from './util';
 import SearchGeoName from './SearchGeoName';
-import { eeaCountries, eeaGroups } from './eeaCountries';
+import { eeaCountries, countryGroups } from './eeaCountries';
 import { biogeographicalData } from './biogeographical';
 import {
   Option,
@@ -64,7 +64,7 @@ const GeolocationWidget = (props) => {
           label: item,
           value: item,
         }))
-      : eeaGroups;
+      : countryGroups;
   };
   const getOptions = (arr, state) => {
     return state ? unionBy(arr, state, 'label') : arr;
