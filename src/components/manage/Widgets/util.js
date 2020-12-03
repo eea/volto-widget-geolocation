@@ -1,5 +1,5 @@
 import countries from 'i18n-iso-countries';
-
+import { assign, values, keys } from 'lodash';
 export function getCountryCode(countryName = '') {
   return countries.getAlpha2Code(countryName, 'en');
 }
@@ -45,4 +45,14 @@ export function getBioTags(biotags = {}) {
     value: item,
   }));
   return bioRegions;
+}
+
+export function getCountries(geoTags = {}) {
+  let countries = assign(...values(geoTags));
+  return keys(countries)
+    .filter((item) => item !== 'title')
+    .map((item) => ({
+      label: countries[item],
+      value: item,
+    }));
 }

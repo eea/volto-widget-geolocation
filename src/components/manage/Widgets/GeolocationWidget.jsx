@@ -9,7 +9,7 @@ import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
-import { getBioTags } from './util';
+import { getBioTags, getCountries } from './util';
 import SearchGeoName from './SearchGeoName';
 import { eeaCountries } from './eeaCountries';
 import {
@@ -42,7 +42,7 @@ const GeolocationWidget = (props) => {
   const [isOpenPopup, setPopup] = useState(false);
   const dispatch = useDispatch();
   const geoData = useSelector((state) => state.geolocation?.data || {});
-  const { biotags, country_mapping, geotags } = geoData;
+  const { biotags, geotags = {} } = geoData;
   React.useEffect(() => {
     dispatch(getGeoData());
   }, [dispatch]);
@@ -54,7 +54,8 @@ const GeolocationWidget = (props) => {
     },
     {
       label: 'Countries groups',
-      options: eeaCountries,
+      options: getCountries(geotags),
+      //eeaCountries,
     },
   ];
   const eeaGroups = () => {
