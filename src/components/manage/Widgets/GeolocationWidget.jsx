@@ -4,14 +4,15 @@ import { Grid, Button, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
-import { unionBy, keys } from 'lodash';
+import { unionBy, keys, isEmpty } from 'lodash';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
 
 import Select, { components } from 'react-select';
 import { getBioTags, getCountries } from './util';
 import SearchGeoName from './SearchGeoName';
-import { eeaCountries } from './eeaCountries';
+import { eeaCountries, eeaGroups } from './eeaCountries';
+import { biogeographicalData } from './biogeographical';
 import {
   Option,
   DropdownIndicator,
@@ -42,7 +43,7 @@ const GeolocationWidget = (props) => {
   const [isOpenPopup, setPopup] = useState(false);
   const dispatch = useDispatch();
   const geoData = useSelector((state) => state.geolocation?.data || {});
-  const { biotags, geotags = {} } = geoData;
+  const { biotags = {}, geotags = {} } = geoData;
   React.useEffect(() => {
     dispatch(getGeoData());
   }, [dispatch]);
@@ -50,19 +51,20 @@ const GeolocationWidget = (props) => {
   let options = [
     {
       label: 'Biogeographical regions',
-      options: getBioTags(biotags),
+      options: !isEmpty(biotags) ? getBioTags(biotags) : biogeographicalData,
     },
     {
       label: 'Countries groups',
-      options: getCountries(geotags),
-      //eeaCountries,
+      options: !isEmpty(geotags) ? getCountries(geotags) : eeaCountries,
     },
   ];
   const eeaGroups = () => {
-    return keys(geotags).map((item) => ({
-      label: item,
-      value: item,
-    }));
+    return !isEmpty(geotags)
+      ? keys(geotags).map((item) => ({
+          label: item,
+          value: item,
+        }))
+      : eeaGroups;
   };
   const getOptions = (arr, state) => {
     return state ? unionBy(arr, state, 'label') : arr;
@@ -70,17 +72,20 @@ const GeolocationWidget = (props) => {
 
   const handleChange = (e, value) => {
     let arr = [];
-    //arr = Object.keys(geotags).filter((item) => item.group?.includes(e.label));
-    arr = keys(geotags[e.value])
-      .filter((item) => item !== 'title')
-      .map((item) =>
-        item !== 'title'
-          ? {
-              value: item,
-              label: geotags[e.value][item],
-            }
-          : '',
-      );
+    if (isEmpty(geotags)) {
+      arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+    } else {
+      arr = keys(geotags[e.value])
+        .filter((item) => item !== 'title')
+        .map((item) =>
+          item !== 'title'
+            ? {
+                value: item,
+                label: geotags[e.value][item],
+              }
+            : '',
+        );
+    }
     onChange(getOptions(data.geolocation, arr));
   };
 
