@@ -2,7 +2,10 @@
  * Geolocation reducer.
  * @module reducers/geolocation/geolocation
  */
-import { GET_GEONAMES } from '@eeacms/volto-widget-geolocation/actionTypes';
+import {
+  GET_GEONAMES,
+  GET_GEODATA,
+} from '@eeacms/volto-widget-geolocation/actionTypes';
 
 const initialState = {
   get: {
@@ -11,6 +14,7 @@ const initialState = {
     error: null,
   },
   api: null,
+  data: null,
   subrequests: {},
 };
 
@@ -35,6 +39,7 @@ export default function geolocation(state = initialState, action = {}) {
   let { result } = action;
   switch (action.type) {
     case `${GET_GEONAMES}_PENDING`:
+    case `${GET_GEODATA}_PENDING`:
       return {
         ...state,
         api: null,
@@ -54,10 +59,22 @@ export default function geolocation(state = initialState, action = {}) {
           error: null,
         },
       };
+    case `${GET_GEODATA}_SUCCESS`:
+      return {
+        ...state,
+        data: { ...result },
+        [getRequestKey(action.type)]: {
+          loading: false,
+          loaded: true,
+          error: null,
+        },
+      };
     case `${GET_GEONAMES}_FAIL`:
+    case `${GET_GEODATA}_FAIL`:
       return {
         ...state,
         api: null,
+        data: null,
         [getRequestKey(action.type)]: {
           loading: false,
           loaded: false,
