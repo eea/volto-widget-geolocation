@@ -32,7 +32,7 @@
    ],
 
    "dependencies": {
-       "@eeacms/volto-widget-geolocation": "^1.0.0"
+       "@eeacms/volto-widget-geolocation": "^2.0.0"
    }
    ```
 
