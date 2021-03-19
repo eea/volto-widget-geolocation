@@ -20,8 +20,7 @@
     "url": "git@github.com:eea/volto-widget-geolocation.git"
   },
   "addons": [
-    "@eeacms/volto-corsproxy",
-    "@eeacms/volto-block-style"
+    "@eeacms/volto-corsproxy"
   ],
   "dependencies": {
     "@eeacms/volto-corsproxy": "^2.0.0",
