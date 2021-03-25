@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy, keys, isEmpty } from 'lodash';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
-import SidebarPopup from '@eeacms/volto-block-style/SidebarPopup/SidebarPopup';
+import { SidebarPopup } from '@plone/volto/components';
 
 import Select, { components } from 'react-select';
 import { getBioTags, getCountries } from './util';

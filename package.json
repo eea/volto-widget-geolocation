@@ -24,7 +24,6 @@
   ],
   "dependencies": {
     "@eeacms/volto-corsproxy": "^2.0.0",
-    "@eeacms/volto-block-style": "^2.0.0",
     "i18n-iso-countries": "6.2.1"
   },
   "scripts": {
