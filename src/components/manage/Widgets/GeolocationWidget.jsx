@@ -93,6 +93,7 @@ const GeolocationWidget = (props) => {
     <FormFieldWrapper
       {...props}
       id="geolocation"
+      className="geo-field-wrapper"
       title="Geo Coverage"
       columns={1}
     >
