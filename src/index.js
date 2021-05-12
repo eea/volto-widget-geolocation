@@ -9,10 +9,11 @@ import { geolocation } from './reducers';
 const applyConfig = (config) => {
   config.widgets.widget = {
     ...config.widgets.widget,
-    geolocation: {
-      widget: GeolocationWidget,
-      vocabulary: { biogeographical: biogeographicalData, eea: eeaCountries },
-    },
+    geolocation: GeolocationWidget,
+    // {
+    //   widget: GeolocationWidget,
+    //   vocabulary: { biogeographical: biogeographicalData, eea: eeaCountries },
+    // },
     search: SearchWidget,
   };
   config.settings.allowed_cors_destinations = [

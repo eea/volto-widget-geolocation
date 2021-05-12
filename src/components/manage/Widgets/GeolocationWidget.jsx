@@ -39,7 +39,7 @@ const messages = defineMessages({
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChange, intl, onChangeSchema } = props;
+  const { data = {}, block, onChange, intl, onChangeSchema } = props;
   const [isOpenPopup, setPopup] = useState(false);
   const dispatch = useDispatch();
   const geoData = useSelector((state) => state.geolocation?.data || {});
