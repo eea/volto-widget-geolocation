@@ -36,14 +36,22 @@ const messages = defineMessages({
     defaultMessage: 'Advance search',
   },
 });
+
+const getOptions = (arr, state) => {
+  return state ? unionBy(arr, state, 'label') : arr;
+};
+
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
-  const { data, block, onChange, intl, onChangeSchema } = props;
+  const { id, value = {}, block, onChange, intl, onChangeSchema } = props;
+  const originalValue = value;
+
   const [isOpenPopup, setPopup] = useState(false);
   const dispatch = useDispatch();
   const geoData = useSelector((state) => state.geolocation?.data || {});
   const { biotags = {}, geotags = {} } = geoData;
+
   React.useEffect(() => {
     dispatch(getGeoData());
   }, [dispatch]);
@@ -58,6 +66,7 @@ const GeolocationWidget = (props) => {
       options: !isEmpty(geotags) ? getCountries(geotags) : eeaCountries,
     },
   ];
+
   const eeaGroups = () => {
     return !isEmpty(geotags)
       ? keys(geotags).map((item) => ({
@@ -66,41 +75,44 @@ const GeolocationWidget = (props) => {
         }))
       : countryGroups;
   };
-  const getOptions = (arr, state) => {
-    return state ? unionBy(arr, state, 'label') : arr;
-  };
 
-  const handleChange = (e, value) => {
+  const handleGroupChange = ({ label, value }) => {
     let arr = [];
     if (isEmpty(geotags)) {
-      arr = eeaCountries.filter((item) => item.group?.includes(e.label));
+      arr = eeaCountries.filter((item) => item.group?.includes(label));
     } else {
-      arr = keys(geotags[e.value])
+      arr = keys(geotags[value])
         .filter((item) => item !== 'title')
         .map((item) =>
           item !== 'title'
             ? {
                 value: item,
-                label: geotags[e.value][item],
+                label: geotags[value][item],
               }
             : '',
         );
     }
-    onChange(getOptions(data.geolocation, arr));
+    onChange(id, {
+      ...originalValue,
+      geolocation: getOptions(originalValue.geolocation, arr),
+    });
   };
+
+  const _groupId = `${id}-select-listingblock-template-group`;
+  const _coverageId = `${id}-select-listingblock-template-coverage`;
 
   return (
     <FormFieldWrapper
       {...props}
-      id="geolocation"
-      title="Geo Coverage"
+      title={props.title || 'Geo Coverage'}
+      className="geo-field-wrapper"
       columns={1}
     >
       <Grid>
         <Grid.Row stretched>
           <Grid.Column width="4">
             <div className="wrapper">
-              <label htmlFor="select-listingblock-template">
+              <label htmlFor={`${id}-select-listingblock-template-group`}>
                 {intl.formatMessage(messages.group)}
               </label>
             </div>
@@ -108,16 +120,16 @@ const GeolocationWidget = (props) => {
           <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
             <Select
               defaultValue={[]}
-              id="select-listingblock-template"
-              name="select-listingblock-template"
+              id={_groupId}
+              name={_groupId}
               className="react-select-container"
               classNamePrefix="react-select"
               options={eeaGroups()}
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option }}
-              //value={selectedOption || []}
-              onChange={(e, value) => handleChange(e, value)}
+              value={[]}
+              onChange={handleGroupChange}
             />
           </Grid.Column>
         </Grid.Row>
@@ -132,17 +144,22 @@ const GeolocationWidget = (props) => {
           <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
             <Select
               isMulti
-              id="select-listingblock-template"
-              name="select-listingblock-template"
+              id={_coverageId}
+              name={_coverageId}
               className="react-select-container"
               classNamePrefix="react-select"
               options={options}
               styles={customSelectStyles}
               theme={selectTheme}
               components={{ DropdownIndicator, Option, Group }}
-              value={data.geolocation}
-              onChange={(field, value) => {
-                onChange(field, value === '' ? undefined : value);
+              value={value.geolocation}
+              onChange={(geolocation) => {
+                onChange(
+                  id,
+                  geolocation === ''
+                    ? { ...value, geolocation: undefined }
+                    : { ...value, geolocation },
+                );
               }}
             />
           </Grid.Column>
@@ -156,8 +173,9 @@ const GeolocationWidget = (props) => {
               basic
               primary
               floated="left"
-              onClick={(name, value) => {
-                setPopup(value);
+              onClick={(event) => {
+                setPopup(true);
+                event.preventDefault();
               }}
             >
               <Icon
@@ -170,7 +188,7 @@ const GeolocationWidget = (props) => {
           </Segment>
           <SidebarPopup open={isOpenPopup}>
             <SearchGeoName
-              data={data}
+              data={value?.geolocation || {}}
               setPopup={setPopup}
               block={block}
               onChange={onChange}
@@ -184,7 +202,8 @@ const GeolocationWidget = (props) => {
 };
 
 GeolocationWidget.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  // data: PropTypes.objectOf(PropTypes.any).isRequired,
+  // value: PropTypes.objectOf(PropTypes.any).isRequired,
   block: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };

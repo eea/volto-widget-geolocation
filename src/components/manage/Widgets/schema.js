@@ -13,7 +13,7 @@ export const GeoSearchSchema = {
     search: {
       title: 'Search',
       description: 'Search for geo Tags',
-      widget: 'search',
+      widget: 'searchGeotags',
     },
     countries: {
       description: 'Select countries',
