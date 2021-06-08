@@ -188,7 +188,8 @@ const GeolocationWidget = (props) => {
           </Segment>
           <SidebarPopup open={isOpenPopup}>
             <SearchGeoName
-              data={value?.geolocation || {}}
+              id={id}
+              data={value}
               setPopup={setPopup}
               block={block}
               onChange={onChange}
