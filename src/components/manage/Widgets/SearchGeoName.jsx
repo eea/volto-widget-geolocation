@@ -11,14 +11,15 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
 
 export default (props) => {
-  const { data, block, setPopup, onChange, onChangeSchema } = props;
+  const { id, data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
+  const [searchUrl, setSearchUrl] = React.useState('');
   const subrequest = useSelector(
     (state) => state.content.subrequests,
     shallowEqual,
   );
   const geonamesUrl = Object.keys(subrequest).find(
-    (item) => item === data?.searchUrl,
+    (item) => item === searchUrl,
   );
   const results = subrequest[geonamesUrl]?.data?.geonames;
   const loading = subrequest[geonamesUrl]?.loading;
@@ -51,7 +52,11 @@ export default (props) => {
 
   const onChangeValues = React.useCallback(
     (id, value) => {
-      onChangeSchema(value, id);
+      if (id === 'searchUrl') {
+        setSearchUrl(value);
+      } else {
+        onChangeSchema(id, value);
+      }
     },
     [onChangeSchema],
   );
@@ -71,7 +76,7 @@ export default (props) => {
         <>
           <button
             onClick={() => {
-              onChange(resultsValue);
+              onChange(id, resultsValue);
               setPopup(false);
             }}
           >
@@ -87,7 +92,7 @@ export default (props) => {
         </>
       }
       footer={
-        Object.keys(subrequest).length > 1 && (
+        results?.length && (
           <ListResults
             results={results}
             loading={loading}
