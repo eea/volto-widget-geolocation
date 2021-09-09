@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-widget-geolocation",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "volto-widget-geolocation: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -23,7 +23,7 @@
     "@eeacms/volto-corsproxy"
   ],
   "dependencies": {
-    "@eeacms/volto-corsproxy": ">=2.1.2",
+    "@eeacms/volto-corsproxy": "*",
     "i18n-iso-countries": "6.2.1"
   },
   "devDependencies": {
