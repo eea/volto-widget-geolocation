@@ -23,7 +23,7 @@
     "@eeacms/volto-corsproxy"
   ],
   "dependencies": {
-    "@eeacms/volto-corsproxy": ">=2.1.2",
+    "@eeacms/volto-corsproxy": "*",
     "i18n-iso-countries": "6.2.1"
   },
   "devDependencies": {
