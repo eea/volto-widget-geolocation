@@ -48,7 +48,7 @@ export function getBioTags(biotags = {}) {
 }
 
 export function getCountries(geoTags = {}) {
-  let countries = assign(...values(geoTags));
+  let countries = assign({}, ...values(geoTags));
   return keys(countries)
     .filter((item) => item !== 'title')
     .map((item) => ({
