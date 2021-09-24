@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { unionBy, keys, isEmpty } from 'lodash';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
+import { GeolocationWidgetView } from '@eeacms/volto-widget-geolocation/components';
+
 import { SidebarPopup } from '@plone/volto/components';
 
 import Select, { components } from 'react-select';
@@ -104,99 +106,119 @@ const GeolocationWidget = (props) => {
   return (
     <FormFieldWrapper
       {...props}
-      title={props.title || 'Geo Coverage'}
+      title={props.title || 'Geographic coverage'}
       className="geo-field-wrapper"
       columns={1}
     >
       <Grid>
-        <Grid.Row stretched>
-          <Grid.Column width="4">
-            <div className="wrapper">
-              <label htmlFor={`${id}-select-listingblock-template-group`}>
-                {intl.formatMessage(messages.group)}
-              </label>
-            </div>
-          </Grid.Column>
-          <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
-            <Select
-              defaultValue={[]}
-              id={_groupId}
-              name={_groupId}
-              className="react-select-container"
-              classNamePrefix="react-select"
-              options={eeaGroups()}
-              styles={customSelectStyles}
-              theme={selectTheme}
-              components={{ DropdownIndicator, Option }}
-              value={[]}
-              onChange={handleGroupChange}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row stretched>
-          <Grid.Column width="4">
-            <div className="wrapper">
-              <label htmlFor="select-listingblock-template">
-                {intl.formatMessage(messages.coverage)}
-              </label>
-            </div>
-          </Grid.Column>
-          <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
-            <Select
-              isMulti
-              id={_coverageId}
-              name={_coverageId}
-              className="react-select-container"
-              classNamePrefix="react-select"
-              options={options}
-              styles={customSelectStyles}
-              theme={selectTheme}
-              components={{ DropdownIndicator, Option, Group }}
-              value={value.geolocation}
-              onChange={(geolocation) => {
-                onChange(
-                  id,
-                  geolocation === ''
-                    ? { ...value, geolocation: undefined }
-                    : { ...value, geolocation },
-                );
-              }}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row stretched>
-          <Segment attached className="actions">
-            <label className={'popup-label'}>
-              {intl.formatMessage(messages.search)}
-            </label>
-            <Button
-              basic
-              primary
-              floated="left"
-              onClick={(event) => {
-                setPopup(true);
-                event.preventDefault();
-              }}
-            >
-              <Icon
-                name={zoomSVG}
-                size="30px"
-                className="addSVG"
-                title={intl.formatMessage(messages.search)}
+        {originalValue?.readOnly ? (
+          <Grid.Row stretched>
+            <Grid.Column width="4">
+              <div className="wrapper">
+                <label htmlFor="select-listingblock-template">
+                  {intl.formatMessage(messages.coverage)}
+                </label>
+              </div>
+            </Grid.Column>
+            <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
+              <GeolocationWidgetView
+                value={originalValue}
+                className="read-only"
               />
-            </Button>
-          </Segment>
-          <SidebarPopup open={isOpenPopup}>
-            <SearchGeoName
-              id={id}
-              data={value}
-              setPopup={setPopup}
-              block={block}
-              onChange={onChange}
-              onChangeSchema={onChangeSchema}
-            />
-          </SidebarPopup>
-        </Grid.Row>
+            </Grid.Column>
+          </Grid.Row>
+        ) : (
+          <>
+            <Grid.Row stretched>
+              <Grid.Column width="4">
+                <div className="wrapper">
+                  <label htmlFor={`${id}-select-listingblock-template-group`}>
+                    {intl.formatMessage(messages.group)}
+                  </label>
+                </div>
+              </Grid.Column>
+              <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
+                <Select
+                  defaultValue={[]}
+                  id={_groupId}
+                  name={_groupId}
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  options={eeaGroups()}
+                  styles={customSelectStyles}
+                  theme={selectTheme}
+                  components={{ DropdownIndicator, Option }}
+                  value={[]}
+                  onChange={handleGroupChange}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row stretched>
+              <Grid.Column width="4">
+                <div className="wrapper">
+                  <label htmlFor="select-listingblock-template">
+                    {intl.formatMessage(messages.coverage)}
+                  </label>
+                </div>
+              </Grid.Column>
+              <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
+                <Select
+                  isMulti
+                  id={_coverageId}
+                  name={_coverageId}
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  options={options}
+                  styles={customSelectStyles}
+                  theme={selectTheme}
+                  components={{ DropdownIndicator, Option, Group }}
+                  value={value.geolocation}
+                  onChange={(geolocation) => {
+                    onChange(
+                      id,
+                      geolocation === ''
+                        ? { ...value, geolocation: undefined }
+                        : { ...value, geolocation },
+                    );
+                  }}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row stretched>
+              <Segment attached className="actions">
+                <label className={'popup-label'}>
+                  {intl.formatMessage(messages.search)}
+                </label>
+                <Button
+                  basic
+                  primary
+                  floated="left"
+                  onClick={(event) => {
+                    setPopup(true);
+                    event.preventDefault();
+                  }}
+                >
+                  <Icon
+                    name={zoomSVG}
+                    size="30px"
+                    className="addSVG"
+                    title={intl.formatMessage(messages.search)}
+                  />
+                </Button>
+              </Segment>
+              <SidebarPopup open={isOpenPopup}>
+                <SearchGeoName
+                  id={id}
+                  data={value}
+                  setPopup={setPopup}
+                  block={block}
+                  onChange={onChange}
+                  onChangeSchema={onChangeSchema}
+                />
+              </SidebarPopup>
+            </Grid.Row>
+          </>
+        )}
       </Grid>
     </FormFieldWrapper>
   );

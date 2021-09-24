@@ -3,6 +3,9 @@
  * @module components
  */
 export GeolocationWidget from './manage/Widgets/GeolocationWidget';
+export GeolocationWidgetEdit from './manage/Widgets/GeolocationWidget';
+export GeolocationWidgetView from './themes/Widgets/GeolocationWidget';
+
 export { biogeographicalData } from './manage/Widgets/biogeographical';
 export { eeaCountries } from './manage/Widgets/eeaCountries';
 export SearchWidget from './manage/Widgets/SearchWidget.jsx';
