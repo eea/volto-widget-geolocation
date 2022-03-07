@@ -4,7 +4,7 @@ pipeline {
   environment {
         GIT_NAME = "volto-widget-geolocation"
         NAMESPACE = "@eeacms"
-        SONARQUBE_TAGS = "volto.eea.europa.eu,clms.land.copernicus.eu,www.eea.europa.eu-ims,climate-energy.eea.europa.eu,sustainability.eionet.europa.eu,forest.eea.europa.eu,biodiversity.europa.eu,industry.eea.europa.eu,water.europa.eu-freshwater"
+        SONARQUBE_TAGS = "volto.eea.europa.eu,clms.land.copernicus.eu,www.eea.europa.eu-ims,climate-energy.eea.europa.eu,sustainability.eionet.europa.eu,forest.eea.europa.eu,biodiversity.europa.eu,industry.eea.europa.eu,water.europa.eu-freshwater,demo-www.eea.europa.eu"
         DEPENDENCIES = ""
     }
 
