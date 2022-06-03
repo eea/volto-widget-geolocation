@@ -36,7 +36,7 @@ const messages = defineMessages({
  * @extends Component
  */
 const SearchWidget = (props) => {
-  const { onChange, data } = props;
+  const { onChange, data = {} } = props;
   const { countries } = data;
   const [text, setText] = useState('');
   const dispatch = useDispatch();

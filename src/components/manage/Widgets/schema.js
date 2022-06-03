@@ -1,6 +1,6 @@
 import { eeaCountries } from './eeaCountries';
 
-export const GeoSearchSchema = {
+export const GeoSearchSchema = (props) => ({
   title: 'GeoGraphical Search',
   fieldsets: [
     {
@@ -51,4 +51,4 @@ export const GeoSearchSchema = {
     },
   },
   required: [],
-};
+});

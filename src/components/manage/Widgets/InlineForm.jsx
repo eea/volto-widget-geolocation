@@ -27,22 +27,23 @@ const messages = defineMessages({
   },
 });
 
-const InlineForm = ({
-  block,
-  data,
-  setValue,
-  description,
-  value,
-  error, // Such as {message: "It's not good"}
-  errors = {},
-  onChangeField,
-  schema,
-  title,
-  icon,
-  headerActions,
-  footer,
-  intl,
-}) => {
+const InlineForm = (props) => {
+  const {
+    block,
+    data,
+    setValue,
+    description,
+    value,
+    error, // Such as {message: "It's not good"}
+    errors = {},
+    onChangeField,
+    schema,
+    title,
+    icon,
+    headerActions,
+    footer,
+    intl,
+  } = props;
   const _ = intl.formatMessage;
   const defaultFieldset = schema.fieldsets.find((o) => o.id === 'default');
   const other = schema.fieldsets.filter((o) => o.id !== 'default');

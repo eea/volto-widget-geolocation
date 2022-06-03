@@ -172,7 +172,7 @@ const GeolocationWidget = (props) => {
                   styles={customSelectStyles}
                   theme={selectTheme}
                   components={{ DropdownIndicator, Option, Group }}
-                  value={value.geolocation}
+                  value={value.geolocation || value}
                   onChange={(geolocation) => {
                     onChange(
                       id,
