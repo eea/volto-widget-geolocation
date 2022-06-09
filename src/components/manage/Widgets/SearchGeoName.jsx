@@ -15,7 +15,6 @@ export default (props) => {
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
   const InlineFormSchema = schema(props);
   const [searchUrl, setSearchUrl] = React.useState('');
-  const [InlineFormData, setInlineFormData] = React.useState({}); //eea.coremetadata
   const subrequest = useSelector(
     (state) => state.content.subrequests,
     shallowEqual,
@@ -62,13 +61,12 @@ export default (props) => {
         onChange('geo_coverage', { ...data, [id]: value }); //eea.coremetadata: As we don't have blocksData here
       }
     },
-    [onChangeSchema],
+    [onChangeSchema, onChange, data],
   );
   return (
     <InlineForm
       data={data}
       schema={InlineFormSchema}
-      InlineFormData={InlineFormData}
       block={block}
       setValue={changeTaglist}
       value={resultsValue}
