@@ -59,7 +59,7 @@ export default (props) => {
       } else if (onChangeSchema) {
         onChangeSchema(id, value);
       } else {
-        setInlineFormData({ [id]: value }); //eea.coremetadata: As we don't have blocksData here
+        onChange('geo_coverage', { ...data, [id]: value }); //eea.coremetadata: As we don't have blocksData here
       }
     },
     [onChangeSchema],
