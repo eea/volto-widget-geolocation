@@ -52,13 +52,13 @@ export default (props) => {
   }, [dispatch]);
 
   const onChangeValues = React.useCallback(
-    (id, value) => {
-      if (id === 'searchUrl') {
+    (field, value) => {
+      if (field === 'searchUrl') {
         setSearchUrl(value);
       } else if (onChangeSchema) {
-        onChangeSchema(id, value);
+        onChangeSchema(field, value);
       } else {
-        onChange('geo_coverage', { ...data, [id]: value }); //eea.coremetadata: As we don't have blocksData here
+        onChange(id, { ...data, [field]: value }); //eea.coremetadata: As we don't have blocksData here
       }
     },
     [onChangeSchema, onChange, data],
