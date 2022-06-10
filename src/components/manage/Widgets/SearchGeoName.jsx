@@ -13,6 +13,7 @@ import checkSVG from '@plone/volto/icons/check.svg';
 export default (props) => {
   const { id, data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
+  const InlineFormSchema = schema(props);
   const [searchUrl, setSearchUrl] = React.useState('');
   const subrequest = useSelector(
     (state) => state.content.subrequests,
@@ -51,19 +52,21 @@ export default (props) => {
   }, [dispatch]);
 
   const onChangeValues = React.useCallback(
-    (id, value) => {
-      if (id === 'searchUrl') {
+    (field, value) => {
+      if (field === 'searchUrl') {
         setSearchUrl(value);
+      } else if (onChangeSchema) {
+        onChangeSchema(field, value);
       } else {
-        onChangeSchema(id, value);
+        onChange(id, { ...data, [field]: value }); //eea.coremetadata: As we don't have blocksData here
       }
     },
-    [onChangeSchema],
+    [onChangeSchema, onChange, data, id],
   );
   return (
     <InlineForm
       data={data}
-      schema={schema}
+      schema={InlineFormSchema}
       block={block}
       setValue={changeTaglist}
       value={resultsValue}
@@ -76,7 +79,12 @@ export default (props) => {
         <>
           <button
             onClick={() => {
-              onChange(id, resultsValue);
+              onChange(
+                id,
+                Array.isArray(resultsValue) //eea.coremetadata behaviour #https://github.com/eea/eea.coremetadata/blob/develop/eea/coremetadata/interfaces.py#L130
+                  ? { geolocation: resultsValue }
+                  : resultsValue,
+              );
               setPopup(false);
             }}
           >
@@ -101,6 +109,7 @@ export default (props) => {
           />
         )
       }
+      {...props}
     />
   );
 };
