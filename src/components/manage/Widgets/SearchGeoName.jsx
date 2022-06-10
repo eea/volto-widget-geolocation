@@ -61,7 +61,7 @@ export default (props) => {
         onChange(id, { ...data, [field]: value }); //eea.coremetadata: As we don't have blocksData here
       }
     },
-    [onChangeSchema, onChange, data],
+    [onChangeSchema, onChange, data, id],
   );
   return (
     <InlineForm
