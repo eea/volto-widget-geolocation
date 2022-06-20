@@ -34,8 +34,8 @@ const messages = defineMessages({
     defaultMessage: 'Geographic group',
   },
   search: {
-    id: 'Advance search',
-    defaultMessage: 'Advance search',
+    id: 'Advanced search',
+    defaultMessage: 'Advanced search',
   },
 });
 
