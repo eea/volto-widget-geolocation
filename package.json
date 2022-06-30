@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-widget-geolocation",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "volto-widget-geolocation: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
