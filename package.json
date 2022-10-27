@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-widget-geolocation",
-  "version": "4.0.6",
+  "version": "5.0.0",
   "description": "volto-widget-geolocation: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -27,8 +27,10 @@
     "i18n-iso-countries": "6.2.1"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.5",
-    "babel-plugin-transform-class-properties": "^6.24.1"
+    "@plone/scripts": "*",
+    "@cypress/code-coverage": "^3.10.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "md5": "^2.3.0"
   },
   "scripts": {
     "release": "release-it",

@@ -6,11 +6,9 @@ import {
 import { geolocation } from './reducers';
 
 const applyConfig = (config) => {
-  config.widgets.widget = {
-    ...config.widgets.widget,
-    geolocation: GeolocationWidgetEdit,
-    searchGeotags: SearchWidget,
-  };
+  config.widgets.widget.geolocation = GeolocationWidgetEdit;
+  config.widgets.widget.searchGeotags = SearchWidget;
+
   config.settings.allowed_cors_destinations = [
     ...(config.settings.allowed_cors_destinations || []),
     'secure.geonames.org',
