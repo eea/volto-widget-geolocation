@@ -52,7 +52,7 @@ const GeolocationWidget = (props) => {
   const [isOpenPopup, setPopup] = useState(false);
   const dispatch = useDispatch();
   const geoData = useSelector((state) => state.geolocation?.data || {});
-  const { biotags = {}, geotags = {} } = geoData;
+  const { biotags = {}, geotags = {}, country_mappings = {} } = geoData;
 
   React.useEffect(() => {
     dispatch(getGeoData());
@@ -65,7 +65,9 @@ const GeolocationWidget = (props) => {
     },
     {
       label: 'Countries groups',
-      options: !isEmpty(geotags) ? getCountries(geotags) : eeaCountries,
+      options: !isEmpty(geotags)
+        ? getCountries(geotags, country_mappings)
+        : eeaCountries,
     },
   ];
 
@@ -83,16 +85,22 @@ const GeolocationWidget = (props) => {
     if (isEmpty(geotags)) {
       arr = eeaCountries.filter((item) => item.group?.includes(label));
     } else {
-      arr = keys(geotags[value])
+      const countries = geotags[value] || {};
+      arr = keys(countries)
         .filter((item) => item !== 'title')
-        .map((item) =>
-          item !== 'title'
-            ? {
-                value: item,
-                label: geotags[value][item],
-              }
-            : '',
-        );
+        .map((item) => {
+          if (keys(country_mappings).includes(countries[item])) {
+            return {
+              value: item,
+              label: country_mappings[countries[item]],
+            };
+          } else {
+            return {
+              value: item,
+              label: countries[item],
+            };
+          }
+        });
     }
     onChange(id, {
       ...originalValue,
@@ -227,7 +235,7 @@ const GeolocationWidget = (props) => {
 GeolocationWidget.propTypes = {
   // data: PropTypes.objectOf(PropTypes.any).isRequired,
   // value: PropTypes.objectOf(PropTypes.any).isRequired,
-  block: PropTypes.string.isRequired,
+  block: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 

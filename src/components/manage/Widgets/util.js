@@ -47,12 +47,21 @@ export function getBioTags(biotags = {}) {
   return bioRegions;
 }
 
-export function getCountries(geoTags = {}) {
+export function getCountries(geoTags = {}, country_mappings = {}) {
   let countries = assign({}, ...values(geoTags));
   return keys(countries)
     .filter((item) => item !== 'title')
-    .map((item) => ({
-      label: countries[item],
-      value: item,
-    }));
+    .map((item) => {
+      if (keys(country_mappings).includes(countries[item])) {
+        return {
+          label: country_mappings[countries[item]],
+          value: item,
+        };
+      } else {
+        return {
+          label: countries[item],
+          value: item,
+        };
+      }
+    });
 }
