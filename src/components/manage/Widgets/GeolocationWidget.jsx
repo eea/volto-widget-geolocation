@@ -235,7 +235,7 @@ const GeolocationWidget = (props) => {
 GeolocationWidget.propTypes = {
   // data: PropTypes.objectOf(PropTypes.any).isRequired,
   // value: PropTypes.objectOf(PropTypes.any).isRequired,
-  block: PropTypes.string.isRequired,
+  block: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
