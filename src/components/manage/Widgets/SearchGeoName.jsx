@@ -2,6 +2,7 @@ import React from 'react';
 import InlineForm from './InlineForm';
 import { Icon as VoltoIcon } from '@plone/volto/components';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { keys } from 'lodash';
 
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
@@ -19,6 +20,8 @@ export default (props) => {
     (state) => state.content.subrequests,
     shallowEqual,
   );
+  const geoData = useSelector((state) => state.geolocation?.data || {});
+  const { country_mappings = {} } = geoData;
   const geonamesUrl = Object.keys(subrequest).find(
     (item) => item === searchUrl,
   );
@@ -30,7 +33,9 @@ export default (props) => {
     setResultsValue((prevState) => [
       ...(prevState || []),
       {
-        label: item.toponymName,
+        label: keys(country_mappings).includes(item.toponymName)
+          ? country_mappings[item.toponymName]
+          : item.toponymName,
         value: 'geo-' + item.geonameId,
       },
     ]);
@@ -106,6 +111,7 @@ export default (props) => {
             loading={loading}
             setValue={saveResultsValue}
             value={resultsValue}
+            country_mappings={country_mappings}
           />
         )
       }
