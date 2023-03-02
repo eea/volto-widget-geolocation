@@ -8,12 +8,19 @@ import {
   Accordion,
   Button,
 } from 'semantic-ui-react';
+import { keys } from 'lodash';
 import { Icon } from '@plone/volto/components';
 import rightSVG from '@plone/volto/icons/right-key.svg';
 import downSVG from '@plone/volto/icons/down-key.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 
-const ListResults = ({ results, loading, setValue, value }) => {
+const ListResults = ({
+  results,
+  loading,
+  setValue,
+  value,
+  country_mappings,
+}) => {
   const [activeAccIndex, setActiveAccIndex] = React.useState(0);
 
   function handleAccClick(e, titleProps) {
@@ -45,7 +52,9 @@ const ListResults = ({ results, loading, setValue, value }) => {
                 display: 'flex',
               }}
             >
-              {item.toponymName}
+              {keys(country_mappings).includes(item.toponymName)
+                ? country_mappings[item.toponymName]
+                : item.toponymName}
               <div>
                 <Button
                   basic
