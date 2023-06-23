@@ -6,11 +6,9 @@
 import React, { useState } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { compose } from 'redux';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { defineMessages, injectIntl } from 'react-intl';
-import { FormFieldWrapper } from '@plone/volto/components';
-import { Icon } from '@plone/volto/components';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 import { getCountryCode, makeSearchUrl } from './util';
 import countries from 'i18n-iso-countries';

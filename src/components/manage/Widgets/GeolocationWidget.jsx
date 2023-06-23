@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import { Grid, Button, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
-import { FormFieldWrapper, Icon } from '@plone/volto/components';
+import { FormFieldWrapper, Icon, SidebarPopup } from '@plone/volto/components';
 import { unionBy, keys, isEmpty } from 'lodash';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import { GeolocationWidgetView } from '@eeacms/volto-widget-geolocation/components';
-
-import { SidebarPopup } from '@plone/volto/components';
-
 import Select, { components } from 'react-select';
 import { getBioTags, getCountries } from './util';
 import SearchGeoName from './SearchGeoName';
