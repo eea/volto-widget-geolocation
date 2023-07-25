@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, Segment } from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon, SidebarPopup } from '@plone/volto/components';
@@ -77,7 +77,16 @@ const GeolocationWidget = (props) => {
       : countryGroups;
   };
 
-  const handleGroupChange = ({ label, value }) => {
+  const handleGroupChange = (selectedOption) => {
+    if (!selectedOption) {
+      onChange(id, {
+        ...originalValue,
+        geolocation: [],
+        selectedGroup: null,
+      });
+      return;
+    }
+    const { label, value } = selectedOption;
     let arr = [];
     if (isEmpty(geotags)) {
       arr = eeaCountries.filter((item) => item.group?.includes(label));
@@ -102,6 +111,7 @@ const GeolocationWidget = (props) => {
     onChange(id, {
       ...originalValue,
       geolocation: getOptions(originalValue.geolocation, arr),
+      selectedGroup: selectedOption,
     });
   };
 
@@ -144,7 +154,6 @@ const GeolocationWidget = (props) => {
               </Grid.Column>
               <Grid.Column width="8" style={{ flexDirection: 'unset' }}>
                 <Select
-                  defaultValue={[]}
                   id={_groupId}
                   name={_groupId}
                   className="react-select-container"
@@ -153,8 +162,9 @@ const GeolocationWidget = (props) => {
                   styles={customSelectStyles}
                   theme={selectTheme}
                   components={{ DropdownIndicator, Option }}
-                  value={[]}
+                  value={originalValue.selectedGroup || []}
                   onChange={handleGroupChange}
+                  isClearable={!!originalValue.selectedGroup}
                 />
               </Grid.Column>
             </Grid.Row>
@@ -189,15 +199,26 @@ const GeolocationWidget = (props) => {
                 />
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row stretched>
-              <Segment attached className="actions">
-                <label className={'popup-label'}>
-                  {intl.formatMessage(messages.search)}
-                </label>
+            <Grid.Row>
+              <Grid.Column width="4">
+                <div className="wrapper">
+                  <label className={'popup-label'}>
+                    {intl.formatMessage(messages.search)}
+                  </label>
+                </div>
+              </Grid.Column>
+              <Grid.Column
+                width="8"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                }}
+              >
                 <Button
+                  size="mini"
                   basic
                   primary
-                  floated="left"
                   onClick={(event) => {
                     setPopup(true);
                     event.preventDefault();
@@ -205,12 +226,11 @@ const GeolocationWidget = (props) => {
                 >
                   <Icon
                     name={zoomSVG}
-                    size="30px"
-                    className="addSVG"
+                    size="26px"
                     title={intl.formatMessage(messages.search)}
                   />
                 </Button>
-              </Segment>
+              </Grid.Column>
               <SidebarPopup open={isOpenPopup}>
                 <SearchGeoName
                   id={id}
