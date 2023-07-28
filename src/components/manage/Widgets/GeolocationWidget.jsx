@@ -115,10 +115,6 @@ const GeolocationWidget = (props) => {
     });
   };
 
-  console.log('here2 value.geolocation', value.geolocation);
-  console.log('here2 value', value);
-  console.log('here2 originalValue', originalValue.selectedGroup);
-
   const _groupId = `${id}-select-listingblock-template-group`;
   const _coverageId = `${id}-select-listingblock-template-coverage`;
 
