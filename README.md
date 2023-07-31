@@ -14,27 +14,35 @@
 [![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
 [![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
 
-[Volto](https://github.com/plone/volto) Widget: Geolocation with [GeoNames](https://www.geonames.org/) integration
+
+[Volto](https://github.com/plone/volto) add-on
 
 ## Features
 
-### Geolocation Widget with [GeoNames](https://www.geonames.org/) integration
-
-![Widget geolocation](https://github.com/eea/volto-widget-geolocation/raw/docs/docs/volto-widget-geolocation.gif)
+Demo GIF
 
 ## Getting started
 
-1. Create new volto project if you don't already have one:
+### Try volto-widget-geolocation with Docker
 
+      git clone https://github.com/eea/volto-widget-geolocation.git
+      cd volto-widget-geolocation
+      make
+      make start
+
+Go to http://localhost:3000
+
+### Add volto-widget-geolocation to your Volto project
+
+1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
+
+   ```Bash
+   docker compose up backend
    ```
-   $ npm install -g yo @plone/generator-volto
-   $ yo @plone/volto my-volto-project --addon @eeacms/volto-widget-geolocation
 
-   $ cd my-volto-project
-   $ yarn add -W @eeacms/volto-widget-geolocation
-   ```
+1. Start Volto frontend
 
-1. If you already have a volto project, just update `package.json`:
+* If you already have a volto project, just update `package.json`:
 
    ```JSON
    "addons": [
@@ -42,15 +50,23 @@
    ],
 
    "dependencies": {
-       "@eeacms/volto-widget-geolocation": "^2.0.0"
+       "@eeacms/volto-widget-geolocation": "*"
    }
+   ```
+
+* If not, create one:
+
+   ```
+   npm install -g yo @plone/generator-volto
+   yo @plone/volto my-volto-project --canary --addon @eeacms/volto-widget-geolocation
+   cd my-volto-project
    ```
 
 1. Install new add-ons and restart Volto:
 
    ```
-   $ yarn
-   $ yarn start
+   yarn
+   yarn start
    ```
 
 1. Go to http://localhost:3000
@@ -63,7 +79,7 @@ See [RELEASE.md](https://github.com/eea/volto-widget-geolocation/blob/master/REL
 
 ## How to contribute
 
-See [DEVELOP.md](https://github.com/eea/volto-widget-geolocation/blob/master/DEVELOP.md2).
+See [DEVELOP.md](https://github.com/eea/volto-widget-geolocation/blob/master/DEVELOP.md).
 
 ## Copyright and license
 
