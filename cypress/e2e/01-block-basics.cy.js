@@ -27,4 +27,13 @@ describe('Blocks Tests', () => {
     cy.contains('My Add-on Page');
     cy.get('.block.image');
   });
+
+  it('Test Geographic Widget: Select Value', () => {
+    cy.get('.edit').first().click();
+    cy.get(
+      '#geo_coverage-select-listingblock-template-group .react-select__control',
+    ).click();
+    cy.contains('.react-select__option', 'eea32').click();
+    cy.get('#toolbar-save').click();
+  });
 });
