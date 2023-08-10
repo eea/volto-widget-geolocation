@@ -6,10 +6,7 @@ describe('Geo Widget Test', () => {
 
   it('Set Behaviour', () => {
     // Go to Control Panel
-    cy.get('#toolbar-personal').click();
-    cy.get('a[href="/controlpanel"]').click();
-    cy.get('a[href="/controlpanel/dexterity-types"]').click();
-    cy.get('a[href="/controlpanel/dexterity-types/Document"]').click();
+    cy.visit('/controlpanel/dexterity-types/Document');
     cy.contains('Behaviors').click();
     cy.contains('EEA Core metadata').click();
     cy.get('#toolbar-save').click();
