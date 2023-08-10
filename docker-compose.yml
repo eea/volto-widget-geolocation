@@ -1,11 +1,12 @@
 version: "3"
 services:
   backend:
-    image: plone/plone-backend:${PLONE_VERSION:-6}
+    image: eeacms/plone-backend
     ports:
       - "8080:8080"
     environment:
       SITE: "Plone"
+      PROFILES: "eea.kitkat:testing"
 
   frontend: 
     build:
