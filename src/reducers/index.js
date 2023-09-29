@@ -1,1 +1,1 @@
-export geolocation from '@eeacms/volto-widget-geolocation/reducers/geolocation';
+export { default as geolocation } from './geolocation';

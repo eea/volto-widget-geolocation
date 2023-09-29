@@ -11,4 +11,42 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#: components/manage/Widgets/GeolocationWidget
+# defaultMessage: Advanced search
+msgid "Advanced search"
+msgstr ""
 
+#: components/manage/Widgets/InlineForm
+# defaultMessage: Edit values
+msgid "Edit values"
+msgstr ""
+
+#: components/manage/Widgets/InlineForm
+# defaultMessage: Error
+msgid "Error"
+msgstr ""
+
+#: components/manage/Widgets/GeolocationWidget
+# defaultMessage: Geographic coverage
+msgid "Geographic coverage"
+msgstr ""
+
+#: components/manage/Widgets/GeolocationWidget
+# defaultMessage: Geographic group
+msgid "Geographic group"
+msgstr ""
+
+#: components/manage/Widgets/SearchWidget
+# defaultMessage: Search
+msgid "Search"
+msgstr ""
+
+#: components/manage/Widgets/SearchWidget
+# defaultMessage: Search for geoTags
+msgid "Search for geoTags"
+msgstr ""
+
+#: components/manage/Widgets/InlineForm
+# defaultMessage: There were some errors
+msgid "There were some errors"
+msgstr ""

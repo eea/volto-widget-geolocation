@@ -14,12 +14,13 @@
 [![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
 [![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
 
-
-[Volto](https://github.com/plone/volto) add-on
+[Volto](https://github.com/plone/volto) Widget: Geolocation with [GeoNames](https://www.geonames.org/) integration
 
 ## Features
 
-Demo GIF
+### Geolocation Widget with [GeoNames](https://www.geonames.org/) integration
+
+![Widget geolocation](https://github.com/eea/volto-widget-geolocation/raw/docs/docs/volto-widget-geolocation.gif)
 
 ## Getting started
 
