@@ -8,12 +8,19 @@ import {
   Accordion,
   Button,
 } from 'semantic-ui-react';
+import { keys } from 'lodash';
 import { Icon } from '@plone/volto/components';
 import rightSVG from '@plone/volto/icons/right-key.svg';
 import downSVG from '@plone/volto/icons/down-key.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 
-const ListResults = ({ results, loading, setValue, value }) => {
+const ListResults = ({
+  results,
+  loading,
+  setValue,
+  value,
+  country_mappings,
+}) => {
   const [activeAccIndex, setActiveAccIndex] = React.useState(0);
 
   function handleAccClick(e, titleProps) {
@@ -32,7 +39,10 @@ const ListResults = ({ results, loading, setValue, value }) => {
       )}
       <Accordion fluid styled exclusive={false}>
         {results?.map((item, index) => (
-          <Accordion.Accordion style={{ borderBottom: '1px solid #c7cdd8' }}>
+          <Accordion.Accordion
+            style={{ borderBottom: '1px solid #c7cdd8' }}
+            key={index}
+          >
             <Accordion.Title
               active={activeAccIndex === 0}
               index={index}
@@ -42,7 +52,9 @@ const ListResults = ({ results, loading, setValue, value }) => {
                 display: 'flex',
               }}
             >
-              {item.toponymName}
+              {keys(country_mappings).includes(item.toponymName)
+                ? country_mappings[item.toponymName]
+                : item.toponymName}
               <div>
                 <Button
                   basic
@@ -51,14 +63,12 @@ const ListResults = ({ results, loading, setValue, value }) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     if (
-                      value?.find((val) => val.value === item.geonameId) ===
-                      undefined
+                      value?.find(
+                        (val) => val.value === 'geo-' + item.geonameId,
+                      ) === undefined
                     ) {
                       //results.splice(index, 1); do not remove result onClick
-                      setValue((prevState) => [
-                        ...(prevState || []),
-                        { label: item.toponymName, value: item.geonameId },
-                      ]);
+                      setValue(item);
                     }
                   }}
                 >
@@ -82,19 +92,15 @@ const ListResults = ({ results, loading, setValue, value }) => {
                       <b>Country:</b> {item.countryName}
                     </p>
                     <p>
-                      <b>GeonameID:</b> {item.geonameId}
+                      <b>GeonameID:</b>{' '}
+                      <a
+                        href={`https://www.geonames.org/${item.geonameId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {item.geonameId}
+                      </a>
                     </p>
-                  </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
-                    <a
-                      href={`https://www.geonames.org/${item.geonameId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Button color="twitter" size="small" compact={true}>
-                        Preview
-                      </Button>
-                    </a>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

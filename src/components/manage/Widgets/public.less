@@ -1,5 +1,20 @@
 .popup-label {
-  vertical-align: sub;
   position: absolute;
   margin: 5px 35px;
+  vertical-align: sub;
+}
+
+// Temporary style fix
+.geo-field-wrapper {
+  > .ui.grid .row .twelve.column {
+    padding: 0;
+
+    > .ui.grid {
+      margin: 0;
+    }
+  }
+}
+
+aside[role='presentation'] .ui.styled.accordion .accordion .active.title {
+  color: #000000 !important;
 }

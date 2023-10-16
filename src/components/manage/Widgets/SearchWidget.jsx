@@ -6,13 +6,11 @@
 import React, { useState } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { compose } from 'redux';
-
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { defineMessages, injectIntl } from 'react-intl';
-import { FormFieldWrapper } from '@plone/volto/components';
-import { Icon } from '@plone/volto/components';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
-import { getCountryCode } from './util';
+import { getCountryCode, makeSearchUrl } from './util';
 import countries from 'i18n-iso-countries';
 import zoomSVG from '@plone/volto/icons/zoom.svg';
 import locales from 'i18n-iso-countries/langs/en.json';
@@ -36,17 +34,14 @@ const messages = defineMessages({
  * @extends Component
  */
 const SearchWidget = (props) => {
-  const { onChange, value, data, id } = props;
+  const { onChange, data = {} } = props;
   const { countries } = data;
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const password = useSelector(
     (state) => state.geolocation?.api?.geonames.password,
   );
-  const subrequests = useSelector(
-    (state) => state.content.subrequests,
-    shallowEqual,
-  );
+
   const onSubmit = async (event) => {
     event.preventDefault();
     let countryCode;
@@ -63,9 +58,7 @@ const SearchWidget = (props) => {
     } else {
       countryCode = getCountryCode(countries);
     }
-    let searchUrl = `https://secure.geonames.org/searchJSON?q=${text}&country=${
-      countryCode || ''
-    }&maxRows=10&username=${password}`;
+    const searchUrl = makeSearchUrl(data, text, password, countryCode);
     onChange('searchUrl', searchUrl);
     await dispatch(
       getProxiedExternalContent(searchUrl, {

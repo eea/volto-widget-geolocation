@@ -331,7 +331,7 @@ export const eeaCountries = [
   },
 ];
 
-export const eeaGroups = [
+export const countryGroups = [
   { label: 'EEA32', value: 'EEA32' },
   { label: 'EEA33', value: 'EEA33' },
   { label: 'EEA39', value: 'EEA39' },

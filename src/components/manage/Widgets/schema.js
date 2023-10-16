@@ -1,6 +1,6 @@
 import { eeaCountries } from './eeaCountries';
 
-export const GeoSearchSchema = {
+export const GeoSearchSchema = (props) => ({
   title: 'GeoGraphical Search',
   fieldsets: [
     {
@@ -13,7 +13,7 @@ export const GeoSearchSchema = {
     search: {
       title: 'Search',
       description: 'Search for geo Tags',
-      widget: 'search',
+      widget: 'searchGeotags',
     },
     countries: {
       description: 'Select countries',
@@ -41,14 +41,14 @@ export const GeoSearchSchema = {
       title: 'Continents',
       choices: [
         ['all', 'all'],
-        ['Europe', 'Europe'],
-        ['Africa', 'Africa'],
-        ['Asia', 'Asia'],
-        ['Oceania', 'Oceania'],
-        ['North America', 'North America'],
-        ['South America', 'South America'],
+        ['EU', 'Europe'],
+        ['AF', 'Africa'],
+        ['AS', 'Asia'],
+        ['OC', 'Oceania'],
+        ['NA', 'North America'],
+        ['SA', 'South America'],
       ],
     },
   },
   required: [],
-};
+});
