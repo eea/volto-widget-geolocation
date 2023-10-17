@@ -20,7 +20,7 @@
 
 ### Geolocation Widget with [GeoNames](https://www.geonames.org/) integration
 
-![Widget geolocation](https://github.com/eea/volto-widget-geolocation/raw/docs/docs/volto-widget-geolocation.gif)
+![Widget geolocation](https://github.com/eea/volto-widget-geolocation/raw/master/docs/volto-widget-geolocation.gif)
 
 ## Getting started
 
