@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button } from 'semantic-ui-react';
+import { Grid, Button, Segment } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon, SidebarPopup } from '@plone/volto/components';
@@ -199,26 +199,16 @@ const GeolocationWidget = (props) => {
                 />
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width="4">
-                <div className="wrapper">
-                  <label className={'popup-label'}>
-                    {intl.formatMessage(messages.search)}
-                  </label>
-                </div>
-              </Grid.Column>
-              <Grid.Column
-                width="8"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}
-              >
+            <Grid.Row stretched>
+              <Segment attached className="actions">
+                <label className={'popup-label'}>
+                  {intl.formatMessage(messages.search)}
+                </label>
                 <Button
                   size="mini"
                   basic
                   primary
+                  floated="left"
                   onClick={(event) => {
                     setPopup(true);
                     event.preventDefault();
@@ -226,11 +216,12 @@ const GeolocationWidget = (props) => {
                 >
                   <Icon
                     name={zoomSVG}
-                    size="26px"
+                    size="30px"
+                    className="addSVG"
                     title={intl.formatMessage(messages.search)}
                   />
                 </Button>
-              </Grid.Column>
+              </Segment>
               <SidebarPopup open={isOpenPopup}>
                 <SearchGeoName
                   id={id}
