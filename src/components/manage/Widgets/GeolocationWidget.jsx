@@ -201,9 +201,6 @@ const GeolocationWidget = (props) => {
             </Grid.Row>
             <Grid.Row stretched>
               <Segment attached className="actions">
-                <label className={'popup-label'}>
-                  {intl.formatMessage(messages.search)}
-                </label>
                 <Button
                   size="mini"
                   basic
@@ -221,6 +218,9 @@ const GeolocationWidget = (props) => {
                     title={intl.formatMessage(messages.search)}
                   />
                 </Button>
+                <label className={'popup-label'}>
+                  {intl.formatMessage(messages.search)}
+                </label>
               </Segment>
               <SidebarPopup open={isOpenPopup}>
                 <SearchGeoName
