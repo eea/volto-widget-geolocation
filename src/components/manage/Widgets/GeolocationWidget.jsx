@@ -208,20 +208,22 @@ const GeolocationWidget = (props) => {
                 </div>
               </Grid.Column>
               <Grid.Column width="8" className="search-grid-column">
-                <Button
-                  className="advanced-search-button"
-                  onClick={(event) => {
-                    setPopup(true);
-                    event.preventDefault();
-                  }}
-                >
-                  <Icon
-                    name={zoomSVG}
-                    size="22px"
-                    title={intl.formatMessage(messages.search)}
-                  />
-                  Search
-                </Button>
+                <div class="add-item-button-wrapper">
+                  <Button
+                    className="icon advanced-search-button"
+                    onClick={(event) => {
+                      setPopup(true);
+                      event.preventDefault();
+                    }}
+                  >
+                    <Icon
+                      name={zoomSVG}
+                      size="16px"
+                      title={intl.formatMessage(messages.search)}
+                    />
+                    Search
+                  </Button>
+                </div>
               </Grid.Column>
               <SidebarPopup open={isOpenPopup}>
                 <SearchGeoName
