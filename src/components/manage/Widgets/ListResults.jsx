@@ -96,7 +96,7 @@ const ListResults = ({
                       <a
                         href={`https://www.geonames.org/${item.geonameId}`}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                       >
                         {item.geonameId}
                       </a>

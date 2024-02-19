@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, Segment } from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormFieldWrapper, Icon, SidebarPopup } from '@plone/volto/components';
@@ -199,29 +199,32 @@ const GeolocationWidget = (props) => {
                 />
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row stretched>
-              <Segment attached className="actions">
-                <Button
-                  size="mini"
-                  basic
-                  primary
-                  floated="left"
-                  onClick={(event) => {
-                    setPopup(true);
-                    event.preventDefault();
-                  }}
-                >
-                  <Icon
-                    name={zoomSVG}
-                    size="30px"
-                    className="addSVG"
-                    title={intl.formatMessage(messages.search)}
-                  />
-                </Button>
-                <label className={'popup-label'}>
-                  {intl.formatMessage(messages.search)}
-                </label>
-              </Segment>
+            <Grid.Row stretched style={{ padding: '10px 0' }}>
+              <Grid.Column width="4">
+                <div className="wrapper">
+                  <label htmlFor="advanced-search-button ">
+                    {intl.formatMessage(messages.search)}
+                  </label>
+                </div>
+              </Grid.Column>
+              <Grid.Column width="8" className="search-grid-column">
+                <div class="add-item-button-wrapper">
+                  <Button
+                    className="icon advanced-search-button"
+                    onClick={(event) => {
+                      setPopup(true);
+                      event.preventDefault();
+                    }}
+                  >
+                    <Icon
+                      name={zoomSVG}
+                      size="16px"
+                      title={intl.formatMessage(messages.search)}
+                    />
+                    Search
+                  </Button>
+                </div>
+              </Grid.Column>
               <SidebarPopup open={isOpenPopup}>
                 <SearchGeoName
                   id={id}
