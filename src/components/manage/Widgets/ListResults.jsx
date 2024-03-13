@@ -58,6 +58,7 @@ const ListResults = ({
               <div>
                 <Button
                   basic
+                  icon
                   primary
                   floated="left"
                   onClick={(e) => {
