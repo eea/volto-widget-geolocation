@@ -11,6 +11,7 @@ import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (props) => {
   const { id, data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
