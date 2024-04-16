@@ -208,7 +208,7 @@ const GeolocationWidget = (props) => {
                 </div>
               </Grid.Column>
               <Grid.Column width="8" className="search-grid-column">
-                <div class="add-item-button-wrapper">
+                <div className="add-item-button-wrapper">
                   <Button
                     className="icon advanced-search-button"
                     onClick={(event) => {
