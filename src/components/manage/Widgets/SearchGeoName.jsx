@@ -11,7 +11,7 @@ import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
 
-export default (props) => {
+const SearchGeoName = (props) => {
   const { id, data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
   const InlineFormSchema = schema(props);
@@ -119,3 +119,5 @@ export default (props) => {
     />
   );
 };
+
+export default SearchGeoName;
