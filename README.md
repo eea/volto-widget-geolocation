@@ -3,16 +3,16 @@
 [![Releases](https://img.shields.io/github/v/release/eea/volto-widget-geolocation)](https://github.com/eea/volto-widget-geolocation/releases)
 
 [![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-widget-geolocation%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-widget-geolocation/job/master/display/redirect)
-[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-master&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-master)
-[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-master&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-master)
-[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-master&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-master)
-[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-master&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-master)
+[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation)
+[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation)
+[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation)
+[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation)
 
 [![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-widget-geolocation%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-widget-geolocation/job/develop/display/redirect)
-[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
-[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
-[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
-[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation-develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation-develop)
+[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&branch=develop&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation&branch=develop)
+[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&branch=develop&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation&branch=develop)
+[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&branch=develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation&branch=develop)
+[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-widget-geolocation&branch=develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-widget-geolocation&branch=develop)
 
 [Volto](https://github.com/plone/volto) Widget: Geolocation with [GeoNames](https://www.geonames.org/) integration
 
@@ -33,6 +33,11 @@
 
 Go to http://localhost:3000
 
+`make start` now defaults to Volto 18. To run the same setup against Volto 17, use:
+
+      VOLTO_VERSION=17 make
+      VOLTO_VERSION=17 make start
+
 ### Add volto-widget-geolocation to your Volto project
 
 1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
@@ -46,29 +51,38 @@ Go to http://localhost:3000
 * If you already have a volto project, just update `package.json`:
 
    ```JSON
-   "addons": [
-       "@eeacms/volto-widget-geolocation"
-   ],
-
    "dependencies": {
        "@eeacms/volto-widget-geolocation": "*"
    }
    ```
 
-* If not, create one:
+   and `volto.config.js`:
 
-   ```
-   npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --canary --addon @eeacms/volto-widget-geolocation
-   cd my-volto-project
+   ```JavaScript
+   const addons = ['@eeacms/volto-widget-geolocation'];
    ```
 
-1. Install new add-ons and restart Volto:
+* If not, create one with Cookieplone, as recommended by the official Plone documentation for Volto 18+:
 
    ```
-   yarn
-   yarn start
+   uvx cookieplone project
+   cd project-title
    ```
+
+1. Install or update dependencies, then start the project:
+
+   ```
+   make install
+   ```
+
+   For a Cookieplone project, start the backend and frontend in separate terminals:
+
+   ```
+   make backend-start
+   make frontend-start
+   ```
+
+   For a legacy Volto 17 project, install the package with `yarn` and restart the frontend as usual.
 
 1. Go to http://localhost:3000
 
