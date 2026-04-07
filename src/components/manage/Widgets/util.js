@@ -1,5 +1,7 @@
 import countries from 'i18n-iso-countries';
-import { assign, values, keys } from 'lodash';
+import assign from 'lodash/assign';
+import values from 'lodash/values';
+import keys from 'lodash/keys';
 export function getCountryCode(countryName = '') {
   return countries.getAlpha2Code(countryName, 'en');
 }

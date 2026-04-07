@@ -1,8 +1,8 @@
 import React from 'react';
 import InlineForm from './InlineForm';
-import { Icon as VoltoIcon } from '@plone/volto/components';
+import VoltoIcon from '@plone/volto/components/theme/Icon/Icon';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { keys } from 'lodash';
+import keys from 'lodash/keys';
 
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
@@ -11,16 +11,20 @@ import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
 import checkSVG from '@plone/volto/icons/check.svg';
 
+const EMPTY_OBJECT = Object.freeze({});
+
 const SearchGeoName = (props) => {
   const { id, data, block, setPopup, onChange, onChangeSchema } = props;
   const [resultsValue, setResultsValue] = React.useState(data.geolocation);
   const InlineFormSchema = schema(props);
   const [searchUrl, setSearchUrl] = React.useState('');
   const subrequest = useSelector(
-    (state) => state.content.subrequests,
+    (state) => state?.content?.subrequests ?? EMPTY_OBJECT,
     shallowEqual,
   );
-  const geoData = useSelector((state) => state.geolocation?.data || {});
+  const geoData = useSelector(
+    (state) => state.geolocation?.data ?? EMPTY_OBJECT,
+  );
   const { country_mappings = {} } = geoData;
   const geonamesUrl = Object.keys(subrequest).find(
     (item) => item === searchUrl,

@@ -8,8 +8,9 @@ import {
   selectTheme,
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
-import { keys, map } from 'lodash';
-import { Field } from '@plone/volto/components';
+import keys from 'lodash/keys';
+import map from 'lodash/map';
+import { Field } from '@plone/volto/components/manage/Form';
 import { Segment, Message, Card } from 'semantic-ui-react';
 
 const messages = defineMessages({
