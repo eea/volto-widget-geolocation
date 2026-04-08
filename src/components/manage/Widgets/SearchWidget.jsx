@@ -9,7 +9,7 @@ import { compose } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { defineMessages, injectIntl } from 'react-intl';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
-import { FormFieldWrapper } from '@plone/volto/components/manage/Widgets';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 import { getCountryCode, makeSearchUrl } from './util';
 import countries from 'i18n-iso-countries';

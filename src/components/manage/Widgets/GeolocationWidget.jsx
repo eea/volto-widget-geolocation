@@ -5,7 +5,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
 import SidebarPopup from '@plone/volto/components/manage/Sidebar/SidebarPopup';
-import { FormFieldWrapper } from '@plone/volto/components/manage/Widgets';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
 import unionBy from 'lodash/unionBy';
 import keys from 'lodash/keys';
 import isEmpty from 'lodash/isEmpty';

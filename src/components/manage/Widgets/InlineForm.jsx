@@ -10,7 +10,7 @@ import {
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
-import { Field } from '@plone/volto/components/manage/Form';
+import Field from '@plone/volto/components/manage/Form/Field';
 import { Segment, Message, Card } from 'semantic-ui-react';
 
 const messages = defineMessages({
