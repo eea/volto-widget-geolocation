@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { Grid, Button } from 'semantic-ui-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
-import { FormFieldWrapper, Icon, SidebarPopup } from '@plone/volto/components';
-import { unionBy, keys, isEmpty } from 'lodash';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
+import SidebarPopup from '@plone/volto/components/manage/Sidebar/SidebarPopup';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
+import unionBy from 'lodash/unionBy';
+import keys from 'lodash/keys';
+import isEmpty from 'lodash/isEmpty';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import { GeolocationWidgetView } from '@eeacms/volto-widget-geolocation/components';
 import Select, { components } from 'react-select';
@@ -36,6 +40,8 @@ const messages = defineMessages({
   },
 });
 
+const EMPTY_OBJECT = Object.freeze({});
+
 const getOptions = (arr, state) => {
   return state ? unionBy(arr, state, 'label') : arr;
 };
@@ -48,7 +54,9 @@ const GeolocationWidget = (props) => {
 
   const [isOpenPopup, setPopup] = useState(false);
   const dispatch = useDispatch();
-  const geoData = useSelector((state) => state.geolocation?.data || {});
+  const geoData = useSelector(
+    (state) => state.geolocation?.data ?? EMPTY_OBJECT,
+  );
   const { biotags = {}, geotags = {}, country_mappings = {} } = geoData;
 
   React.useEffect(() => {
