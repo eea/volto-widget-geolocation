@@ -8,8 +8,8 @@ import {
   Accordion,
   Button,
 } from 'semantic-ui-react';
-import { keys } from 'lodash';
-import { Icon } from '@plone/volto/components';
+import keys from 'lodash/keys';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import rightSVG from '@plone/volto/icons/right-key.svg';
 import downSVG from '@plone/volto/icons/down-key.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
