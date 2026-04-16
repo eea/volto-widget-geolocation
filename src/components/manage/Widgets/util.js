@@ -1,7 +1,11 @@
-import countries from 'i18n-iso-countries';
+import countries from 'i18n-iso-countries/index';
+import en from 'i18n-iso-countries/langs/en.json';
 import assign from 'lodash/assign';
 import values from 'lodash/values';
 import keys from 'lodash/keys';
+
+countries.registerLocale(en);
+
 export function getCountryCode(countryName = '') {
   return countries.getAlpha2Code(countryName, 'en');
 }
