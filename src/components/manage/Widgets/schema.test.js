@@ -39,10 +39,7 @@ describe('GeoSearchSchema', () => {
     expect(schema.properties.featureClass.title).toBe('Feature class');
     expect(schema.properties.featureClass.choices.length).toBe(10);
     // First choice should be 'all'
-    expect(schema.properties.featureClass.choices[0]).toEqual([
-      'all',
-      'all',
-    ]);
+    expect(schema.properties.featureClass.choices[0]).toEqual(['all', 'all']);
   });
 
   it('has continents property with choices', () => {

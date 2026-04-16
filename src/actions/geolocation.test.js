@@ -1,7 +1,4 @@
-import {
-  getGeonameSettings,
-  getGeoData,
-} from './geolocation';
+import { getGeonameSettings, getGeoData } from './geolocation';
 import {
   GET_GEONAMES,
   GET_GEODATA,
