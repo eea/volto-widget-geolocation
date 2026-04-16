@@ -4,7 +4,7 @@ import {
   getBioTags,
   getCountries,
 } from './util';
-import countries from 'i18n-iso-countries';
+import countries from 'i18n-iso-countries/index';
 
 describe('getCountryCode', () => {
   it('returns correct country code with countryName', () => {
