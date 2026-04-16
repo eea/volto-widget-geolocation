@@ -1,1 +1,2 @@
 {"type":"config","name":"Increase Cypress test coverage for volto-widget-geolocation","metricName":"coverage_pct","metricUnit":"%","bestDirection":"higher"}
+{"run":1,"commit":"64d4569","metric":24.17,"metrics":{"branches_pct":5.04,"functions_pct":5.97,"lines_pct":24.17,"statements_pct":23.03,"test_count":2},"status":"keep","description":"Baseline: 2 existing cypress tests, coverage 24.17% lines, 5.04% branches, 5.97% functions","timestamp":1776347912702,"segment":0,"confidence":null,"iterationTokens":null}
