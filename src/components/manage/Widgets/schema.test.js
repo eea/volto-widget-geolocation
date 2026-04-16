@@ -1,6 +1,5 @@
 import { GeoSearchSchema } from './schema';
 import { eeaCountries } from './eeaCountries';
-import { biogeographicalData } from './biogeographical';
 
 describe('GeoSearchSchema', () => {
   it('returns a schema with correct title', () => {
