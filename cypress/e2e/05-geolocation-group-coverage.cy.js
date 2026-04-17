@@ -1,92 +1,63 @@
-import { slateBeforeEach, slateAfterEach } from '../support/e2e';
-
-const api_url = () => Cypress.env('API_PATH') || 'http://localhost:8080/Plone';
-
-const enableEeaCoreMetadata = () => {
-  cy.autologin();
-  cy.request({
-    method: 'PATCH',
-    url: `${api_url()}/@controlpanels/dexterity-types/Document`,
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    auth: { user: 'admin', pass: 'admin' },
-    body: { 'eea.coremetadata.behavior': true },
-  });
-};
-
-const setupPage = () => {
-  enableEeaCoreMetadata();
-  cy.autologin();
-  cy.createContent({
-    contentType: 'Document',
-    contentId: 'cypress',
-    contentTitle: 'Cypress',
-  });
-  cy.createContent({
-    contentType: 'Document',
-    contentId: 'my-page',
-    contentTitle: 'My Page',
-    path: 'cypress',
-  });
-  cy.visit('/cypress/my-page');
-  cy.waitForResourceToLoad('my-page');
-  cy.navigate('/cypress/my-page/edit');
-};
+import {
+  cleanupContentTree,
+  fetchContent,
+  geolocationSelectForLabel,
+  openGeolocationSelect,
+  selectFirstReactOption,
+  setupGeolocationPage,
+} from '../support/e2e';
 
 describe('Geolocation Widget: Group Selection and Coverage Flow', () => {
   beforeEach(() => {
-    setupPage();
+    setupGeolocationPage();
   });
 
   afterEach(() => {
-    cy.autologin();
-    cy.removeContent('cypress');
+    cleanupContentTree();
   });
 
-  it('selects a geographic group and updates coverage', () => {
-    cy.get('.geo-field-wrapper')
-      .find('.react-select-container')
-      .first()
-      .find('.react-select__control')
-      .click({ force: true });
+  it('selects a geographic group and updates coverage options', () => {
+    openGeolocationSelect('Geographic group');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
+    selectFirstReactOption().then((selectedGroup) => {
+      geolocationSelectForLabel('Geographic group')
+        .find('.react-select__single-value')
+        .should('contain', selectedGroup);
+    });
 
-    cy.get('.react-select__menu .react-select__option')
-      .first()
-      .click({ force: true });
-
-    cy.get('.geo-field-wrapper')
-      .find('.react-select-container')
-      .first()
-      .find('.react-select__single-value')
-      .should('exist');
+    openGeolocationSelect('Geographic coverage');
+    cy.get('.react-select__menu .react-select__option', { timeout: 10000 }).should(
+      'have.length.gte',
+      1,
+    );
   });
 
-  it('saves document with geolocation data', () => {
-    cy.get('.geo-field-wrapper')
-      .find('.react-select-container')
-      .eq(1)
-      .find('.react-select__control')
-      .click({ force: true });
+  it('saves document with geolocation data and persists selected values', () => {
+    openGeolocationSelect('Geographic group');
+    selectFirstReactOption().as('selectedGroupLabel');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
+    openGeolocationSelect('Geographic coverage');
+    selectFirstReactOption().as('selectedCoverageLabel');
 
-    cy.get('.react-select__menu .react-select__option')
-      .contains('Alpine')
-      .click({ force: true });
+    cy.toolbarSave();
 
-    cy.get('.geo-field-wrapper')
-      .find('.react-select-container')
-      .eq(1)
-      .find('.react-select__multi-value')
-      .should('contain', 'Alpine');
+    cy.get('@selectedGroupLabel').then((selectedGroupLabel) => {
+      cy.get('@selectedCoverageLabel').then((selectedCoverageLabel) => {
+        fetchContent('cypress/my-page').its('body.geo_coverage').should((geoCoverage) => {
+          expect(geoCoverage).to.be.an('object');
+          expect(geoCoverage.selectedGroup.label).to.eq(selectedGroupLabel);
+          expect(geoCoverage.geolocation).to.be.an('array').that.is.not.empty;
+          expect(geoCoverage.geolocation.map((item) => item.label)).to.include(
+            selectedCoverageLabel,
+          );
+        });
 
-    cy.get('#toolbar-save').click();
-
-    cy.visit('/cypress/my-page');
-    cy.waitForResourceToLoad('my-page');
-    cy.navigate('/cypress/my-page/edit');
-
-    cy.get('.geo-field-wrapper').should('exist');
+        cy.visit('/cypress/my-page/edit');
+        cy.waitForResourceToLoad('my-page');
+        geolocationSelectForLabel('Geographic coverage')
+          .find('.react-select__multi-value')
+          .should('contain', selectedCoverageLabel);
+      });
+    });
   });
 });

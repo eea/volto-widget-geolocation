@@ -21,6 +21,106 @@ import './commands';
 //Generate code-coverage
 import '@cypress/code-coverage/support';
 
+const API_PATH = () => Cypress.env('API_PATH') || 'http://localhost:8080/Plone';
+const ADMIN_AUTH = { user: 'admin', pass: 'admin' };
+const JSON_HEADERS = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
+export const geolocationApiUrl = API_PATH;
+
+export const enableDocumentCoreMetadataBehavior = () => {
+  cy.autologin();
+  return cy.request({
+    method: 'PATCH',
+    url: `${API_PATH()}/@controlpanels/dexterity-types/Document`,
+    headers: JSON_HEADERS,
+    auth: ADMIN_AUTH,
+    body: { 'eea.coremetadata.behavior': true },
+  });
+};
+
+export const cleanupContentTree = (rootPath = 'cypress') => {
+  cy.autologin();
+  return cy.request({
+    method: 'DELETE',
+    url: `${API_PATH()}/${rootPath}`,
+    headers: { Accept: 'application/json' },
+    auth: ADMIN_AUTH,
+    body: {},
+    failOnStatusCode: false,
+  });
+};
+
+export const setupGeolocationPage = ({
+  rootId = 'cypress',
+  pageId = 'my-page',
+  pageTitle = 'My Page',
+} = {}) => {
+  enableDocumentCoreMetadataBehavior();
+  cleanupContentTree(rootId);
+  cy.createContent({
+    contentType: 'Document',
+    contentId: rootId,
+    contentTitle: 'Cypress',
+  });
+  cy.createContent({
+    contentType: 'Document',
+    contentId: pageId,
+    contentTitle: pageTitle,
+    path: rootId,
+  });
+  cy.visit(`/${rootId}/${pageId}/edit`);
+  cy.waitForResourceToLoad(pageId);
+  cy.url({ timeout: 15000 }).should('include', `/${rootId}/${pageId}/edit`);
+  cy.get('.sidebar-container', { timeout: 15000 }).should('exist');
+  cy.get('.sidebar-container').within(() => {
+    cy.contains('a, button', /^Page$/).click({ force: true });
+  });
+  cy.get('.geo-field-wrapper', { timeout: 15000 }).should('exist');
+};
+
+export const geolocationFieldRow = (label) =>
+  cy.contains('.geo-field-wrapper label', label).closest('.row');
+
+export const geolocationSelectForLabel = (label) =>
+  geolocationFieldRow(label).should('exist').find('.react-select-container').first();
+
+export const openGeolocationSelect = (label) =>
+  geolocationSelectForLabel(label)
+    .scrollIntoView()
+    .find('.react-select__control')
+    .click({ force: true })
+    .then(() => {
+      cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
+    });
+
+export const selectFirstReactOption = () =>
+  cy
+    .get('.react-select__menu .react-select__option', { timeout: 10000 })
+    .first()
+    .then(($option) => {
+      const label = $option.text().trim();
+      return cy.wrap($option).click({ force: true }).then(() => label);
+    });
+
+export const selectReactOptionByLabel = (label) =>
+  cy
+    .get('.react-select__menu .react-select__option', { timeout: 10000 })
+    .contains(label)
+    .click({ force: true });
+
+export const fetchContent = (path) => {
+  cy.autologin();
+  return cy.request({
+    method: 'GET',
+    url: `${API_PATH()}/${path}`,
+    headers: { Accept: 'application/json' },
+    auth: ADMIN_AUTH,
+  });
+};
+
 export const slateBeforeEach = (contentType = 'Document') => {
   cy.autologin();
   cy.createContent({
