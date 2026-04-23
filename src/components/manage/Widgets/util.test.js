@@ -3,6 +3,7 @@ import {
   makeSearchUrl,
   getBioTags,
   getCountries,
+  getGeoGroupsCoverage,
 } from './util';
 import countries from 'i18n-iso-countries/index';
 
@@ -99,5 +100,89 @@ describe('getCountries', () => {
 
   it('returns no countries', () => {
     expect(getCountries()).toEqual([]);
+  });
+});
+
+describe('getGeoGroupsCoverage', () => {
+  const groupedCountries = [
+    { value: 'geo-a', label: 'Austria', group: ['Large', 'Small'] },
+    { value: 'geo-b', label: 'Belgium', group: ['Large', 'Small'] },
+    { value: 'geo-c', label: 'Croatia', group: ['Large'] },
+  ];
+
+  it('returns fully covered groups sorted by size and ungrouped extras', () => {
+    const selectedCountries = [
+      { value: 'geo-a', label: 'Austria' },
+      { value: 'geo-b', label: 'Belgium' },
+      { value: 'geo-c', label: 'Croatia' },
+      { value: 'geo-extra', label: 'Kyrgyzstan' },
+    ];
+
+    expect(getGeoGroupsCoverage(selectedCountries, groupedCountries)).toEqual({
+      groups: [
+        {
+          value: 'Large',
+          label: 'Large',
+          countries: [
+            { value: 'geo-a', label: 'Austria' },
+            { value: 'geo-b', label: 'Belgium' },
+            { value: 'geo-c', label: 'Croatia' },
+          ],
+        },
+        {
+          value: 'Small',
+          label: 'Small',
+          countries: [
+            { value: 'geo-a', label: 'Austria' },
+            { value: 'geo-b', label: 'Belgium' },
+          ],
+        },
+      ],
+      ungrouped: [{ value: 'geo-extra', label: 'Kyrgyzstan' }],
+    });
+  });
+
+  it('does not return a group when only part of it is selected', () => {
+    const selectedCountries = [
+      { value: 'geo-a', label: 'Austria' },
+      { value: 'geo-c', label: 'Croatia' },
+    ];
+
+    expect(getGeoGroupsCoverage(selectedCountries, groupedCountries)).toEqual({
+      groups: [],
+      ungrouped: selectedCountries,
+    });
+  });
+
+  it('builds group membership from backend geotags when available', () => {
+    const selectedCountries = [
+      { value: 'geo-a', label: 'Austria' },
+      { value: 'geo-tr', label: 'Türkiye' },
+    ];
+    const geotags = {
+      eu: {
+        title: 'European group',
+        'geo-a': 'Austria',
+        'geo-tr': 'Turkey',
+      },
+    };
+
+    expect(
+      getGeoGroupsCoverage(selectedCountries, [], geotags, {
+        Turkey: 'Türkiye',
+      }),
+    ).toEqual({
+      groups: [
+        {
+          value: 'eu',
+          label: 'European group',
+          countries: [
+            { value: 'geo-a', label: 'Austria' },
+            { value: 'geo-tr', label: 'Türkiye' },
+          ],
+        },
+      ],
+      ungrouped: [],
+    });
   });
 });
