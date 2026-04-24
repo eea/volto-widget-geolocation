@@ -45,21 +45,21 @@ describe('Geolocation Widget: Edit Mode', () => {
   it('displays the geographic group selector and coverage selector', () => {
     cy.get('.sidebar-container').should('exist');
     cy.get('.geo-field-wrapper').should('exist');
-    cy.get('.geo-field-wrapper .react-select-container').should('have.length.gte', 2);
+    cy.get('.geo-field-wrapper .react-select-container').should(
+      'have.length.gte',
+      2,
+    );
   });
 
   it('selects a geographic group from the dropdown', () => {
-    cy.get('.geo-field-wrapper')
+    const groupSelect = cy
+      .get('.geo-field-wrapper')
       .find('.react-select-container')
       .first()
-      .find('.react-select__control')
-      .click({ force: true });
+      .find('.react-select__control');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
-
-    cy.get('.react-select__menu .react-select__option')
-      .first()
-      .click({ force: true });
+    groupSelect.click({ force: true });
+    groupSelect.find('input').type('{downarrow}{enter}', { force: true });
 
     cy.get('.geo-field-wrapper')
       .find('.react-select-container')
@@ -69,29 +69,26 @@ describe('Geolocation Widget: Edit Mode', () => {
   });
 
   it('opens coverage dropdown and shows option groups', () => {
-    cy.get('.geo-field-wrapper')
+    const coverageSelect = cy
+      .get('.geo-field-wrapper')
       .find('.react-select-container')
       .eq(1)
-      .find('.react-select__control')
-      .click({ force: true });
+      .find('.react-select__control');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
-    cy.get('.react-select__group-heading').should('exist');
+    coverageSelect.click({ force: true });
+    cy.contains('Biogeographical regions').should('exist');
   });
 
   it('selects and removes coverage items', () => {
     // Open coverage dropdown and select Alpine
-    cy.get('.geo-field-wrapper')
+    const coverageSelect = cy
+      .get('.geo-field-wrapper')
       .find('.react-select-container')
       .eq(1)
-      .find('.react-select__control')
-      .click({ force: true });
+      .find('.react-select__control');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
-
-    cy.get('.react-select__menu .react-select__option')
-      .contains('Alpine')
-      .click({ force: true });
+    coverageSelect.click({ force: true });
+    coverageSelect.find('input').type('Alpine{enter}', { force: true });
 
     // Verify selected
     cy.get('.geo-field-wrapper')
@@ -121,17 +118,14 @@ describe('Geolocation Widget: Edit Mode', () => {
 
   it('clears the geographic group selection', () => {
     // First select a group
-    cy.get('.geo-field-wrapper')
+    const groupSelect = cy
+      .get('.geo-field-wrapper')
       .find('.react-select-container')
       .first()
-      .find('.react-select__control')
-      .click({ force: true });
+      .find('.react-select__control');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
-
-    cy.get('.react-select__menu .react-select__option')
-      .first()
-      .click({ force: true });
+    groupSelect.click({ force: true });
+    groupSelect.find('input').type('{downarrow}{enter}', { force: true });
 
     // Wait for selection to settle
     cy.wait(500);

@@ -43,17 +43,14 @@ describe('Geolocation Widget: Group Selection and Coverage Flow', () => {
   });
 
   it('selects a geographic group and updates coverage', () => {
-    cy.get('.geo-field-wrapper')
+    const groupSelect = cy
+      .get('.geo-field-wrapper')
       .find('.react-select-container')
       .first()
-      .find('.react-select__control')
-      .click({ force: true });
+      .find('.react-select__control');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
-
-    cy.get('.react-select__menu .react-select__option')
-      .first()
-      .click({ force: true });
+    groupSelect.click({ force: true });
+    groupSelect.find('input').type('{downarrow}{enter}', { force: true });
 
     cy.get('.geo-field-wrapper')
       .find('.react-select-container')
@@ -63,17 +60,14 @@ describe('Geolocation Widget: Group Selection and Coverage Flow', () => {
   });
 
   it('saves document with geolocation data', () => {
-    cy.get('.geo-field-wrapper')
+    const coverageSelect = cy
+      .get('.geo-field-wrapper')
       .find('.react-select-container')
       .eq(1)
-      .find('.react-select__control')
-      .click({ force: true });
+      .find('.react-select__control');
 
-    cy.get('.react-select__menu', { timeout: 10000 }).should('exist');
-
-    cy.get('.react-select__menu .react-select__option')
-      .contains('Alpine')
-      .click({ force: true });
+    coverageSelect.click({ force: true });
+    coverageSelect.find('input').type('Alpine{enter}', { force: true });
 
     cy.get('.geo-field-wrapper')
       .find('.react-select-container')
