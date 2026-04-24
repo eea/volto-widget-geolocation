@@ -1,10 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import Popup from '@eeacms/volto-eea-design-system/ui/Popup/Popup';
+import { Popup } from 'semantic-ui-react';
 import { defineMessages, useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
-import { getGeoGroupsCoverage } from '@eeacms/volto-widget-geolocation/components/manage/Widgets/util';
 import './public.less';
 
 const messages = defineMessages({
@@ -13,8 +10,6 @@ const messages = defineMessages({
     defaultMessage: 'Countries in {group}',
   },
 });
-
-const EMPTY_OBJECT = Object.freeze({});
 
 const renderFlatItems = (items) =>
   items.map((item, index) => <li key={item.value || index}>{item.label}</li>);
@@ -28,37 +23,18 @@ const GroupPopupContent = ({ countries }) => (
   </span>
 );
 
+const renderInlineItems = (items) =>
+  items.map((item, index) => (
+    <React.Fragment key={item.value || index}>
+      <span className="geolocation-item">{item.label}</span>
+      <InlineSeparator show={index < items.length - 1} />
+    </React.Fragment>
+  ));
+
 const GeolocationWidget = ({ value, className, flat = false }) => {
   const intl = useIntl();
-  const dispatch = useDispatch();
-  const geoStatus = useSelector(
-    (state) => state.geolocation?.get ?? EMPTY_OBJECT,
-  );
-  const geoData = useSelector(
-    (state) => state.geolocation?.data ?? EMPTY_OBJECT,
-  );
-  const { geotags = {}, country_mappings = {} } = geoData;
   const geolocation = value?.geolocation;
-  const hasGeotags = Object.keys(geotags).length > 0;
-
-  React.useEffect(() => {
-    if (
-      !flat &&
-      !hasGeotags &&
-      !geoStatus.loading &&
-      !geoStatus.loaded &&
-      !geoStatus.error
-    ) {
-      dispatch(getGeoData());
-    }
-  }, [
-    dispatch,
-    flat,
-    geoStatus.error,
-    geoStatus.loaded,
-    geoStatus.loading,
-    hasGeotags,
-  ]);
+  const groupedGeolocation = value?.grouped_geolocation;
 
   if (!geolocation) return '';
 
@@ -70,25 +46,18 @@ const GeolocationWidget = ({ value, className, flat = false }) => {
     );
   }
 
-  if (!hasGeotags) {
+  if (!groupedGeolocation) {
+    const fallbackGroup = value?.selectedGroup;
+    const fallbackItems = fallbackGroup ? [fallbackGroup] : geolocation;
+
     return (
       <div className={cx(className, 'geolocation-widget', 'widget')}>
-        {geolocation.map((item, index) => (
-          <React.Fragment key={item.value || index}>
-            <span className="geolocation-item">{item.label}</span>
-            <InlineSeparator show={index < geolocation.length - 1} />
-          </React.Fragment>
-        ))}
+        {renderInlineItems(fallbackItems)}
       </div>
     );
   }
 
-  const { groups, ungrouped } = getGeoGroupsCoverage(
-    geolocation,
-    [],
-    geotags,
-    country_mappings,
-  );
+  const { groups = [], ungrouped = [] } = groupedGeolocation;
   const inlineItems = [
     ...groups.map((group) => ({ ...group, isGroup: true })),
     ...ungrouped.map((item) => ({ ...item, isGroup: false })),
