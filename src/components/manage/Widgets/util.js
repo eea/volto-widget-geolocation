@@ -137,7 +137,7 @@ export function getGeoGroupsCoverage(
     });
   }
 
-  const groups = Array.from(groupMembers.entries())
+  const matchedGroups = Array.from(groupMembers.entries())
     .filter(
       ([, group]) =>
         group.countries.length > 0 &&
@@ -153,6 +153,7 @@ export function getGeoGroupsCoverage(
         second.countries.length - first.countries.length ||
         first.label.localeCompare(second.label),
     );
+  const groups = matchedGroups.slice(0, 1);
 
   const coveredByGroups = new Set(
     groups.flatMap((group) => group.countries.map((country) => country.value)),

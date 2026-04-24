@@ -110,7 +110,7 @@ describe('getGeoGroupsCoverage', () => {
     { value: 'geo-c', label: 'Croatia', group: ['Large'] },
   ];
 
-  it('returns fully covered groups sorted by size and ungrouped extras', () => {
+  it('returns only the largest covered group and ungrouped extras', () => {
     const selectedCountries = [
       { value: 'geo-a', label: 'Austria' },
       { value: 'geo-b', label: 'Belgium' },
@@ -127,14 +127,6 @@ describe('getGeoGroupsCoverage', () => {
             { value: 'geo-a', label: 'Austria' },
             { value: 'geo-b', label: 'Belgium' },
             { value: 'geo-c', label: 'Croatia' },
-          ],
-        },
-        {
-          value: 'Small',
-          label: 'Small',
-          countries: [
-            { value: 'geo-a', label: 'Austria' },
-            { value: 'geo-b', label: 'Belgium' },
           ],
         },
       ],
