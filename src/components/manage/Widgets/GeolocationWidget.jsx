@@ -147,6 +147,7 @@ const GeolocationWidget = (props) => {
               <GeolocationWidgetView
                 value={originalValue}
                 className="read-only"
+                flat
               />
             </Grid.Column>
           </Grid.Row>
