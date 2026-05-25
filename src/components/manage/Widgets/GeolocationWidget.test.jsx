@@ -54,6 +54,11 @@ jest.mock('@plone/volto/components/manage/Widgets/SelectStyling', () => ({
   customSelectStyles: {},
 }));
 
+jest.mock('./SearchGeoName', () => ({
+  __esModule: true,
+  default: () => <div data-testid="search-geoname" />,
+}));
+
 jest.mock('react-select', () => {
   const Select = ({ id, onChange, value }) => (
     <button
