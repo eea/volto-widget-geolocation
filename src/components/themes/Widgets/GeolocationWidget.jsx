@@ -23,14 +23,6 @@ const GroupPopupContent = ({ countries }) => (
   </span>
 );
 
-const renderInlineItems = (items) =>
-  items.map((item, index) => (
-    <React.Fragment key={item.value || index}>
-      <span className="geolocation-item">{item.label}</span>
-      <InlineSeparator show={index < items.length - 1} />
-    </React.Fragment>
-  ));
-
 const GeolocationWidget = ({ value, className, flat = false }) => {
   const intl = useIntl();
   const geolocation = value?.geolocation;
