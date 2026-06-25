@@ -47,13 +47,10 @@ const GeolocationWidget = ({ value, className, flat = false }) => {
   }
 
   if (!groupedGeolocation) {
-    const fallbackGroup = value?.selectedGroup;
-    const fallbackItems = fallbackGroup ? [fallbackGroup] : geolocation;
-
     return (
-      <div className={cx(className, 'geolocation-widget', 'widget')}>
-        {renderInlineItems(fallbackItems)}
-      </div>
+      <ul className={cx(className, 'geolocation-widget', 'widget')}>
+        {renderFlatItems(geolocation)}
+      </ul>
     );
   }
 

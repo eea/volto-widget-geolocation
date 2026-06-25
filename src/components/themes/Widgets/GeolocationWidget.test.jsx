@@ -41,15 +41,22 @@ describe('theme GeolocationWidget', () => {
     expect(screen.getByText('France')).toBeTruthy();
   });
 
-  it('renders selected group fallback when grouped data is missing', () => {
-    renderWidget({
+  it('renders flat list fallback when grouped data is missing', () => {
+    const { container } = renderWidget({
       value: {
-        geolocation: [{ label: 'Romania', value: 'geo-ro' }],
+        geolocation: [
+          { label: 'Romania', value: 'geo-ro' },
+          { label: 'France', value: 'geo-fr' },
+        ],
         selectedGroup: { label: 'EEA member countries', value: 'eea' },
       },
     });
 
-    expect(screen.getByText('EEA member countries')).toBeTruthy();
+    // Should render <ul><li>, ignoring selectedGroup
+    expect(container.querySelector('ul')).toBeTruthy();
+    expect(container.querySelectorAll('li').length).toBe(2);
+    expect(screen.getByText('Romania')).toBeTruthy();
+    expect(screen.getByText('France')).toBeTruthy();
   });
 
   it('renders grouped countries and ungrouped items inline', () => {
