@@ -76,14 +76,24 @@ const GeolocationWidget = (props) => {
     },
   ];
 
+  const getGroupLabel = (groupId) => geotags[groupId]?.title || groupId;
+
   const eeaGroups = () => {
     return !isEmpty(geotags)
       ? keys(geotags).map((item) => ({
-          label: item,
+          label: getGroupLabel(item),
           value: item,
         }))
       : countryGroups;
   };
+
+  const selectedGroup =
+    originalValue.selectedGroup && !isEmpty(geotags)
+      ? {
+          ...originalValue.selectedGroup,
+          label: getGroupLabel(originalValue.selectedGroup.value),
+        }
+      : originalValue.selectedGroup || [];
 
   const handleGroupChange = (selectedOption) => {
     if (!selectedOption) {
@@ -171,7 +181,7 @@ const GeolocationWidget = (props) => {
                   styles={customSelectStyles}
                   theme={selectTheme}
                   components={{ DropdownIndicator, Option }}
-                  value={originalValue.selectedGroup || []}
+                  value={selectedGroup}
                   onChange={handleGroupChange}
                   isClearable={!!originalValue.selectedGroup}
                 />
