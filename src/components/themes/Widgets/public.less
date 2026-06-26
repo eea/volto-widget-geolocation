@@ -1,13 +1,33 @@
-ul.geolocation-widget {
-  display: flex;
+.geolocation-widget {
   max-width: 100%;
-  flex-wrap: wrap;
   padding: 0;
   margin: 0;
 
-  li {
-    margin-right: 0.25rem;
-    list-style: none;
+  .popup-trigger,
+  .popup-container,
+  .geolocation-item,
+  .geolocation-separator {
+    display: inline;
+  }
+
+  .popup-container {
+    position: relative;
+  }
+
+  .geolocation-group-trigger {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
   }
 
   &.read-only {
@@ -15,8 +35,19 @@ ul.geolocation-widget {
   }
 }
 
-ul.metadata.geolocation-widget {
-  display: grid;
+ul.geolocation-widget li {
+  list-style: none;
+}
+
+.geolocation-group-countries {
+  display: inline;
+}
+
+.ui.popup.geolocation-group-popup {
+  max-width: 32rem;
+  line-height: 1.5;
+}
+
+.metadata.geolocation-widget {
   margin-bottom: 1rem;
-  grid-template-columns: auto auto;
 }

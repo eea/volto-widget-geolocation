@@ -27,6 +27,7 @@ describe('geolocation reducer', () => {
     });
     expect(state.get.loading).toBe(true);
     expect(state.get.loaded).toBe(false);
+    expect(state.get.error).toBeNull();
     expect(state.api).toBeNull();
   });
 
@@ -36,6 +37,8 @@ describe('geolocation reducer', () => {
     });
     expect(state.get.loading).toBe(true);
     expect(state.get.loaded).toBe(false);
+    expect(state.get.error).toBeNull();
+    expect(state.api).toBeNull();
   });
 
   it('handles GET_GEONAMES_SUCCESS', () => {
@@ -68,11 +71,15 @@ describe('geolocation reducer', () => {
 
   it('handles GET_GEONAMES_FAIL', () => {
     const error = { message: 'Network error' };
-    const state = geolocation(initialState, {
-      type: `${GET_GEONAMES}_FAIL`,
-      error,
-    });
+    const state = geolocation(
+      { ...initialState, api: { stale: true }, data: { stale: true } },
+      {
+        type: `${GET_GEONAMES}_FAIL`,
+        error,
+      },
+    );
     expect(state.api).toBeNull();
+    expect(state.data).toBeNull();
     expect(state.get.loading).toBe(false);
     expect(state.get.loaded).toBe(false);
     expect(state.get.error).toEqual(error);
@@ -80,10 +87,14 @@ describe('geolocation reducer', () => {
 
   it('handles GET_GEODATA_FAIL', () => {
     const error = { message: 'Server error' };
-    const state = geolocation(initialState, {
-      type: `${GET_GEODATA}_FAIL`,
-      error,
-    });
+    const state = geolocation(
+      { ...initialState, api: { stale: true }, data: { stale: true } },
+      {
+        type: `${GET_GEODATA}_FAIL`,
+        error,
+      },
+    );
+    expect(state.api).toBeNull();
     expect(state.data).toBeNull();
     expect(state.get.loading).toBe(false);
     expect(state.get.loaded).toBe(false);
