@@ -156,7 +156,7 @@ describe('manage GeolocationWidget', () => {
       },
     };
     mockSelectValues['geo-select-listingblock-template-group'] = {
-      label: 'GroupA',
+      label: 'Group A',
       value: 'GroupA',
     };
 

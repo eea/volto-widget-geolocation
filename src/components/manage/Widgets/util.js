@@ -6,8 +6,10 @@ import keys from 'lodash/keys';
 
 countries.registerLocale(en);
 
-const sortByLabel = (items) =>
-  [...items].sort((a, b) => a.label.localeCompare(b.label));
+export const sortByLabel = (items) =>
+  [...items].sort((a, b) =>
+    (a?.label ?? '').localeCompare(b?.label ?? '', 'en'),
+  );
 
 export function getCountryCode(countryName = '') {
   return countries.getAlpha2Code(countryName, 'en');

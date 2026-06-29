@@ -12,7 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import { GeolocationWidgetView } from '@eeacms/volto-widget-geolocation/components';
 import Select, { components } from 'react-select';
-import { getBioTags, getCountries } from './util';
+import { getBioTags, getCountries, sortByLabel } from './util';
 import SearchGeoName from './SearchGeoName';
 import { eeaCountries, countryGroups } from './eeaCountries';
 import { biogeographicalData } from './biogeographical';
@@ -45,9 +45,6 @@ const EMPTY_OBJECT = Object.freeze({});
 const getOptions = (arr, state) => {
   return state ? unionBy(arr, state, 'label') : arr;
 };
-
-const sortByLabel = (items) =>
-  [...items].sort((a, b) => a.label.localeCompare(b.label));
 
 const getSortedOptions = (arr, state) => sortByLabel(getOptions(arr, state));
 

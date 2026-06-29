@@ -3,6 +3,7 @@ import {
   makeSearchUrl,
   getBioTags,
   getCountries,
+  sortByLabel,
 } from './util';
 import countries from 'i18n-iso-countries/index';
 
@@ -99,5 +100,41 @@ describe('getCountries', () => {
 
   it('returns no countries', () => {
     expect(getCountries()).toEqual([]);
+  });
+});
+
+describe('sortByLabel', () => {
+  it('sorts items by label alphabetically', () => {
+    const items = [
+      { label: 'Romania', value: 'geo-798549' },
+      { label: 'Austria', value: 'geo-2782113' },
+      { label: 'Belgium', value: 'geo-2802361' },
+    ];
+    const expected = [
+      { label: 'Austria', value: 'geo-2782113' },
+      { label: 'Belgium', value: 'geo-2802361' },
+      { label: 'Romania', value: 'geo-798549' },
+    ];
+    expect(sortByLabel(items)).toEqual(expected);
+  });
+
+  it('does not mutate the original array', () => {
+    const items = [
+      { label: 'Romania', value: 'geo-798549' },
+      { label: 'Austria', value: 'geo-2782113' },
+    ];
+    const sorted = sortByLabel(items);
+    expect(items[0].label).toEqual('Romania');
+    expect(sorted[0].label).toEqual('Austria');
+  });
+
+  it('handles items with undefined or null labels without crashing', () => {
+    const items = [
+      { label: undefined, value: 'geo-unknown' },
+      { label: null, value: 'geo-missing' },
+      { label: 'Austria', value: 'geo-2782113' },
+    ];
+    const sorted = sortByLabel(items);
+    expect(sorted[2].label).toEqual('Austria');
   });
 });
