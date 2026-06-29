@@ -46,6 +46,9 @@ const getOptions = (arr, state) => {
   return state ? unionBy(arr, state, 'label') : arr;
 };
 
+const sortByLabel = (items) =>
+  [...items].sort((a, b) => a.label.localeCompare(b.label));
+
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
@@ -59,6 +62,9 @@ const GeolocationWidget = (props) => {
   );
   const { biotags = {}, geotags = {}, country_mappings = {} } = geoData;
 
+  console.log('BIOTAGS', biotags);
+  console.log('GEOTAGS', geotags);
+  console.log('COUNTRY_MAPPINGS', country_mappings);
   React.useEffect(() => {
     dispatch(getGeoData());
   }, [dispatch]);
@@ -80,10 +86,12 @@ const GeolocationWidget = (props) => {
 
   const eeaGroups = () => {
     return !isEmpty(geotags)
-      ? keys(geotags).map((item) => ({
-          label: getGroupLabel(item),
-          value: item,
-        }))
+      ? sortByLabel(
+          keys(geotags).map((item) => ({
+            label: getGroupLabel(item),
+            value: item,
+          })),
+        )
       : countryGroups;
   };
 
@@ -110,21 +118,23 @@ const GeolocationWidget = (props) => {
       arr = eeaCountries.filter((item) => item.group?.includes(label));
     } else {
       const countries = geotags[value] || {};
-      arr = keys(countries)
-        .filter((item) => item !== 'title')
-        .map((item) => {
-          if (keys(country_mappings).includes(countries[item])) {
-            return {
-              value: item,
-              label: country_mappings[countries[item]],
-            };
-          } else {
-            return {
-              value: item,
-              label: countries[item],
-            };
-          }
-        });
+      arr = sortByLabel(
+        keys(countries)
+          .filter((item) => item !== 'title')
+          .map((item) => {
+            if (keys(country_mappings).includes(countries[item])) {
+              return {
+                value: item,
+                label: country_mappings[countries[item]],
+              };
+            } else {
+              return {
+                value: item,
+                label: countries[item],
+              };
+            }
+          }),
+      );
     }
     onChange(id, {
       ...originalValue,

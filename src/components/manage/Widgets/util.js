@@ -6,6 +6,9 @@ import keys from 'lodash/keys';
 
 countries.registerLocale(en);
 
+const sortByLabel = (items) =>
+  [...items].sort((a, b) => a.label.localeCompare(b.label));
+
 export function getCountryCode(countryName = '') {
   return countries.getAlpha2Code(countryName, 'en');
 }
@@ -50,12 +53,12 @@ export function getBioTags(biotags = {}) {
     label: biotags[item].title,
     value: item,
   }));
-  return bioRegions;
+  return sortByLabel(bioRegions);
 }
 
 export function getCountries(geoTags = {}, country_mappings = {}) {
   let countries = assign({}, ...values(geoTags));
-  return keys(countries)
+  const countryOptions = keys(countries)
     .filter((item) => item !== 'title')
     .map((item) => {
       if (keys(country_mappings).includes(countries[item])) {
@@ -70,4 +73,5 @@ export function getCountries(geoTags = {}, country_mappings = {}) {
         };
       }
     });
+  return sortByLabel(countryOptions);
 }

@@ -68,8 +68,8 @@ describe('makeSearchUrl', () => {
 describe('getBioTags', () => {
   it('returns correct bio tags', () => {
     const bioTags = {
-      region1: { title: 'Region 1' },
       region2: { title: 'Region 2' },
+      region1: { title: 'Region 1' },
     };
     const expectedBioRegions = [
       { label: 'Region 1', value: 'region1' },
@@ -91,8 +91,8 @@ describe('getCountries', () => {
     };
     const countryMappings = { 'Country 1': 'Mapped Country 1' };
     const expectedCountries = [
-      { label: 'Mapped Country 1', value: 'name_country1' },
       { label: 'Country 2', value: 'name_country2' },
+      { label: 'Mapped Country 1', value: 'name_country1' },
     ];
     expect(getCountries(geoTags, countryMappings)).toEqual(expectedCountries);
   });
