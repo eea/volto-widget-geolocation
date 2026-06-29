@@ -64,9 +64,6 @@ const GeolocationWidget = (props) => {
   );
   const { biotags = {}, geotags = {}, country_mappings = {} } = geoData;
 
-  console.log('BIOTAGS', biotags);
-  console.log('GEOTAGS', geotags);
-  console.log('COUNTRY_MAPPINGS', country_mappings);
   React.useEffect(() => {
     dispatch(getGeoData());
   }, [dispatch]);
