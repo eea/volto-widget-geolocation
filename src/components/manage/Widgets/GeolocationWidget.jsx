@@ -49,6 +49,8 @@ const getOptions = (arr, state) => {
 const sortByLabel = (items) =>
   [...items].sort((a, b) => a.label.localeCompare(b.label));
 
+const getSortedOptions = (arr, state) => sortByLabel(getOptions(arr, state));
+
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
@@ -138,7 +140,7 @@ const GeolocationWidget = (props) => {
     }
     onChange(id, {
       ...originalValue,
-      geolocation: getOptions(originalValue.geolocation, arr),
+      geolocation: getSortedOptions(originalValue.geolocation, arr),
       selectedGroup: selectedOption,
     });
   };
@@ -222,7 +224,7 @@ const GeolocationWidget = (props) => {
                       id,
                       geolocation === ''
                         ? { ...value, geolocation: undefined }
-                        : { ...value, geolocation },
+                        : { ...value, geolocation: sortByLabel(geolocation) },
                     );
                   }}
                 />
