@@ -3,6 +3,7 @@ import {
   makeSearchUrl,
   getBioTags,
   getCountries,
+  sortByLabel,
 } from './util';
 import countries from 'i18n-iso-countries/index';
 
@@ -68,8 +69,8 @@ describe('makeSearchUrl', () => {
 describe('getBioTags', () => {
   it('returns correct bio tags', () => {
     const bioTags = {
-      region1: { title: 'Region 1' },
       region2: { title: 'Region 2' },
+      region1: { title: 'Region 1' },
     };
     const expectedBioRegions = [
       { label: 'Region 1', value: 'region1' },
@@ -91,13 +92,49 @@ describe('getCountries', () => {
     };
     const countryMappings = { 'Country 1': 'Mapped Country 1' };
     const expectedCountries = [
-      { label: 'Mapped Country 1', value: 'name_country1' },
       { label: 'Country 2', value: 'name_country2' },
+      { label: 'Mapped Country 1', value: 'name_country1' },
     ];
     expect(getCountries(geoTags, countryMappings)).toEqual(expectedCountries);
   });
 
   it('returns no countries', () => {
     expect(getCountries()).toEqual([]);
+  });
+});
+
+describe('sortByLabel', () => {
+  it('sorts items by label alphabetically', () => {
+    const items = [
+      { label: 'Romania', value: 'geo-798549' },
+      { label: 'Austria', value: 'geo-2782113' },
+      { label: 'Belgium', value: 'geo-2802361' },
+    ];
+    const expected = [
+      { label: 'Austria', value: 'geo-2782113' },
+      { label: 'Belgium', value: 'geo-2802361' },
+      { label: 'Romania', value: 'geo-798549' },
+    ];
+    expect(sortByLabel(items)).toEqual(expected);
+  });
+
+  it('does not mutate the original array', () => {
+    const items = [
+      { label: 'Romania', value: 'geo-798549' },
+      { label: 'Austria', value: 'geo-2782113' },
+    ];
+    const sorted = sortByLabel(items);
+    expect(items[0].label).toEqual('Romania');
+    expect(sorted[0].label).toEqual('Austria');
+  });
+
+  it('handles items with undefined or null labels without crashing', () => {
+    const items = [
+      { label: undefined, value: 'geo-unknown' },
+      { label: null, value: 'geo-missing' },
+      { label: 'Austria', value: 'geo-2782113' },
+    ];
+    const sorted = sortByLabel(items);
+    expect(sorted[2].label).toEqual('Austria');
   });
 });

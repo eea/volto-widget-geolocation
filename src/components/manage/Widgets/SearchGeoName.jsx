@@ -6,6 +6,7 @@ import keys from 'lodash/keys';
 
 import { GeoSearchSchema as schema } from './schema';
 import ListResults from './ListResults';
+import { sortByLabel } from './util';
 import { getGeonameSettings } from '@eeacms/volto-widget-geolocation/actions';
 import worldSVG from '@plone/volto/icons/world.svg';
 import clearSVG from '@plone/volto/icons/clear.svg';
@@ -91,7 +92,7 @@ const SearchGeoName = (props) => {
               onChange(
                 id,
                 Array.isArray(resultsValue) //eea.coremetadata behaviour #https://github.com/eea/eea.coremetadata/blob/develop/eea/coremetadata/interfaces.py#L130
-                  ? { geolocation: resultsValue }
+                  ? { geolocation: sortByLabel(resultsValue) }
                   : resultsValue,
               );
               setPopup(false);
