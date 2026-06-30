@@ -54,11 +54,10 @@ const GeolocationWidget = ({ value, className, flat = false }) => {
     ...groups.map((group) => ({ ...group, isGroup: true })),
     ...ungrouped.map((item) => ({ ...item, isGroup: false })),
   ];
-  const sortedInlineItems = sortByLabel(inlineItems);
 
   return (
     <div className={cx(className, 'geolocation-widget', 'widget')}>
-      {sortedInlineItems.map((item, index) => (
+      {inlineItems.map((item, index) => (
         <React.Fragment key={item.value || index}>
           {item.isGroup ? (
             <Popup
@@ -82,7 +81,7 @@ const GeolocationWidget = ({ value, className, flat = false }) => {
           ) : (
             <span className="geolocation-item">{item.label}</span>
           )}
-          <InlineSeparator show={index < sortedInlineItems.length - 1} />
+          <InlineSeparator show={index < inlineItems.length - 1} />
         </React.Fragment>
       ))}
     </div>
