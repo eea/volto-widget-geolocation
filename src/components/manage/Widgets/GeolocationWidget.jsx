@@ -12,7 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 import { GeolocationWidgetView } from '@eeacms/volto-widget-geolocation/components';
 import Select, { components } from 'react-select';
-import { getBioTags, getCountries } from './util';
+import { getBioTags, getCountries, sortByLabel } from './util';
 import SearchGeoName from './SearchGeoName';
 import { eeaCountries, countryGroups } from './eeaCountries';
 import { biogeographicalData } from './biogeographical';
@@ -46,6 +46,8 @@ const getOptions = (arr, state) => {
   return state ? unionBy(arr, state, 'label') : arr;
 };
 
+const getSortedOptions = (arr, state) => sortByLabel(getOptions(arr, state));
+
 const Group = (props) => <components.Group {...props} />;
 
 const GeolocationWidget = (props) => {
@@ -76,14 +78,26 @@ const GeolocationWidget = (props) => {
     },
   ];
 
+  const getGroupLabel = (groupId) => geotags[groupId]?.title || groupId;
+
   const eeaGroups = () => {
     return !isEmpty(geotags)
-      ? keys(geotags).map((item) => ({
-          label: item,
-          value: item,
-        }))
+      ? sortByLabel(
+          keys(geotags).map((item) => ({
+            label: getGroupLabel(item),
+            value: item,
+          })),
+        )
       : countryGroups;
   };
+
+  const selectedGroup =
+    originalValue.selectedGroup && !isEmpty(geotags)
+      ? {
+          ...originalValue.selectedGroup,
+          label: getGroupLabel(originalValue.selectedGroup.value),
+        }
+      : originalValue.selectedGroup || [];
 
   const handleGroupChange = (selectedOption) => {
     if (!selectedOption) {
@@ -100,25 +114,27 @@ const GeolocationWidget = (props) => {
       arr = eeaCountries.filter((item) => item.group?.includes(label));
     } else {
       const countries = geotags[value] || {};
-      arr = keys(countries)
-        .filter((item) => item !== 'title')
-        .map((item) => {
-          if (keys(country_mappings).includes(countries[item])) {
-            return {
-              value: item,
-              label: country_mappings[countries[item]],
-            };
-          } else {
-            return {
-              value: item,
-              label: countries[item],
-            };
-          }
-        });
+      arr = sortByLabel(
+        keys(countries)
+          .filter((item) => item !== 'title')
+          .map((item) => {
+            if (keys(country_mappings).includes(countries[item])) {
+              return {
+                value: item,
+                label: country_mappings[countries[item]],
+              };
+            } else {
+              return {
+                value: item,
+                label: countries[item],
+              };
+            }
+          }),
+      );
     }
     onChange(id, {
       ...originalValue,
-      geolocation: getOptions(originalValue.geolocation, arr),
+      geolocation: getSortedOptions(originalValue.geolocation, arr),
       selectedGroup: selectedOption,
     });
   };
@@ -171,7 +187,7 @@ const GeolocationWidget = (props) => {
                   styles={customSelectStyles}
                   theme={selectTheme}
                   components={{ DropdownIndicator, Option }}
-                  value={originalValue.selectedGroup || []}
+                  value={selectedGroup}
                   onChange={handleGroupChange}
                   isClearable={!!originalValue.selectedGroup}
                 />
@@ -202,7 +218,7 @@ const GeolocationWidget = (props) => {
                       id,
                       geolocation === ''
                         ? { ...value, geolocation: undefined }
-                        : { ...value, geolocation },
+                        : { ...value, geolocation: sortByLabel(geolocation) },
                     );
                   }}
                 />

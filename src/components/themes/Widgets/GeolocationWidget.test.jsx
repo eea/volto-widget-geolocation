@@ -82,7 +82,7 @@ describe('theme GeolocationWidget', () => {
     expect(
       screen.getByRole('button', { name: 'Countries in EEA member countries' }),
     ).toBeTruthy();
-    expect(screen.getByText('Romania, France')).toBeTruthy();
+    expect(screen.getByText('France, Romania')).toBeTruthy();
     expect(screen.getByText('Kosovo')).toBeTruthy();
   });
 });
