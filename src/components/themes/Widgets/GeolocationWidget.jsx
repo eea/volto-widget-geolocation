@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Popup } from 'semantic-ui-react';
 import { defineMessages, useIntl } from 'react-intl';
+import { sortByLabel } from '../../manage/Widgets/util';
 import './public.less';
 
 const messages = defineMessages({
@@ -19,7 +20,9 @@ const InlineSeparator = ({ show }) =>
 
 const GroupPopupContent = ({ countries }) => (
   <span className="geolocation-group-countries">
-    {countries.map((country) => country.label).join(', ')}
+    {sortByLabel(countries)
+      .map((country) => country.label)
+      .join(', ')}
   </span>
 );
 
