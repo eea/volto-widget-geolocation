@@ -17,7 +17,7 @@ jest.mock('react-redux', () => ({
       geolocation: {
         api: {
           geonames: {
-            password: 'demo',
+            password: 'demo', //betterleaks:allow
           },
         },
       },

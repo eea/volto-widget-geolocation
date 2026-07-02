@@ -24,7 +24,7 @@ describe('makeSearchUrl', () => {
   it('creates correct URL', () => {
     const data = { featureClass: 'country' };
     const text = 'Romania';
-    const password = 'admin';
+    const password = 'admin'; //betterleaks:allow
     const countryCode = 'RO';
     const expectedUrl = `https://secure.geonames.org/searchJSON?q=${text}&country=${countryCode}&featureClass=A&continentCode=&maxRows=10&username=${password}`;
     expect(makeSearchUrl(data, text, password, countryCode)).toEqual(
@@ -35,7 +35,7 @@ describe('makeSearchUrl', () => {
   it('creates correct URL with no countryCode', () => {
     const data = { featureClass: 'country', continents: 'EU' };
     const text = 'Romania';
-    const password = 'admin';
+    const password = 'admin'; //betterleaks:allow
     const countryCode = undefined;
     const expectedUrl = `https://secure.geonames.org/searchJSON?q=${text}&country=&featureClass=A&continentCode=EU&maxRows=10&username=${password}`;
     expect(makeSearchUrl(data, text, password, countryCode)).toEqual(
@@ -46,7 +46,7 @@ describe('makeSearchUrl', () => {
   it('creates correct URL with no countryCode and continentCode', () => {
     const data = { featureClass: 'test' };
     const text = 'Romania';
-    const password = 'admin';
+    const password = 'admin'; //betterleaks:allow
     const countryCode = undefined;
     const expectedUrl = `https://secure.geonames.org/searchJSON?q=${text}&country=&continentCode=&maxRows=10&username=${password}`;
     expect(makeSearchUrl(data, text, password, countryCode)).toEqual(
@@ -57,7 +57,7 @@ describe('makeSearchUrl', () => {
   it('creates correct URL with no featureClass', () => {
     const data = {};
     const text = 'Romania';
-    const password = 'admin';
+    const password = 'admin'; //betterleaks:allow
     const countryCode = undefined;
     const expectedUrl = `https://secure.geonames.org/searchJSON?q=${text}&country=&continentCode=&maxRows=10&username=${password}`;
     expect(makeSearchUrl(data, text, password, countryCode)).toEqual(
