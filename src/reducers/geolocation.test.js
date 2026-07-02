@@ -42,7 +42,7 @@ describe('geolocation reducer', () => {
   });
 
   it('handles GET_GEONAMES_SUCCESS', () => {
-    const result = { geonames: { password: 'test' } };
+    const result = { geonames: { password: 'test' } }; //betterleaks:allow
     const state = geolocation(initialState, {
       type: `${GET_GEONAMES}_SUCCESS`,
       result,
