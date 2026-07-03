@@ -72,8 +72,8 @@ pipeline {
           }
         }
       }
+      failFast false
       parallel {
-        failFast false
 
       // Declarative stage names must stay string literals.
       stage('Volto 18-yarn') {
@@ -114,22 +114,19 @@ pipeline {
 
           stage('Lint') {
             when { environment name: 'SKIP_TESTS', value: '' }
-            parallel {
-              failFast false
-              stage('ES lint') {
-                steps {
-                  sh '''docker run --rm --name="$IMAGE_NAME-eslint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current lint'''
-                }
-              }
-              stage('Style lint') {
-                steps {
-                  sh '''docker run --rm --name="$IMAGE_NAME-stylelint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current stylelint'''
-                }
-              }
-              stage('Prettier') {
-                steps {
-                  sh '''docker run --rm --name="$IMAGE_NAME-prettier-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current prettier'''
-                }
+            steps {
+              script {
+                parallel(
+                  'ES lint': {
+                    sh '''docker run --rm --name="$IMAGE_NAME-eslint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current lint'''
+                  },
+                  'Style lint': {
+                    sh '''docker run --rm --name="$IMAGE_NAME-stylelint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current stylelint'''
+                  },
+                  'Prettier': {
+                    sh '''docker run --rm --name="$IMAGE_NAME-prettier-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current prettier'''
+                  }
+                )
               }
             }
           }
