@@ -83,7 +83,7 @@ pipeline {
             steps {
               sh '''
                 docker run --privileged --rm tonistiigi/binfmt --install arm64
-                docker buildx inspect volto-builder > /dev/null 2>&1 || docker buildx create --name volto-builder --driver docker-container
+                docker buildx create --name volto-builder --driver docker-container 2>/dev/null || true
                 docker buildx use volto-builder
                 docker buildx build --pull --platform linux/amd64 --load \
                   --build-arg="VOLTO_VERSION=$CURRENT_VOLTO" \
