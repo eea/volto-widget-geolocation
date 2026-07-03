@@ -92,7 +92,7 @@ pipeline {
           stage('Multi-platform build check') {
             steps {
               sh '''
-                docker run --privileged --rm tonistiigi/binfmt --install arm64
+                ls /proc/sys/fs/binfmt_misc/qemu-aarch64 2>/dev/null || docker run --privileged --rm tonistiigi/binfmt --install arm64
                 docker buildx create --name volto-builder --driver docker-container 2>/dev/null || true
                 docker buildx use volto-builder
                 docker buildx build --platform linux/amd64,linux/arm64 \
