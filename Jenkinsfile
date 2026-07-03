@@ -81,7 +81,26 @@ pipeline {
         stages {
       	  stage('Build test image') {
             steps {
-              sh '''docker build --pull --build-arg="VOLTO_VERSION=$CURRENT_VOLTO" --build-arg="ADDON_NAME=$NAMESPACE/$GIT_NAME"  --build-arg="ADDON_PATH=$GIT_NAME" . -t $IMAGE_NAME-frontend-current'''
+              sh '''
+                docker run --privileged --rm tonistiigi/binfmt --install arm64
+                docker buildx inspect volto-builder > /dev/null 2>&1 || docker buildx create --name volto-builder --driver docker-container
+                docker buildx use volto-builder
+                docker buildx build --pull --platform linux/amd64 --load \
+                  --build-arg="VOLTO_VERSION=$CURRENT_VOLTO" \
+                  --build-arg="ADDON_NAME=$NAMESPACE/$GIT_NAME" \
+                  --build-arg="ADDON_PATH=$GIT_NAME" \
+                  . -t $IMAGE_NAME-frontend-current
+              '''
+            }
+          }
+
+          stage('Multi-platform build check') {
+            steps {
+              sh '''docker buildx build --platform linux/amd64,linux/arm64 \
+                --build-arg="VOLTO_VERSION=$CURRENT_VOLTO" \
+                --build-arg="ADDON_NAME=$NAMESPACE/$GIT_NAME" \
+                --build-arg="ADDON_PATH=$GIT_NAME" \
+                .'''
             }
           }
 
