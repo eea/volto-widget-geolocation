@@ -6,6 +6,8 @@ pipeline {
   environment {
     GIT_NAME = "volto-widget-geolocation"
     NAMESPACE = "@eeacms"
+    DOCKER_BUILDKIT  = "1"
+    BUILDKIT_PROGRESS = "plain"
     SONARQUBE_TAGS = "volto.eea.europa.eu,climate-energy.eea.europa.eu,forest.eea.europa.eu,biodiversity.europa.eu,industry.eea.europa.eu,water.europa.eu-freshwater,demo-www.eea.europa.eu,clmsdemo.devel6cph.eea.europa.eu,water.europa.eu-marine,climate-adapt.eea.europa.eu,climate-advisory-board.devel4cph.eea.europa.eu,climate-advisory-board.europa.eu,www.eea.europa.eu-en,www.eea.europa.eu,insitu.copernicus.eu,ask.copernicus.eu,land.copernicus.eu"
     DEPENDENCIES = ""
     BACKEND_PROFILES = "eea.kitkat:testing"
@@ -71,6 +73,7 @@ pipeline {
         }
       }
       parallel {
+        failFast false
 
       // Declarative stage names must stay string literals.
       stage('Volto 18-yarn') {
@@ -109,24 +112,25 @@ pipeline {
             }
           }
 
-          stage('ES lint') {
+          stage('Lint') {
             when { environment name: 'SKIP_TESTS', value: '' }
-            steps {
-              sh '''docker run --rm --name="$IMAGE_NAME-eslint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current lint'''
-            }
-          }
-
-          stage('Style lint') {
-            when { environment name: 'SKIP_TESTS', value: '' }
-            steps {
-              sh '''docker run --rm --name="$IMAGE_NAME-stylelint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME  $IMAGE_NAME-frontend-current stylelint'''
-            }
-          }
-
-          stage('Prettier') {
-            when { environment name: 'SKIP_TESTS', value: '' }
-            steps {
-              sh '''docker run --rm --name="$IMAGE_NAME-prettier-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME  $IMAGE_NAME-frontend-current prettier'''
+            parallel {
+              failFast false
+              stage('ES lint') {
+                steps {
+                  sh '''docker run --rm --name="$IMAGE_NAME-eslint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current lint'''
+                }
+              }
+              stage('Style lint') {
+                steps {
+                  sh '''docker run --rm --name="$IMAGE_NAME-stylelint-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current stylelint'''
+                }
+              }
+              stage('Prettier') {
+                steps {
+                  sh '''docker run --rm --name="$IMAGE_NAME-prettier-current" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend-current prettier'''
+                }
+              }
             }
           }
           stage('Unit tests') {
