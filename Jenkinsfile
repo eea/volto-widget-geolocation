@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    node { label 'docker-big-jobs' }
+    node { label 'docker-test' }
   }
 
   environment {
@@ -26,7 +26,7 @@ pipeline {
         }
       }
       steps {
-        node(label: 'docker-big-jobs') {
+        node(label: 'docker-test') {
           withCredentials([string(credentialsId: 'eea-jenkins-token', variable: 'GITHUB_TOKEN'), string(credentialsId: 'eea-jenkins-npm-token', variable: 'NPM_TOKEN')]) {
             sh '''docker run -i --rm --pull always --name="$IMAGE_NAME-gitflow-master" -e GIT_BRANCH="$BRANCH_NAME" -e GIT_NAME="$GIT_NAME" -e GIT_TOKEN="$GITHUB_TOKEN" -e NPM_TOKEN="$NPM_TOKEN" -e LANGUAGE=javascript eeacms/gitflow'''
           }
@@ -77,7 +77,7 @@ pipeline {
 
       // Declarative stage names must stay string literals.
       stage('Volto 18-yarn') {
-        agent { node { label 'docker-big-jobs'} }
+        agent { node { label 'docker-test'} }
         stages {
       	  stage('Build test image') {
             steps {
@@ -281,7 +281,7 @@ pipeline {
       }
 
       stage('Volto 17') { 
-        agent { node { label 'docker-big-jobs'} }
+        agent { node { label 'docker-test'} }
         when {
           allOf {
             environment name: 'SKIP_TESTS', value: ''
