@@ -40,6 +40,7 @@ const SearchWidget = (props) => {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const password = useSelector(
+    //betterleaks:allow
     (state) => state.geolocation?.api?.geonames.password,
   );
 
