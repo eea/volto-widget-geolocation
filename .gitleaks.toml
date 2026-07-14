@@ -87,3 +87,9 @@ regexTarget = "match"
 regexes = [
   '''SONAR_AUTH_TOKEN''',
 ]
+
+[[allowlists]]
+description = "Allow password variable in SearchWidget (Redux selector, not a secret)"
+paths = [
+  '''src/components/manage/Widgets/SearchWidget\.jsx'''
+]
