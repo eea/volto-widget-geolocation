@@ -39,7 +39,8 @@ const SearchWidget = (props) => {
   const { countries } = data;
   const [text, setText] = useState('');
   const dispatch = useDispatch();
-  const password = useSelector( // betterleaks:allow -- Redux state reference
+  const password = useSelector(
+    // betterleaks:allow -- Redux state reference
     (state) => state.geolocation?.api?.geonames.password,
   );
 
