@@ -94,3 +94,9 @@ paths = [
   '''(^|/)core/''',
   '''(^|/)node_modules/''',
 ]
+
+[[allowlists]]
+description = "Allow the volto-widget-geolocation Redux state reference (not a literal secret)"
+paths = [
+  '''(^|/)packages/volto-widget-geolocation/src/components/manage/Widgets/SearchWidget\.jsx$''',
+]
