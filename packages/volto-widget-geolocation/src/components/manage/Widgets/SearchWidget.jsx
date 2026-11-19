@@ -40,8 +40,7 @@ const SearchWidget = (props) => {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const password = useSelector(
-    // Redux state reference, not a literal secret.
-    (state) => state.geolocation?.api?.geonames.password, // betterleaks:allow
+    (state) => state.geolocation?.api?.geonames.password,
   );
 
   const onSubmit = async (event) => {
