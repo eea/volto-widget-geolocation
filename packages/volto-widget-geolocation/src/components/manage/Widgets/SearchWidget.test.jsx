@@ -1,16 +1,17 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import SearchWidget from './SearchWidget';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 
-const mockDispatch = jest.fn((action) =>
+const mockDispatch = vi.fn((action) =>
   action.url.includes('getJSON')
     ? Promise.resolve({ countryCode: 'RO' })
     : Promise.resolve({ geonames: [] }),
 );
 
-jest.mock('react-redux', () => ({
+vi.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
   useSelector: (selector) =>
     selector({
@@ -24,16 +25,16 @@ jest.mock('react-redux', () => ({
     }),
 }));
 
-jest.mock('@eeacms/volto-corsproxy/actions', () => ({
-  getProxiedExternalContent: jest.fn((url, options) => ({ url, options })),
+vi.mock('@eeacms/volto-corsproxy/actions', () => ({
+  getProxiedExternalContent: vi.fn((url, options) => ({ url, options })),
 }));
 
-jest.mock('@plone/volto/components/manage/Widgets/FormFieldWrapper', () => ({
+vi.mock('@plone/volto/components/manage/Widgets/FormFieldWrapper', () => ({
   __esModule: true,
   default: ({ children }) => <div>{children}</div>,
 }));
 
-jest.mock('@plone/volto/components/theme/Icon/Icon', () => ({
+vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
   __esModule: true,
   default: () => <span />,
 }));
@@ -52,7 +53,7 @@ describe('SearchWidget', () => {
   });
 
   it('builds a search URL from a country name', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderSearchWidget({
       data: { countries: 'Romania', featureClass: 'country' },
       onChange,
@@ -76,7 +77,7 @@ describe('SearchWidget', () => {
   });
 
   it('resolves a geoname id to a country code before searching', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderSearchWidget({
       data: { countries: 'geo-798549', featureClass: 'country' },
       onChange,

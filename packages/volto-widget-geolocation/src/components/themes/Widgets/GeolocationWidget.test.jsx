@@ -1,9 +1,10 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { render, screen } from '@testing-library/react';
 import GeolocationWidget from './GeolocationWidget';
 
-jest.mock('semantic-ui-react', () => ({
+vi.mock('semantic-ui-react', () => ({
   Popup: ({ trigger, content }) => (
     <span>
       {trigger}

@@ -1,23 +1,24 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { fireEvent, render, screen } from '@testing-library/react';
 import GeolocationWidget from './GeolocationWidget';
 import { getGeoData } from '@eeacms/volto-widget-geolocation/actions';
 
-const mockDispatch = jest.fn();
+const mockDispatch = vi.fn();
 let mockState;
 const mockSelectValues = {};
 
-jest.mock('react-redux', () => ({
+vi.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
   useSelector: (selector) => selector(mockState),
 }));
 
-jest.mock('@eeacms/volto-widget-geolocation/actions', () => ({
-  getGeoData: jest.fn(() => ({ type: 'GET_GEODATA' })),
+vi.mock('@eeacms/volto-widget-geolocation/actions', () => ({
+  getGeoData: vi.fn(() => ({ type: 'GET_GEODATA' })),
 }));
 
-jest.mock('@eeacms/volto-widget-geolocation/components', () => ({
+vi.mock('@eeacms/volto-widget-geolocation/components', () => ({
   GeolocationWidgetView: ({ value, className }) => (
     <div className={className}>
       {(value.geolocation || []).map((item) => item.label).join(', ')}
@@ -25,14 +26,14 @@ jest.mock('@eeacms/volto-widget-geolocation/components', () => ({
   ),
 }));
 
-jest.mock('@plone/volto/components/manage/Sidebar/SidebarPopup', () => ({
+vi.mock('@plone/volto/components/manage/Sidebar/SidebarPopup', () => ({
   __esModule: true,
   default: ({ open, children }) => (
     <div data-testid="sidebar">{open ? children : null}</div>
   ),
 }));
 
-jest.mock('@plone/volto/components/manage/Widgets/FormFieldWrapper', () => ({
+vi.mock('@plone/volto/components/manage/Widgets/FormFieldWrapper', () => ({
   __esModule: true,
   default: ({ children, title }) => (
     <section>
@@ -42,24 +43,24 @@ jest.mock('@plone/volto/components/manage/Widgets/FormFieldWrapper', () => ({
   ),
 }));
 
-jest.mock('@plone/volto/components/theme/Icon/Icon', () => ({
+vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
   __esModule: true,
   default: () => <span>icon</span>,
 }));
 
-jest.mock('@plone/volto/components/manage/Widgets/SelectStyling', () => ({
+vi.mock('@plone/volto/components/manage/Widgets/SelectStyling', () => ({
   Option: () => null,
   DropdownIndicator: () => null,
   selectTheme: {},
   customSelectStyles: {},
 }));
 
-jest.mock('./SearchGeoName', () => ({
+vi.mock('./SearchGeoName', () => ({
   __esModule: true,
   default: () => <div data-testid="search-geoname" />,
 }));
 
-jest.mock('react-select', () => {
+vi.mock('react-select', () => {
   const Select = ({ id, onChange, value }) => (
     <button
       type="button"
@@ -83,7 +84,7 @@ jest.mock('react-select', () => {
 const renderWidget = (props) =>
   render(
     <IntlProvider locale="en" messages={{}}>
-      <GeolocationWidget id="geo" onChange={jest.fn()} {...props} />
+      <GeolocationWidget id="geo" onChange={vi.fn()} {...props} />
     </IntlProvider>,
   );
 
@@ -115,7 +116,7 @@ describe('manage GeolocationWidget', () => {
   });
 
   it('adds the static countries from a selected country group', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     mockSelectValues['geo-select-listingblock-template-group'] = {
       label: 'EEA32',
       value: 'EEA32',
@@ -138,7 +139,7 @@ describe('manage GeolocationWidget', () => {
   });
 
   it('adds mapped countries from backend geotags', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     mockState = {
       geolocation: {
         data: {
@@ -183,7 +184,7 @@ describe('manage GeolocationWidget', () => {
   });
 
   it('clears group selections and forwards coverage changes', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     mockSelectValues['geo-select-listingblock-template-group'] = null;
     mockSelectValues['geo-select-listingblock-template-coverage'] = [
       { label: 'France', value: 'geo-fr' },

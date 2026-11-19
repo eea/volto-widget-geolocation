@@ -1,8 +1,9 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import ListResults from './ListResults';
 
-jest.mock('@plone/volto/components/theme/Icon/Icon', () => ({
+vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
   __esModule: true,
   default: () => <span data-testid="icon">icon</span>,
 }));
@@ -23,7 +24,7 @@ const france = {
 
 describe('ListResults', () => {
   it('renders mapped result labels and adds a new result', () => {
-    const setValue = jest.fn();
+    const setValue = vi.fn();
     const { container } = render(
       <ListResults
         results={[romania, france]}
@@ -48,7 +49,7 @@ describe('ListResults', () => {
   });
 
   it('does not add duplicate results and can show the loading state', () => {
-    const setValue = jest.fn();
+    const setValue = vi.fn();
     const { container } = render(
       <ListResults
         results={[romania]}

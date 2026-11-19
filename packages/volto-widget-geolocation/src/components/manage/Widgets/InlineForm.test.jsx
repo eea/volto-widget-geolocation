@@ -1,9 +1,10 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { fireEvent, render, screen } from '@testing-library/react';
 import InlineForm from './InlineForm';
 
-jest.mock('react-select', () => ({
+vi.mock('react-select', () => ({
   __esModule: true,
   default: ({ onChange, value = [] }) => (
     <button
@@ -15,14 +16,14 @@ jest.mock('react-select', () => ({
   ),
 }));
 
-jest.mock('@plone/volto/components/manage/Widgets/SelectStyling', () => ({
+vi.mock('@plone/volto/components/manage/Widgets/SelectStyling', () => ({
   Option: () => null,
   DropdownIndicator: () => null,
   selectTheme: {},
   customSelectStyles: {},
 }));
 
-jest.mock('@plone/volto/components/manage/Form/Field', () => ({
+vi.mock('@plone/volto/components/manage/Form/Field', () => ({
   __esModule: true,
   default: ({ id, value, onChange, required, error }) => (
     <button type="button" onClick={() => onChange(id, `${value}-changed`)}>
@@ -49,8 +50,8 @@ const renderInlineForm = (props) =>
       <InlineForm
         schema={schema}
         data={{ featureClass: 'continent' }}
-        setValue={jest.fn()}
-        onChangeField={jest.fn()}
+        setValue={vi.fn()}
+        onChangeField={vi.fn()}
         {...props}
       />
     </IntlProvider>,
@@ -80,8 +81,8 @@ describe('InlineForm', () => {
   });
 
   it('forwards select and field changes', () => {
-    const setValue = jest.fn();
-    const onChangeField = jest.fn();
+    const setValue = vi.fn();
+    const onChangeField = vi.fn();
     renderInlineForm({ setValue, onChangeField });
 
     fireEvent.click(screen.getByText('empty select'));
