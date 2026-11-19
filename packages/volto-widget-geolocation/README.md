@@ -12,6 +12,27 @@
 
 ![Widget geolocation](https://raw.githubusercontent.com/eea/volto-widget-geolocation/master/docs/volto-widget-geolocation.gif)
 
+## Upgrade
+
+### Upgrading to 9.x
+
+> This version requires `Volto 18` or `Volto 19` and Node.js 22.
+
+The widget keeps the same id, the same schema fields and the same stored coordinates, so
+geolocation data saved with 8.x keeps rendering unchanged. The release adds Volto 19 support and
+moves the repository to the Volto 19 layout, where the published package lives in
+`packages/volto-widget-geolocation`. The only source edit since 8.0.1 is a comment on a Redux
+selector, which leaves the behaviour untouched.
+
+#### Breaking changes
+
+- **Node.js 22 or newer is required** (`engines.node >= 22`), 8.x declared no engine.
+- **React 18 is required.** The package declares `react` and `react-dom` as `^18.2.0` peers, 8.x
+  declared no peers.
+- **The package no longer ships the repository tooling.** The Cypress specs and the Jest setup are
+  gone and the unit tests moved to Vitest next to the add-on, so nothing a site imports was
+  removed.
+
 ## Requirements
 
 ### Backend
